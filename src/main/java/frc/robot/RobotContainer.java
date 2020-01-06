@@ -5,8 +5,6 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-// Gayego
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
