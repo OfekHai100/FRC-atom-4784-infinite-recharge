@@ -21,6 +21,16 @@ public class AtomTalon extends WPI_TalonSRX {
     private int m_Slot;
     private double m_distancePerPulse;
 
+    /**
+     * Constructor for AtomTalon.
+     * @param port of the Talon.
+     * @param pidIdx - Inner (0) or Outer (1), we use inner.
+     * @param slotIdx - slot to store PIDF constants (1-4).
+     * @param kP
+     * @param kI
+     * @param kD
+     * @param kF
+     */
     public AtomTalon(int port, int pidIdx, int slotIdx, double kP, double kI, double kD, double kF) {
         super(port);
         super.configFactoryDefault();
@@ -34,28 +44,52 @@ public class AtomTalon extends WPI_TalonSRX {
         super.config_kF(m_Slot, kF);
     }
 
+    /**
+     * Configures the Talon to use CTRE Mag Encoder as it's sensor.
+     */
     public void configEncoder() {
         super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, m_PID, 10);
         this.reset();
-        this.m_distancePerPulse = Math.PI * Constants.kWheelDiameterInches / Constants.kUPR;
+        this.m_distancePerPulse = Math.PI * Constants.kWheelDiameterInches / Constants.kUPR; // INCORRECT!
     }
 
+    /**
+     * Resets encoder value to 0.
+     */
     public void reset() {
         super.setSelectedSensorPosition(0);
     }
 
+    /**
+     * Convert sensor units to inches.
+     * @param units
+     * @return inches.
+     */
     public double unitsToInches(int units) {
         return units * this.m_distancePerPulse;
     }
 
+    /**
+     * Convert inches to sensor units.
+     * @param inches
+     * @return units.
+     */
     public int inchesToUnits(double inches) {
         return (int) (inches / this.m_distancePerPulse);
     }
     
+    /**
+     * Get current distance traveled, in inches.
+     * @return current distance traveled.
+     */
     public double getDistanceInches() {
         return super.getSelectedSensorPosition() * this.m_distancePerPulse;
     }
 
+    /**
+     * Get current velocity, in inches per second.
+     * @return current velocity.
+     */
     public double getVelocityInches() {
         return super.getSelectedSensorVelocity() * this.m_distancePerPulse * 10.0;
     }
