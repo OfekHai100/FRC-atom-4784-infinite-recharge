@@ -13,29 +13,43 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shooter extends SubsystemBase {
+public class Roulette extends SubsystemBase {
+<<<<<<< HEAD:src/main/java/frc/robot/subsystems/Roulette.java
+  
+  private I2C.Port m_port = I2C.Port.kOnboard;
+  private ColorSensorV3 m_colorSensor = new ColorSensorV3(m_port);
+  
+  /**
+   * Creates a new Roulette.
+   */
+=======
   I2C.Port port = I2C.Port.kOnboard;
   ColorSensorV3 colorSensor = new ColorSensorV3(port);
   /**
-   * Creates a new Shooter.
+   * Creates a new Roulette.
    */
-  public Shooter() {
+  // roullete class 
+>>>>>>> f12173e2da91a61b93b641a07b46606795b3252b:src/main/java/frc/robot/subsystems/Shooter.java
+  public Roulette() {
 
   }
 
-  public String whatColor(){
-    Color detected = colorSensor.getColor();
+  /**
+   * Checks detected color by ColorSensorV3.
+   */
+  public String whatColor() {
+    Color detected = m_colorSensor.getColor();
     if (detected.equals(Color.kRed)) {
-      return "red";
+      return "RED";
     }
     if (detected.equals(Color.kYellow)) {
-      return "yellow";
-     }
+      return "YELLOW";
+    }
     if (detected.equals(Color.kBlue)) {
-      return "blue";
+      return "BLUE";
     }
     if (detected.equals(Color.kGreen)) {
-      return "green";
+      return "GREEN";
     }
     return "NO COLOR FOUND";
   } 

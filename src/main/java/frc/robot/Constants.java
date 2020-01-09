@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+// GIT MASTER
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -18,4 +20,15 @@ package frc.robot;
 public final class Constants {
     public static final double kWheelDiameterInches = 3.29; // FAKE!!!
     public static final int kUPR = 4096; // CTRE Encoder spins 4096 units per rotation.
+    
+    // generator highest point, cm. 
+    public static final double generatorHstPoint = 200.3425;
+    // generator lowest point, cm.
+    public static final double generatorLstPoint = 117.1575;
+
+
+
+
+
+
 }
