@@ -28,7 +28,9 @@ public class RobotContainer {
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_drive);
 
   Joystick driver = new Joystick(0);
-
+  Joystick secondDriver  = new Joystick(1);
+  //added second controller!
+  
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */

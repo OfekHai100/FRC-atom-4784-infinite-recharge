@@ -18,4 +18,15 @@ package frc.robot;
 public final class Constants {
     public static final double kWheelDiameterInches = 3.29; // FAKE!!!
     public static final int kUPR = 4096; // CTRE Encoder spins 4096 units per rotation.
+    
+    // generator highest point, cm. 
+    public static final double generatorHstPoint = 200.3425;
+    // generator lowest point, cm.
+    public static final double generatorLstPoint = 117.1575;
+
+
+
+
+
+
 }

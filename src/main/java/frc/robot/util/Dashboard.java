@@ -16,9 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Class to control the Dashboard.
  */
 public class Dashboard {
-
-    // GAYEGO
-
     /**
      * Displays match data every match for the drivers.
      */

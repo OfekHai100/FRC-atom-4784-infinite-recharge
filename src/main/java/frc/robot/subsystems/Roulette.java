@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Roulette extends SubsystemBase {
+<<<<<<< HEAD:src/main/java/frc/robot/subsystems/Roulette.java
   
   private I2C.Port m_port = I2C.Port.kOnboard;
   private ColorSensorV3 m_colorSensor = new ColorSensorV3(m_port);
@@ -21,6 +22,14 @@ public class Roulette extends SubsystemBase {
   /**
    * Creates a new Roulette.
    */
+=======
+  I2C.Port port = I2C.Port.kOnboard;
+  ColorSensorV3 colorSensor = new ColorSensorV3(port);
+  /**
+   * Creates a new Roulette.
+   */
+  // roullete class 
+>>>>>>> f12173e2da91a61b93b641a07b46606795b3252b:src/main/java/frc/robot/subsystems/Shooter.java
   public Roulette() {
 
   }
