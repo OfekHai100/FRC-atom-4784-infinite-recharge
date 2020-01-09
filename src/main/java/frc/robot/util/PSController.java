@@ -7,8 +7,17 @@
 
 package frc.robot.util;
 
+import edu.wpi.first.wpilibj.Joystick;
+
 /**
  * Add your docs here.
  */
-public class PSController {
+public class PSController extends Joystick {
+
+private int port;
+
+public PSController(int port){
+    super(port);
+}
+    
 }
