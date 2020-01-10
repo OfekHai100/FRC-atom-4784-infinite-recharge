@@ -13,16 +13,17 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.util.AtomTalon;
 
 public class Drivetrain extends SubsystemBase {
   
   // FAKE PIDF VALUES!
-  public AtomTalon leftMaster = new AtomTalon(1, 0, 1, 0.1, 0, 1, 0);
-  public AtomTalon rightMaster = new AtomTalon(2, 0, 1, 0.1, 0, 1, 0);
+  public AtomTalon leftMaster = new AtomTalon(Constants.Ports.kLeftMaster, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdx, 0.1, 0, 1, 0);
+  public AtomTalon rightMaster = new AtomTalon(Constants.Ports.kRightSlave, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdx, 0.1, 0, 1, 0);
 
-  private WPI_VictorSPX m_leftSlave = new WPI_VictorSPX(3);
-  private WPI_VictorSPX m_rightSlave = new WPI_VictorSPX(4);
+  private WPI_VictorSPX m_leftSlave = new WPI_VictorSPX(Constants.Ports.kLeftSlave);
+  private WPI_VictorSPX m_rightSlave = new WPI_VictorSPX(Constants.Ports.kRightSlave);
 
   private DifferentialDrive m_drive = new DifferentialDrive(leftMaster, rightMaster);
 

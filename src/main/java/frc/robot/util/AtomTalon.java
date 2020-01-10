@@ -50,7 +50,7 @@ public class AtomTalon extends WPI_TalonSRX {
     public void configEncoder() {
         super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, m_PID, 10);
         this.reset();
-        this.m_distancePerPulse = Math.PI * Constants.kWheelDiameterInches / Constants.kUPR; // INCORRECT!
+        this.m_distancePerPulse = Math.PI * Constants.DrivetrainConstants.kWheelDiameterInches / Constants.DrivetrainConstants.kUPR; // INCORRECT!
     }
 
     /**

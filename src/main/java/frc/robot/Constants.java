@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-// GIT MASTER
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -18,13 +16,49 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final double kWheelDiameterInches = 3.29; // FAKE!!!
-    public static final int kUPR = 4096; // CTRE Encoder spins 4096 units per rotation.
     
-    // generator highest point, cm. 
-    public static final double generatorHstPoint = 200.3425;
-    // generator lowest point, cm.
-    public static final double generatorLstPoint = 117.1575;
+    public static final int kPIDIdx = 0; // Inner PID Loop.
+    
+    public final class Ports {
+        // Drivetrain hardware:
+        public static final int kLeftMaster = 1;
+        public static final int kRightMaster = 2;
+        public static final int kLeftSlave = 3;
+        public static final int kRightSlave = 4;
+        
+        // Roulette hardware:
+        public static final int kRoulette = 5;
+        public static final int kCylinderForward = 0;
+        public static final int kCylinderReverse = 1;
+
+        // Shooter hardware:
+        public static final int kLeft = 6;
+        public static final int kRight = 7;
+
+        // Joysticks:
+        public static final int kMain = 0;
+        public static final int kSecond = 1;
+    }
+
+    public final class DrivetrainConstants {
+        public static final int kUPR = 4096; // CTRE Encoder spins 4096 units per rotation.
+        public static final double kWheelDiameterInches = 3.29; // FAKE!!!
+        // PIDF Constants slot index:
+        public static final int kSlotIdx = 1;
+    }
+
+    public final class ShooterConstants {
+        public static final int kUPR = 4096; // CTRE Encoder spins 4096 units per rotation.
+        // PIDF Constants slot index:
+        public static final int kSlotIdx = 2;
+    }
+    
+    public final class FieldConstants {
+        // Generator Switch highest point, in cm. 
+        public static final double kGeneratorHstPoint = 200.3425;
+        // Generator Switch lowest point, in cm.
+        public static final double kGeneratorLstPoint = 117.1575;
+    }
 
 
 

@@ -27,8 +27,8 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_drive);
 
-  Joystick driver = new Joystick(0);
-  Joystick secondDriver  = new Joystick(1);
+  Joystick driver = new Joystick(Constants.Ports.kMain);
+  Joystick secondDriver  = new Joystick(Constants.Ports.kSecond);
   
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
