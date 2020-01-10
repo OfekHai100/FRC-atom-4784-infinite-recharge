@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX; 
 
@@ -45,8 +46,21 @@ public class Drivetrain extends SubsystemBase {
     rightMaster.configEncoder();
   }
 
+  /**
+   * Drive using Arcade-Drive
+   * @param y value of the joystick.
+   * @param x value of the joystick.
+   */
   public void arcade(double y, double x) {
     m_drive.arcadeDrive(y, x);
+  }
+
+  /**
+   * Stops all motors.
+   */
+  public void stop() {
+    leftMaster.set(ControlMode.PercentOutput, 0);
+    rightMaster.set(ControlMode.PercentOutput, 0);
   }
 
   /**

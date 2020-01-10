@@ -14,10 +14,40 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class PSController extends Joystick {
 
-private int port;//
+    public PSController(int port){
+        super(port);
+    }
 
-public PSController(int port){
-    super(port);
-}
+    public boolean getIx() {
+        return super.getRawButton(1);
+    }
+
+    public boolean getCircle() {
+        return super.getRawButton(2);
+    }
+
+    public boolean getTriangle() {
+        return super.getRawButton(3);
+    }
+
+    public boolean getSquare() {
+        return super.getRawButton(4);
+    }
+
+    public boolean getR1() {
+        return super.getRawButton(10);
+    }
+
+    public boolean getR2() {
+        return super.getRawButton(12);
+    }
+
+    public boolean getL1() {
+        return super.getRawButton(11);
+    }
+
+    public boolean getL2() {
+        return super.getRawButton(13);
+    }
     
 }

@@ -7,31 +7,60 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Roulette extends SubsystemBase {
-<<<<<<< HEAD:src/main/java/frc/robot/subsystems/Roulette.java
   
+  // Color Sensor:
   private I2C.Port m_port = I2C.Port.kOnboard;
   private ColorSensorV3 m_colorSensor = new ColorSensorV3(m_port);
+
+  // Hardware:
+  private DoubleSolenoid m_cylinder = new DoubleSolenoid(0, 1);
+  private VictorSPX m_rouletteMotor = new VictorSPX(5);
   
   /**
    * Creates a new Roulette.
    */
-=======
-  I2C.Port port = I2C.Port.kOnboard;
-  ColorSensorV3 colorSensor = new ColorSensorV3(port);
-  /**
-   * Creates a new Roulette.
-   */
-  // roullete class 
->>>>>>> f12173e2da91a61b93b641a07b46606795b3252b:src/main/java/frc/robot/subsystems/Shooter.java
   public Roulette() {
+    m_rouletteMotor.configFactoryDefault();
+    closeRoulette();
+  }
 
+  /**
+   * Opens the Roulette spinning mechanism.
+   */
+  public void openRoulette() {
+    m_cylinder.set(Value.kForward);
+  }
+
+  /**
+   * Closes the Roulette spinning mechanism.
+   */
+  public void closeRoulette() {
+    m_cylinder.set(Value.kReverse);
+  }
+
+  /**
+   * Spins the Roulette using a motor.
+   */
+  public void spin() {
+    m_rouletteMotor.set(ControlMode.PercentOutput, 0.4);
+  }
+
+  /**
+   * Stops the motor.
+   */
+  public void stop() {
+    m_rouletteMotor.set(ControlMode.PercentOutput, 0);
   }
 
   /**
@@ -53,8 +82,6 @@ public class Roulette extends SubsystemBase {
     }
     return "NO COLOR FOUND";
   } 
-  
-
 
   @Override
   public void periodic() {
