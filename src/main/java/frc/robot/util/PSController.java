@@ -19,35 +19,35 @@ public class PSController extends Joystick {
     }
 
     public boolean getIx() {
-        return super.getRawButton(1);
-    }
-
-    public boolean getCircle() {
-        return super.getRawButton(2);
-    }
-
-    public boolean getTriangle() {
-        return super.getRawButton(3);
-    }
-
-    public boolean getSquare() {
         return super.getRawButton(4);
     }
 
+    public boolean getCircle() {
+        return super.getRawButton(3);
+    }
+
+    public boolean getTriangle() {
+        return super.getRawButton(2);
+    }
+
+    public boolean getSquare() {
+        return super.getRawButton(1);
+    }
+
     public boolean getR1() {
-        return super.getRawButton(10);
+        return super.getRawButton(6);
     }
 
     public boolean getR2() {
-        return super.getRawButton(12);
+        return super.getRawButton(8);
     }
 
     public boolean getL1() {
-        return super.getRawButton(11);
+        return super.getRawButton(5);
     }
 
     public boolean getL2() {
-        return super.getRawButton(13);
+        return super.getRawButton(7);
     }
     
 }
