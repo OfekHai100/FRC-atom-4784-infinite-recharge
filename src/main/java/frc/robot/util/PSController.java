@@ -10,7 +10,7 @@ package frc.robot.util;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
- * Add your docs here.
+ * Class for handling Playstation 4 controller as a Joystick.
  */
 public class PSController extends Joystick {
 
@@ -18,20 +18,20 @@ public class PSController extends Joystick {
         super(port);
     }
 
-    public boolean getIx() {
-        return super.getRawButton(4);
-    }
-
-    public boolean getCircle() {
-        return super.getRawButton(3);
+    public boolean getSquare() {
+        return super.getRawButton(1);
     }
 
     public boolean getTriangle() {
         return super.getRawButton(2);
     }
 
-    public boolean getSquare() {
-        return super.getRawButton(1);
+    public boolean getCircle() {
+        return super.getRawButton(3);
+    }
+
+    public boolean getIx() {
+        return super.getRawButton(4);
     }
 
     public boolean getR1() {

@@ -94,4 +94,12 @@ public class AtomTalon extends WPI_TalonSRX {
         return super.getSelectedSensorVelocity() * this.m_distancePerPulse * 10.0;
     }
 
+    /**
+     * Reports the output of the Talon, in percent.
+     * @return output percent.
+     */
+    public double report() {
+        return super.getMotorOutputPercent();
+    }
+
 }
