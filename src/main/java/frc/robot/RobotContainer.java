@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Roulette;
+import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -24,6 +26,8 @@ import frc.robot.subsystems.Drivetrain;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drive = new Drivetrain();
+  private final Roulette m_roulette = new Roulette();
+  private final Shooter m_shooter = new Shooter();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_drive);
 
