@@ -35,6 +35,15 @@ public final class Constants {
         public static final int kLeft = 6;
         public static final int kRight = 7;
 
+        // Climber hardware:
+        public static final int kLeftClimber = 8;
+        public static final int kRightClimber = 9;
+
+        // Roller hardware:
+        public static final int kRoller = 10;
+        public static final int kRollerForward = 2;
+        public static final int kRollerReverse = 3;
+
         // Joysticks:
         public static final int kMain = 0;
         public static final int kSecond = 1;
