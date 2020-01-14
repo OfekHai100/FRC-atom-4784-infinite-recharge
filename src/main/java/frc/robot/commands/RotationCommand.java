@@ -10,14 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Roulette;
 
-public class SpinningCommand extends CommandBase {
+public class RotationCommand extends CommandBase {
   
   private final Roulette m_roulette;
   
   /**
    * Creates a new RouletteCommand.
    */
-  public SpinningCommand(Roulette roulette) {
+  public RotationCommand(Roulette roulette) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_roulette = roulette;
     addRequirements(m_roulette);
@@ -32,7 +32,7 @@ public class SpinningCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_roulette.spin();
+    m_roulette.rotate();
   }
 
   // Called once the command ends or is interrupted.

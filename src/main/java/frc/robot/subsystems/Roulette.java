@@ -50,9 +50,9 @@ public class Roulette extends SubsystemBase {
   }
 
   /**
-   * Spins the Roulette using a motor.
+   * Rotates the Roulette using a motor.
    */
-  public void spin() {
+  public void rotate() {
     m_rouletteMotor.set(ControlMode.PercentOutput, 0.4);
   }
 

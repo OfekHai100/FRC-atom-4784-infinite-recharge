@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Roulette;
 import frc.robot.util.Dashboard;
 
-public class PositioningCommand extends CommandBase {
+public class PositionCommand extends CommandBase {
   
   private final Roulette m_roulette;
   private String m_gameData;
@@ -19,7 +19,7 @@ public class PositioningCommand extends CommandBase {
   /**
    * Creates a new ColorCommand.
    */
-  public PositioningCommand(Roulette roulette) {
+  public PositionCommand(Roulette roulette) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_roulette = roulette;
     addRequirements(m_roulette);
@@ -39,7 +39,7 @@ public class PositioningCommand extends CommandBase {
       if(m_gameData == m_roulette.whatColor()) {
         m_roulette.stop();
       } else {
-        m_roulette.spin();
+        m_roulette.rotate();
       }
     }
   }
