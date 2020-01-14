@@ -8,34 +8,38 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Roulette;
 
-public class ExampleCommand extends CommandBase {
+public class SpinningCommand extends CommandBase {
   
-  private final Drivetrain m_drive;
-
+  private final Roulette m_roulette;
+  
   /**
-   * Creates a new ExampleCommand.
+   * Creates a new RouletteCommand.
    */
-  public ExampleCommand(Drivetrain drive) {
+  public SpinningCommand(Roulette roulette) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_drive = drive;
-    addRequirements(drive);
+    m_roulette = roulette;
+    addRequirements(m_roulette);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_roulette.openRoulette();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_roulette.spin();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_roulette.stop();
+    m_roulette.closeRoulette();
   }
 
   // Returns true when the command should end.

@@ -52,4 +52,28 @@ public class Dashboard {
         }
     }
 
+    /**
+     * Checks the color for position control (Shield Generator phase 3 only!), return the required color
+     * for the ColorSensorV3 on the Roulette mechanism.
+     * @return The required game color for the sensor.
+     */
+    public static String getGameColor() {
+        String gameData = DriverStation.getInstance().getGameSpecificMessage();
+        if(gameData.length() > 0) {
+            switch(gameData.charAt(0)) {
+                case 'B':
+                    return "Red";
+                case 'G':
+                    return "Yellow";
+                case 'R':
+                    return "Blue";
+                case 'Y':
+                    return "Green";
+                default:
+                    return null;
+            }
+        }
+        return null;
+    }
+
 }

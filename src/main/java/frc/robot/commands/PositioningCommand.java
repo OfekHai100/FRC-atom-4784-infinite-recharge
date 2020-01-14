@@ -8,34 +8,47 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Roulette;
+import frc.robot.util.Dashboard;
 
-public class ExampleCommand extends CommandBase {
+public class PositioningCommand extends CommandBase {
   
-  private final Drivetrain m_drive;
-
+  private final Roulette m_roulette;
+  private String m_gameData;
+  
   /**
-   * Creates a new ExampleCommand.
+   * Creates a new ColorCommand.
    */
-  public ExampleCommand(Drivetrain drive) {
+  public PositioningCommand(Roulette roulette) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_drive = drive;
-    addRequirements(drive);
+    m_roulette = roulette;
+    addRequirements(m_roulette);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_roulette.openRoulette();
+    m_gameData = Dashboard.getGameColor();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(m_gameData != null) {
+      if(m_gameData == m_roulette.whatColor()) {
+        m_roulette.stop();
+      } else {
+        m_roulette.spin();
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_roulette.stop();
+    m_roulette.closeRoulette();
   }
 
   // Returns true when the command should end.
