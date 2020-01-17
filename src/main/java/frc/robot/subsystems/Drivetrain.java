@@ -20,11 +20,11 @@ import frc.robot.util.AtomTalon;
 public class Drivetrain extends SubsystemBase {
   
   // FAKE PIDF VALUES!
-  private AtomTalon m_leftMaster = new AtomTalon(Constants.Ports.kLeftMaster, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdx, 0.1, 0, 1, 0);
-  private AtomTalon m_rightMaster = new AtomTalon(Constants.Ports.kRightSlave, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdx, 0.1, 0, 1, 0);
+  private static AtomTalon m_leftMaster = new AtomTalon(Constants.Ports.kLeftMaster, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdx, 0.1, 0, 1, 0);
+  private static AtomTalon m_rightMaster = new AtomTalon(Constants.Ports.kRightSlave, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdx, 0.1, 0, 1, 0);
 
-  private WPI_VictorSPX m_leftSlave = new WPI_VictorSPX(Constants.Ports.kLeftSlave);
-  private WPI_VictorSPX m_rightSlave = new WPI_VictorSPX(Constants.Ports.kRightSlave);
+  private static WPI_VictorSPX m_leftSlave = new WPI_VictorSPX(Constants.Ports.kLeftSlave);
+  private static WPI_VictorSPX m_rightSlave = new WPI_VictorSPX(Constants.Ports.kRightSlave);
 
   private PigeonIMU m_pigeon = new PigeonIMU(m_leftMaster);
 
@@ -86,6 +86,11 @@ public class Drivetrain extends SubsystemBase {
   public void stop() {
     m_leftMaster.set(ControlMode.PercentOutput, 0);
     m_rightMaster.set(ControlMode.PercentOutput, 0);
+  }
+
+  public static double[] getOutputs() {
+    double[] outputs = {m_leftMaster.getMotorOutputPercent(), m_rightMaster.getMotorOutputPercent(), m_leftSlave.getMotorOutputPercent(), m_rightSlave.getMotorOutputPercent()};
+    return outputs;
   }
 
   /**
