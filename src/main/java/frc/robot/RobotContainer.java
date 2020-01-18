@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Roulette;
 import frc.robot.subsystems.Shooter;
@@ -29,8 +28,6 @@ public class RobotContainer {
   private final Drivetrain m_drive = new Drivetrain();
   private final Roulette m_roulette = new Roulette();
   private final Shooter m_shooter = new Shooter();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_drive);
 
   PSController driver = new PSController(Constants.Ports.kMain);
   PSController secondDriver  = new PSController(Constants.Ports.kSecond);
@@ -62,7 +59,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    
+    return null;
   }
 }

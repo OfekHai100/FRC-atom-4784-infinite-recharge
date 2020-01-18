@@ -10,6 +10,7 @@ package frc.robot.util;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Constants;
 
 /**
@@ -87,11 +88,27 @@ public class AtomTalon extends WPI_TalonSRX {
     }
 
     /**
-     * Get current velocity, in inches per second.
+     * Get current distance traveled, in meters.
+     * @return current distance traveled.
+     */
+    public double getDistanceMeters() {
+        return Units.inchesToMeters(getDistanceInches());
+    }
+
+    /**
+     * Get current velocity, in meters per second.
      * @return current velocity.
      */
     public double getVelocityInches() {
         return super.getSelectedSensorVelocity() * this.m_distancePerPulse * 10.0;
+    }
+
+    /**
+     * Get current velocity, in meters per second.
+     * @return current velocity.
+     */
+    public double getVelocityMeters() {
+        return Units.inchesToMeters(getVelocityInches());
     }
 
     /**
