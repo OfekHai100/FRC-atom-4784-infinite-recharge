@@ -16,6 +16,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Roulette;
 import frc.robot.subsystems.Shooter;
 import frc.robot.util.PSController;
+import frc.robot.vision.Limelight;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -29,6 +30,8 @@ public class RobotContainer {
   private final Roulette m_roulette = new Roulette();
   private final Shooter m_shooter = new Shooter();
 
+  private final Limelight m_limelight;
+
   PSController driver = new PSController(Constants.Ports.kMain);
   PSController secondDriver  = new PSController(Constants.Ports.kSecond);
   
@@ -36,6 +39,7 @@ public class RobotContainer {
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    m_limelight = new Limelight();
     // Configure the button bindings
     configureButtonBindings();
   }

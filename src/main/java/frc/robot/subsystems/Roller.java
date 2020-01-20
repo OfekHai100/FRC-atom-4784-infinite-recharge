@@ -10,12 +10,13 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Roller extends SubsystemBase {
   
-  private VictorSPX m_roller = new VictorSPX(Constants.Ports.kRoller);
+  private Spark m_roller = new Spark(Constants.Ports.kRoller);
   private DoubleSolenoid m_cylinder = new DoubleSolenoid(Constants.Ports.kRollerForward, Constants.Ports.kRollerReverse);
   
   /**

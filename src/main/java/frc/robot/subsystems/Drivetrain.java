@@ -34,7 +34,7 @@ public class Drivetrain extends SubsystemBase {
   private SpeedControllerGroup m_left = new SpeedControllerGroup(m_leftFront, m_leftRear);
   private SpeedControllerGroup m_right = new SpeedControllerGroup(m_rightFront, m_rightRear);
 
-  private PigeonIMU m_pigeon = new PigeonIMU(m_leftFront);
+  private PigeonIMU m_pigeon = new PigeonIMU(4);
 
   private DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 

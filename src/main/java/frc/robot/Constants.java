@@ -40,7 +40,7 @@ public final class Constants {
         public static final int kRightClimber = 9;
 
         // Roller hardware:
-        public static final int kRoller = 10;
+        public static final int kRoller = 0;
         public static final int kRollerForward = 2;
         public static final int kRollerReverse = 3;
 
