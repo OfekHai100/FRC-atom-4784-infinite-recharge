@@ -14,6 +14,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public class Limelight {
     
+    // Limelight varaibles.
     private double tx, ty, ta, tv;
 
     /**
