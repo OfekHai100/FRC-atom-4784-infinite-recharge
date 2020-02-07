@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,21 +15,17 @@ import frc.robot.util.AtomTalon;
 
 public class Shooter extends SubsystemBase {
   
-  // FAKE CONSTANTS!
-  private AtomTalon m_left = new AtomTalon(Constants.Ports.kLeft, Constants.kPIDIdx, Constants.ShooterConstants.kSlotIdx, 0.1, 0, 1, 0);
-  private VictorSPX m_right = new VictorSPX(Constants.Ports.kRight);
+  // FAKE PIDF VALUES!
+  private AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.kPIDIdx, Constants.ShooterConstants.kSlotIdx, 0.1, 0, 1, 0);
+  private VictorSPX m_shooter = new VictorSPX(Constants.Ports.kShooter);
   
   /**
    * Creates a new Shooter.
    */
   public Shooter() {
-    m_right.configFactoryDefault();
-    m_right.follow(m_left);
+    m_shooter.configFactoryDefault();
 
-    m_left.setInverted(true);
-    m_right.setInverted(InvertType.OpposeMaster);
-
-    m_left.configEncoder();
+    m_shooter.setInverted(true);
   }
 
   @Override

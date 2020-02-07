@@ -17,6 +17,7 @@ package frc.robot;
  */
 public final class Constants {
     
+    public static final int kUPR = 4096; // CTRE Encoder spins 4096 units per rotation.
     public static final int kPIDIdx = 0; // Inner PID Loop.
     
     public final class Ports {
@@ -25,24 +26,19 @@ public final class Constants {
         public static final int kRightMaster = 2;
         public static final int kLeftSlave = 3;
         public static final int kRightSlave = 4;
-        
-        // Roulette hardware:
-        public static final int kRoulette = 5;
-        public static final int kCylinderForward = 0;
-        public static final int kCylinderReverse = 1;
 
         // Shooter hardware:
-        public static final int kLeft = 6;
-        public static final int kRight = 7;
+        public static final int kShooter = 5;
+        public static final int kRotator = 6;
 
         // Climber hardware:
-        public static final int kLeftClimber = 8;
-        public static final int kRightClimber = 9;
+        public static final int kLeftClimber = 7;
+        public static final int kRightClimber = 8;
 
-        // Roller hardware:
-        public static final int kRoller = 0;
-        public static final int kRollerForward = 2;
-        public static final int kRollerReverse = 3;
+        // Roulette hardware:
+        public static final int kRoulette = 9;
+        public static final int kCylinderForward = 0;
+        public static final int kCylinderReverse = 1;
 
         // Joysticks:
         public static final int kMain = 0;
@@ -50,16 +46,17 @@ public final class Constants {
     }
 
     public final class DrivetrainConstants {
-        public static final int kUPR = 4096; // CTRE Encoder spins 4096 units per rotation.
-        public static final double kWheelDiameterInches = 3.29; // FAKE!!!
-        // PIDF Constants slot index:
-        public static final int kSlotIdx = 1;
+        public static final double kWheelDiameterMeters = 0.1524;
+        public static final int kSlotIdxLeft = 1;
+        public static final int kSlotIdxRight = 2;
     }
 
     public final class ShooterConstants {
-        public static final int kUPR = 4096; // CTRE Encoder spins 4096 units per rotation.
-        // PIDF Constants slot index:
-        public static final int kSlotIdx = 2;
+        public static final int kSlotIdx = 3;
+    }
+
+    public final class ClimberConstants {
+        public static final int kSlotIdx = 4;
     }
     
     public final class FieldConstants {

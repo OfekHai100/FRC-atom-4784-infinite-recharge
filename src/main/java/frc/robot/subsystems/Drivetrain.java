@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
@@ -21,12 +20,13 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.AtomTalon;
+import frc.robot.util.AtomTalon.Subsystem;
 
 public class Drivetrain extends SubsystemBase {
   
   // FAKE PIDF VALUES!
-  private static AtomTalon m_leftFront = new AtomTalon(Constants.Ports.kLeftMaster, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdx, 0.1, 0, 1, 0);
-  private static AtomTalon m_rightFront = new AtomTalon(Constants.Ports.kRightSlave, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdx, 0.1, 0, 1, 0);
+  private static AtomTalon m_leftFront = new AtomTalon(Constants.Ports.kLeftMaster, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdxLeft, 0.1, 0, 1, 0);
+  private static AtomTalon m_rightFront = new AtomTalon(Constants.Ports.kRightSlave, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdxRight, 0.1, 0, 1, 0);
 
   private static WPI_VictorSPX m_leftRear = new WPI_VictorSPX(Constants.Ports.kLeftSlave);
   private static WPI_VictorSPX m_rightRear = new WPI_VictorSPX(Constants.Ports.kRightSlave);
@@ -58,8 +58,8 @@ public class Drivetrain extends SubsystemBase {
     //m_leftSlave.setInverted(InvertType.FollowMaster);
     //m_rightSlave.setInverted(InvertType.FollowMaster);
 
-    m_leftFront.configEncoder();
-    m_rightFront.configEncoder();
+    m_leftFront.configEncoder(Subsystem.DRIVETRAIN);
+    m_rightFront.configEncoder(Subsystem.DRIVETRAIN);
 
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
@@ -140,11 +140,6 @@ public class Drivetrain extends SubsystemBase {
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
     m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
-  }
-
-  public static double[] getOutputs() {
-    double[] outputs = {m_leftFront.getMotorOutputPercent(), m_rightFront.getMotorOutputPercent(), m_leftRear.getMotorOutputPercent(), m_rightRear.getMotorOutputPercent()};
-    return outputs;
   }
 
   /**

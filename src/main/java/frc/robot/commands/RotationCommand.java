@@ -8,38 +8,38 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Roulette;
+import frc.robot.subsystems.Climber;
 
 public class RotationCommand extends CommandBase {
   
-  private final Roulette m_roulette;
+  private final Climber m_climber;
   
   /**
    * Creates a new RouletteCommand.
    */
-  public RotationCommand(Roulette roulette) {
+  public RotationCommand(Climber climber) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_roulette = roulette;
-    addRequirements(m_roulette);
+    m_climber = climber;
+    addRequirements(m_climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_roulette.openRoulette();
+    m_climber.openRoulette();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_roulette.rotate();
+    m_climber.rotate();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_roulette.stop();
-    m_roulette.closeRoulette();
+    m_climber.stop();
+    m_climber.closeRoulette();
   }
 
   // Returns true when the command should end.

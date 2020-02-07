@@ -18,6 +18,12 @@ import frc.robot.Constants;
  */
 public class AtomTalon extends WPI_TalonSRX {
 
+    public enum Subsystem {
+        DRIVETRAIN,
+        CLIMBER,
+        SHOOTER
+    }
+
     private int m_PID;
     private int m_Slot;
     private double m_distancePerPulse;
@@ -48,10 +54,23 @@ public class AtomTalon extends WPI_TalonSRX {
     /**
      * Configures the Talon to use CTRE Mag Encoder as it's sensor.
      */
-    public void configEncoder() {
+    public void configEncoder(Subsystem s) {
+        double wheelDiameter;
+        
+        switch(s) {
+            case DRIVETRAIN:
+                wheelDiameter = Constants.DrivetrainConstants.kWheelDiameterMeters;
+            case CLIMBER:
+                // UPDATE!!
+                wheelDiameter = 0;
+            default:
+                // UPDATE!!
+                wheelDiameter = 0;
+        }
+        
         super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, m_PID, 10);
         this.reset();
-        this.m_distancePerPulse = Math.PI * Constants.DrivetrainConstants.kWheelDiameterInches / Constants.DrivetrainConstants.kUPR; // INCORRECT!
+        this.m_distancePerPulse = Math.PI * wheelDiameter / Constants.kUPR;
     }
 
     /**

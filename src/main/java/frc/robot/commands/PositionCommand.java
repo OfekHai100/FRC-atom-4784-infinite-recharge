@@ -8,27 +8,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Roulette;
+import frc.robot.subsystems.Climber;
 import frc.robot.util.Dashboard;
 
 public class PositionCommand extends CommandBase {
   
-  private final Roulette m_roulette;
+  private final Climber m_climber;
   private String m_gameData;
   
   /**
    * Creates a new ColorCommand.
    */
-  public PositionCommand(Roulette roulette) {
+  public PositionCommand(Climber climber) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_roulette = roulette;
-    addRequirements(m_roulette);
+    m_climber = climber;
+    addRequirements(m_climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_roulette.openRoulette();
+    m_climber.openRoulette();
     m_gameData = Dashboard.getGameColor();
   }
 
@@ -36,10 +36,10 @@ public class PositionCommand extends CommandBase {
   @Override
   public void execute() {
     if(m_gameData != null) {
-      if(m_gameData == m_roulette.whatColor()) {
-        m_roulette.stop();
+      if(m_gameData == m_climber.whatColor()) {
+        m_climber.stop();
       } else {
-        m_roulette.rotate();
+        m_climber.rotate();
       }
     }
   }
@@ -47,8 +47,8 @@ public class PositionCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_roulette.stop();
-    m_roulette.closeRoulette();
+    m_climber.stop();
+    m_climber.closeRoulette();
   }
 
   // Returns true when the command should end.

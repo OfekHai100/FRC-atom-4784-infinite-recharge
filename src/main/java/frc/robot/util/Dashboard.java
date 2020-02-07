@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Drivetrain;
 
 /**
  * Class to control the Dashboard.
@@ -55,7 +54,7 @@ public class Dashboard {
 
     /**
      * Checks the color for position control (Shield Generator phase 3 only!), return the required color
-     * for the ColorSensorV3 on the Roulette mechanism.
+     * for the ColorSensorV3 on the Climber mechanism which used for the Control Panel tasks.
      * @return The required game color for the sensor.
      */
     public static String getGameColor() {
@@ -70,22 +69,9 @@ public class Dashboard {
                     return "Blue";
                 case 'Y':
                     return "Green";
-                default:
-                    return null;
             }
         }
         return null;
-    }
-
-    /**
-     * Checks Shuffleboard code.
-     */
-    public static void testMethod() {
-        double outputs[] = Drivetrain.getOutputs();
-        SmartDashboard.putNumber("LEFT MASTER (1)", outputs[0]);
-        SmartDashboard.putNumber("RIGHT MASTER (2)", outputs[1]);
-        SmartDashboard.putNumber("LEFT SLAVE (3)", outputs[2]);
-        SmartDashboard.putNumber("RIGHT SLAVE (4)", outputs[3]);
     }
 
 }
