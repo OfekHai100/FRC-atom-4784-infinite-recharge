@@ -17,15 +17,18 @@ public class Shooter extends SubsystemBase {
   
   // FAKE PIDF VALUES!
   private AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.kPIDIdx, Constants.ShooterConstants.kSlotIdx, 0.1, 0, 1, 0);
-  private VictorSPX m_shooter = new VictorSPX(Constants.Ports.kShooter);
+  private VictorSPX m_shooterFront = new VictorSPX(Constants.Ports.kShooterFront);
+  private VictorSPX m_shooterRear = new VictorSPX(Constants.Ports.kShooterRear);
   
   /**
    * Creates a new Shooter.
    */
   public Shooter() {
-    m_shooter.configFactoryDefault();
+    m_shooterFront.configFactoryDefault();
+    m_shooterRear.configFactoryDefault();
 
-    m_shooter.setInverted(true);
+    m_shooterFront.setInverted(false);
+    m_shooterRear.setInverted(true);
   }
 
   @Override

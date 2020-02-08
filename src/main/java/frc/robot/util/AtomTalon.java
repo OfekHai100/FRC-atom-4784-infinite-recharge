@@ -130,12 +130,4 @@ public class AtomTalon extends WPI_TalonSRX {
         return Units.inchesToMeters(getVelocityInches());
     }
 
-    /**
-     * Reports the output of the Talon, in percent.
-     * @return output percent.
-     */
-    public double report() {
-        return super.getMotorOutputPercent();
-    }
-
 }

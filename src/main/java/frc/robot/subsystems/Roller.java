@@ -7,17 +7,55 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Roller extends SubsystemBase {
   
-
+  private VictorSPX m_roller = new VictorSPX(Constants.Ports.kRoller);
+  private DoubleSolenoid m_left = new DoubleSolenoid(Constants.Ports.kLeftForward, Constants.Ports.kLeftReverse);
+  private DoubleSolenoid m_right = new DoubleSolenoid(Constants.Ports.kRightForward, Constants.Ports.kRightReverse);
   
   /**
    * Creates a new Roller.
    */
   public Roller() {
+    m_roller.configFactoryDefault();
+  }
 
+  /**
+   * Opens the Roller mechanism.
+   */
+  public void openRoller() {
+    m_left.set(Value.kForward);
+    m_right.set(Value.kForward);
+  }
+
+  /**
+   * Closes the Roller mechanism.
+   */
+  public void closeRoller() {
+    m_left.set(Value.kReverse);
+    m_right.set(Value.kReverse);
+  }
+
+  /**
+   * Starts to spin the motors.
+   */
+  public void intake() {
+    m_roller.set(ControlMode.PercentOutput, 0.4);
+  }
+
+  /**
+   * Stops the motor.
+   */
+  public void stop() {
+    m_roller.set(ControlMode.PercentOutput, 0);
   }
 
   @Override

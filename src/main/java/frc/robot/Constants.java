@@ -28,17 +28,23 @@ public final class Constants {
         public static final int kRightSlave = 4;
 
         // Shooter hardware:
-        public static final int kShooter = 5;
-        public static final int kRotator = 6;
+        public static final int kShooterFront = 5;
+        public static final int kShooterRear = 6;
+        public static final int kRotator = 7;
 
         // Climber hardware:
-        public static final int kLeftClimber = 7;
-        public static final int kRightClimber = 8;
+        public static final int kLeftClimber = 8;
+        public static final int kRightClimber = 9;
 
         // Roulette hardware:
-        public static final int kRoulette = 9;
-        public static final int kCylinderForward = 0;
-        public static final int kCylinderReverse = 1;
+        public static final int kRoulette = 10;
+
+        // Roller hardware:
+        public static final int kRoller = 11;
+        public static final int kLeftForward = 0;
+        public static final int kLeftReverse = 1;
+        public static final int kRightForward = 2;
+        public static final int kRightReverse = 3;
 
         // Joysticks:
         public static final int kMain = 0;
