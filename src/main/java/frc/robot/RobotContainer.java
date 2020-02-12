@@ -11,8 +11,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Roller;
 import frc.robot.subsystems.Shooter;
 import frc.robot.util.PSController;
 import frc.robot.vision.Limelight;
@@ -28,12 +31,15 @@ public class RobotContainer {
   private final Drivetrain m_drive = new Drivetrain();
   private final Climber m_climber = new Climber();
   private final Shooter m_shooter = new Shooter();
+  private final Roller m_roller = new Roller();
 
   private final Limelight m_limelight;
 
   PSController driver = new PSController(Constants.Ports.kMain);
   PSController secondDriver  = new PSController(Constants.Ports.kSecond);
-  
+
+  JoystickButton intake = new JoystickButton(driver, PSController.getL2());
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -53,6 +59,8 @@ public class RobotContainer {
     m_drive.setDefaultCommand(
       new RunCommand(() -> m_drive.arcade(-driver.getY(), driver.getX()), m_drive)
     );
+
+    intake.whenHeld(new IntakeCommand(m_roller));
   }
 
 

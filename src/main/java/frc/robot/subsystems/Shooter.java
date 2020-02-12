@@ -7,11 +7,13 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.AtomTalon;
+import frc.robot.util.AtomTalon.Subsystem;
 
 public class Shooter extends SubsystemBase {
   
@@ -29,6 +31,23 @@ public class Shooter extends SubsystemBase {
 
     m_shooterFront.setInverted(false);
     m_shooterRear.setInverted(true);
+    m_rotator.setInverted(false);
+
+    m_shooterFront.configOpenloopRamp(0.3);
+    m_shooterRear.configOpenloopRamp(0.3);
+    m_rotator.configOpenloopRamp(0.4);
+
+    m_rotator.configEncoder(Subsystem.SHOOTER);
+  }
+
+  public void goToAngle(double angle) {
+    double current = m_rotator.getSelectedSensorPosition() / 360;
+    double error = angle * current;
+    m_rotator.set(ControlMode.Position, error);
+  }
+
+  public void stopRotator() {
+    m_rotator.set(ControlMode.PercentOutput, 0);
   }
 
   @Override

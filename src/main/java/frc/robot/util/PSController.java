@@ -18,35 +18,35 @@ public class PSController extends Joystick {
         super(port);
     }
 
-    public int getSquare() {
+    public static int getSquare() {
         return 1;
     }
 
-    public int getTriangle() {
+    public static int getTriangle() {
         return 2;
     }
 
-    public int getCircle() {
+    public static int getCircle() {
         return 3;
     }
 
-    public int getIx() {
+    public static int getIx() {
         return 4;
     }
 
-    public int getR1() {
+    public static int getR1() {
         return 6;
     }
 
-    public int getR2() {
+    public static int getR2() {
         return 8;
     }
 
-    public int getL1() {
+    public static int getL1() {
         return 5;
     }
 
-    public int getL2() {
+    public static int getL2() {
         return 7;
     }
     

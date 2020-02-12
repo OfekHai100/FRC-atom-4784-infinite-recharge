@@ -58,6 +58,11 @@ public class Drivetrain extends SubsystemBase {
     //m_leftSlave.setInverted(InvertType.FollowMaster);
     //m_rightSlave.setInverted(InvertType.FollowMaster);
 
+    m_leftFront.configOpenloopRamp(0.4);
+    m_rightFront.configOpenloopRamp(0.4);
+    m_leftRear.configOpenloopRamp(0.4);
+    m_rightRear.configOpenloopRamp(0.4);
+
     m_leftFront.configEncoder(Subsystem.DRIVETRAIN);
     m_rightFront.configEncoder(Subsystem.DRIVETRAIN);
 

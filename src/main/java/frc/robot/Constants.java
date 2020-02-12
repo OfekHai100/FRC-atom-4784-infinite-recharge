@@ -36,11 +36,8 @@ public final class Constants {
         public static final int kLeftClimber = 8;
         public static final int kRightClimber = 9;
 
-        // Roulette hardware:
-        public static final int kRoulette = 10;
-
         // Roller hardware:
-        public static final int kRoller = 11;
+        public static final int kRoller = 10;
         public static final int kLeftForward = 0;
         public static final int kLeftReverse = 1;
         public static final int kRightForward = 2;
@@ -59,10 +56,6 @@ public final class Constants {
 
     public final class ShooterConstants {
         public static final int kSlotIdx = 3;
-    }
-
-    public final class ClimberConstants {
-        public static final int kSlotIdx = 4;
     }
     
     public final class FieldConstants {

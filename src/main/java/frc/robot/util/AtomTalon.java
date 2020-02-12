@@ -27,7 +27,7 @@ public class AtomTalon extends WPI_TalonSRX {
     private int m_PID;
     private int m_Slot;
     private double m_distancePerPulse;
-
+    private int m_timeout = 10;
     /**
      * Constructor for AtomTalon.
      * @param port of the Talon.
@@ -64,11 +64,12 @@ public class AtomTalon extends WPI_TalonSRX {
                 // UPDATE!!
                 wheelDiameter = 0;
             default:
+                // == case SHOOTER:
                 // UPDATE!!
                 wheelDiameter = 0;
         }
         
-        super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, m_PID, 10);
+        super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, m_PID, m_timeout);
         this.reset();
         this.m_distancePerPulse = Math.PI * wheelDiameter / Constants.kUPR;
     }
@@ -81,29 +82,21 @@ public class AtomTalon extends WPI_TalonSRX {
     }
 
     /**
-     * Convert sensor units to inches.
+     * Convert sensor units to meters.
      * @param units
-     * @return inches.
+     * @return meters.
      */
-    public double unitsToInches(int units) {
+    public double unitsToMeters(int units) {
         return units * this.m_distancePerPulse;
     }
 
     /**
-     * Convert inches to sensor units.
-     * @param inches
+     * Convert meters to sensor units.
+     * @param meters
      * @return units.
      */
-    public int inchesToUnits(double inches) {
-        return (int) (inches / this.m_distancePerPulse);
-    }
-    
-    /**
-     * Get current distance traveled, in inches.
-     * @return current distance traveled.
-     */
-    public double getDistanceInches() {
-        return super.getSelectedSensorPosition() * this.m_distancePerPulse;
+    public int metersToUnits(double meters) {
+        return (int) (meters / this.m_distancePerPulse);
     }
 
     /**
@@ -111,15 +104,15 @@ public class AtomTalon extends WPI_TalonSRX {
      * @return current distance traveled.
      */
     public double getDistanceMeters() {
-        return Units.inchesToMeters(getDistanceInches());
+        return super.getSelectedSensorPosition() * this.m_distancePerPulse;
     }
 
     /**
-     * Get current velocity, in meters per second.
-     * @return current velocity.
+     * Get current distance traveled, in feet.
+     * @return current distance traveled.
      */
-    public double getVelocityInches() {
-        return super.getSelectedSensorVelocity() * this.m_distancePerPulse * 10.0;
+    public double getDistanceFeet() {
+        return Units.metersToFeet(getDistanceMeters());
     }
 
     /**
@@ -127,7 +120,15 @@ public class AtomTalon extends WPI_TalonSRX {
      * @return current velocity.
      */
     public double getVelocityMeters() {
-        return Units.inchesToMeters(getVelocityInches());
+        return super.getSelectedSensorVelocity() * this.m_distancePerPulse * 10.0;
+    }
+
+    /**
+     * Get current velocity, in feet per second.
+     * @return current velocity.
+     */
+    public double getVelocityFeet() {
+        return Units.metersToFeet(getVelocityMeters());
     }
 
 }
