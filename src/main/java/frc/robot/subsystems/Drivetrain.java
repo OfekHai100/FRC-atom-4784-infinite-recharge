@@ -8,9 +8,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -34,6 +36,8 @@ public class Drivetrain extends SubsystemBase {
   private SpeedControllerGroup m_left = new SpeedControllerGroup(m_leftFront, m_leftRear);
   private SpeedControllerGroup m_right = new SpeedControllerGroup(m_rightFront, m_rightRear);
 
+  
+
   private PigeonIMU m_pigeon = new PigeonIMU(4);
 
   private DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
@@ -49,14 +53,14 @@ public class Drivetrain extends SubsystemBase {
 
     m_pigeon.configFactoryDefault();
 
-    //m_leftSlave.follow(m_leftMaster);
-    //m_rightSlave.follow(m_rightMaster);
+    //m_leftRear.follow(m_leftFront);
+    //m_rightRear.follow(m_rightFront);
 
-    //m_leftMaster.setInverted(false);
-    //m_rightMaster.setInverted(true);
+    //m_leftFront.setInverted(false);
+    //m_rightFront.setInverted(true);
 
-    //m_leftSlave.setInverted(InvertType.FollowMaster);
-    //m_rightSlave.setInverted(InvertType.FollowMaster);
+    //m_leftRear.setInverted(InvertType.FollowMaster);
+    //m_rightRear.setInverted(InvertType.FollowMaster);
 
     m_leftFront.configOpenloopRamp(0.4);
     m_rightFront.configOpenloopRamp(0.4);
