@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -20,7 +22,7 @@ public final class Constants {
     public static final int kUPR = 4096; // CTRE Encoder spins 4096 units per rotation.
     public static final int kPIDIdx = 0; // Inner PID Loop.
     
-    public final class Ports {
+    public static final class Ports {
         // Drivetrain hardware:
         public static final int kLeftMaster = 1;
         public static final int kRightMaster = 2;
@@ -45,17 +47,33 @@ public final class Constants {
         public static final int kSecond = 1;
     }
 
-    public final class DrivetrainConstants {
+    public static final class DrivetrainConstants {
         public static final double kWheelDiameterMeters = 0.1524;
+        
+        public static final double ksVolts = 0;
+        public static final double ksVoltSecondsPerMeter = 0;
+        public static final double ksVoltSecondsSquaredPerMeter = 0;
+
+        public static final double kMaxSpeed = 0;
+        public static final double kMaxAcceleration = 0;
+
+        public static final double kTrackWidth = 0.69;
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidth);
+
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
+
+        public static final double kP = 0;
+
         public static final int kSlotIdxLeft = 1;
         public static final int kSlotIdxRight = 2;
     }
 
-    public final class ShooterConstants {
+    public static final class ShooterConstants {
         public static final int kSlotIdx = 3;
     }
     
-    public final class FieldConstants {
+    public static final class FieldConstants {
         // Generator Switch highest point, in cm. 
         public static final double kGeneratorHstPoint = 200.3425;
         // Generator Switch lowest point, in cm.
