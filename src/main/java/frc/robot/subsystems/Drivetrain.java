@@ -89,11 +89,11 @@ public class Drivetrain extends SubsystemBase {
 
   /**
    * Get the Yaw heading of the Robot.
-   * @return heading, in degrees.
+   * @return Robot's heading in degrees, from -180 to 180.
    */
   public double getHeading() {
     double[] ypr = getYPR();
-    return ypr[0];
+    return Math.IEEEremainder(ypr[0], 360) ;
   }
 
   /**

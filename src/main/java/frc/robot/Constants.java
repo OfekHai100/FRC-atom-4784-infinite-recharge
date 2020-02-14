@@ -42,6 +42,10 @@ public final class Constants {
         public static final int kRoller = 10;
         public static final int kCylinderForward = 0;
         public static final int kCylinderReverse = 1;
+
+        // LED:
+        public static final int kLEDRing = 0;
+        
         // Joysticks:
         public static final int kMain = 0;
         public static final int kSecond = 1;
@@ -50,19 +54,24 @@ public final class Constants {
     public static final class DrivetrainConstants {
         public static final double kWheelDiameterMeters = 0.1524;
         
+        // UPDATE!
         public static final double ksVolts = 0;
         public static final double ksVoltSecondsPerMeter = 0;
         public static final double ksVoltSecondsSquaredPerMeter = 0;
 
+        // UPDATE!
         public static final double kMaxSpeed = 0;
         public static final double kMaxAcceleration = 0;
 
+        // UPDATE!
         public static final double kTrackWidth = 0.69;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidth);
 
+        // UPDATE!
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
 
+        // UPDATE!
         public static final double kP = 0;
 
         public static final int kSlotIdxLeft = 1;

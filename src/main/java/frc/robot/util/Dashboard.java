@@ -54,7 +54,7 @@ public class Dashboard {
 
     /**
      * Checks the color for position control (Shield Generator phase 3 only!), return the required color
-     * for the ColorSensorV3 on the Climber mechanism which used for the Control Panel tasks.
+     * for the ColorSensorV3 which used for the Control Panel tasks.
      * @return The required game color for the sensor.
      */
     public static String getGameColor() {
