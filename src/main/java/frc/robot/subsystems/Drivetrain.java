@@ -8,11 +8,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
-
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -35,8 +32,6 @@ public class Drivetrain extends SubsystemBase {
 
   private SpeedControllerGroup m_left = new SpeedControllerGroup(m_leftFront, m_leftRear);
   private SpeedControllerGroup m_right = new SpeedControllerGroup(m_rightFront, m_rightRear);
-
-  
 
   private PigeonIMU m_pigeon = new PigeonIMU(4);
 
@@ -103,7 +98,7 @@ public class Drivetrain extends SubsystemBase {
 
   /**
    * Get the Yaw, Pitch and Roll values of the Robot as an array.
-   * @return
+   * @return yaw, pitch, roll.
    */
   public double[] getYPR() {
     double[] ypr = new double[3];
@@ -111,14 +106,26 @@ public class Drivetrain extends SubsystemBase {
     return ypr;
   }
 
+  /**
+   * Get the current position.
+   * @return current position.
+   */
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
 
+  /**
+   * Get the current wheel speeds.
+   * @return current wheel speeds.
+   */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(m_leftFront.getVelocityMeters(), m_rightFront.getVelocityMeters());
   }
 
+  /**
+   * Get the average distance traveled.
+   * @return average distance.
+   */
   public double getDistance() {
     return (m_leftFront.getDistanceMeters() + m_rightFront.getDistanceMeters()) / 2.0;
   }
@@ -129,6 +136,8 @@ public class Drivetrain extends SubsystemBase {
   public void stop() {
     m_leftFront.set(ControlMode.PercentOutput, 0);
     m_rightFront.set(ControlMode.PercentOutput, 0);
+    m_leftRear.set(ControlMode.PercentOutput, 0);
+    m_rightRear.set(ControlMode.PercentOutput, 0);
   }
 
   /**
@@ -149,13 +158,6 @@ public class Drivetrain extends SubsystemBase {
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
     m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
-  }
-
-  /**
-   * Test method for auto command.
-   */
-  public void testAutoCommand() {
-    System.out.println("JUST A TEST, RELAX");
   }
 
   @Override

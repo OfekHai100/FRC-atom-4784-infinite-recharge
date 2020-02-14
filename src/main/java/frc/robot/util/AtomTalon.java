@@ -18,16 +18,20 @@ import frc.robot.Constants;
  */
 public class AtomTalon extends WPI_TalonSRX {
 
+    /**
+     * Auxiliary enum class to define Talon's subsystem.
+     */
     public enum Subsystem {
         DRIVETRAIN,
         CLIMBER,
         SHOOTER
     }
 
-    private int m_PID;
-    private int m_Slot;
-    private double m_distancePerPulse;
-    private int m_timeout = 10;
+    private int m_PID; // PID Index.
+    private int m_Slot; // Slot Index
+    private double m_distancePerPulse; // Distance traveled per encoder pulse.
+    private int m_timeout = 10; // Timeout = 10ms.
+    
     /**
      * Constructor for AtomTalon.
      * @param port of the Talon.

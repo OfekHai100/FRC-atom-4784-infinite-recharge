@@ -38,11 +38,8 @@ public final class Constants {
 
         // Roller hardware:
         public static final int kRoller = 10;
-        public static final int kLeftForward = 0;
-        public static final int kLeftReverse = 1;
-        public static final int kRightForward = 2;
-        public static final int kRightReverse = 3;
-
+        public static final int kCylinderForward = 0;
+        public static final int kCylinderReverse = 1;
         // Joysticks:
         public static final int kMain = 0;
         public static final int kSecond = 1;

@@ -18,30 +18,28 @@ import frc.robot.Constants;
 public class Roller extends SubsystemBase {
   
   private VictorSPX m_roller = new VictorSPX(Constants.Ports.kRoller);
-  private DoubleSolenoid m_left = new DoubleSolenoid(Constants.Ports.kLeftForward, Constants.Ports.kLeftReverse);
-  private DoubleSolenoid m_right = new DoubleSolenoid(Constants.Ports.kRightForward, Constants.Ports.kRightReverse);
+  private DoubleSolenoid m_cylinder = new DoubleSolenoid(Constants.Ports.kCylinderForward, Constants.Ports.kCylinderReverse);
   
   /**
    * Creates a new Roller.
    */
   public Roller() {
     m_roller.configFactoryDefault();
+    m_roller.setInverted(true);
   }
 
   /**
    * Opens the Roller mechanism.
    */
   public void openRoller() {
-    m_left.set(Value.kForward);
-    m_right.set(Value.kForward);
+    m_cylinder.set(Value.kForward);
   }
 
   /**
    * Closes the Roller mechanism.
    */
   public void closeRoller() {
-    m_left.set(Value.kReverse);
-    m_right.set(Value.kReverse);
+    m_cylinder.set(Value.kReverse);
   }
 
   /**

@@ -40,12 +40,34 @@ public class Shooter extends SubsystemBase {
     m_rotator.configEncoder(Subsystem.SHOOTER);
   }
 
+  /**
+   * Sets output for the shooting motor, determined by vision processing.
+   * @param output
+   */
+  public void shoot(double output) {
+    m_shooterFront.set(ControlMode.PercentOutput, output);
+  }
+
+  /**
+   * Sets the shooter to specific angle.
+   * @param angle
+   */
   public void goToAngle(double angle) {
     double current = m_rotator.getSelectedSensorPosition() / 360;
     double error = angle * current;
     m_rotator.set(ControlMode.Position, error);
   }
 
+  /**
+   * Stops the front shooter motor.
+   */
+  public void stopShooter() {
+    m_shooterFront.set(ControlMode.PercentOutput, 0);
+  }
+
+  /**
+   * Stops the rotator motor.
+   */
   public void stopRotator() {
     m_rotator.set(ControlMode.PercentOutput, 0);
   }

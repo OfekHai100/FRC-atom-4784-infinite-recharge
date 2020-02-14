@@ -13,6 +13,7 @@ import frc.robot.subsystems.Roller;
 public class IntakeCommand extends CommandBase {
   
   private final Roller m_roller;
+  
   /**
    * Creates a new InsertCommand.
    */

@@ -24,18 +24,38 @@ public class Climber extends SubsystemBase {
   public Climber() {
     m_leftClimber.configFactoryDefault();
     m_rightClimber.configFactoryDefault();
+
+    m_leftClimber.setInverted(false);
+    m_rightClimber.setInverted(false);
   }
 
-  public void setLeft(double left) {
-    m_leftClimber.set(ControlMode.PercentOutput, left);
+  /**
+   * Sets power for the left climber.
+   * @param left
+   */
+  public void climbLeft(double left) {
+    m_leftClimber.set(ControlMode.PercentOutput, 0.4);
   }
 
-  public void setRight(double right) {
-    m_rightClimber.set(ControlMode.PercentOutput, right);
+  /**
+   * Sets power for the right climber.
+   * @param right
+   */
+  public void climbRight(double right) {
+    m_rightClimber.set(ControlMode.PercentOutput, 0.4);
   }
 
-  public void stop() {
+  /**
+   * Stops the left climber.
+   */
+  public void stopLeft() {
     m_leftClimber.set(ControlMode.PercentOutput, 0);
+  }
+
+  /**
+   * Stops the right climber.
+   */
+  public void stopRight() {
     m_rightClimber.set(ControlMode.PercentOutput, 0);
   }
  
