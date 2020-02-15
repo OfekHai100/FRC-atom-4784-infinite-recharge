@@ -79,11 +79,13 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    // THIS CODE WILL CREATE 'S' SHAPED TRAJECTORY.
+    
     var voltageConstraint =
       new DifferentialDriveVoltageConstraint(
         new SimpleMotorFeedforward(Constants.DrivetrainConstants.ksVolts,
-                                  Constants.DrivetrainConstants.ksVoltSecondsPerMeter,
-                                  Constants.DrivetrainConstants.ksVoltSecondsSquaredPerMeter),
+                                   Constants.DrivetrainConstants.ksVoltSecondsPerMeter,
+                                   Constants.DrivetrainConstants.ksVoltSecondsSquaredPerMeter),
         Constants.DrivetrainConstants.kDriveKinematics,
         10);
 
@@ -99,13 +101,13 @@ public class RobotContainer {
       new Pose2d(3, 0, new Rotation2d(0)), 
       config);
 
-    RamseteCommand command = new RamseteCommand(
+    RamseteCommand autoCommand = new RamseteCommand(
       path, 
       m_drive::getPose, 
       new RamseteController(Constants.DrivetrainConstants.kRamseteB, Constants.DrivetrainConstants.kRamseteZeta), 
       new SimpleMotorFeedforward(Constants.DrivetrainConstants.ksVolts,
-                                Constants.DrivetrainConstants.ksVoltSecondsPerMeter,
-                                Constants.DrivetrainConstants.ksVoltSecondsSquaredPerMeter), 
+                                 Constants.DrivetrainConstants.ksVoltSecondsPerMeter,
+                                 Constants.DrivetrainConstants.ksVoltSecondsSquaredPerMeter), 
       Constants.DrivetrainConstants.kDriveKinematics, 
       m_drive::getWheelSpeeds, 
       new PIDController(Constants.DrivetrainConstants.kP, 0, 0), 
@@ -113,6 +115,6 @@ public class RobotContainer {
       m_drive::setVoltage, 
       m_drive);
 
-    return command;
+    return autoCommand;
   }
 }

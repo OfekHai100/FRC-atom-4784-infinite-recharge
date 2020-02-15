@@ -19,11 +19,10 @@ import frc.robot.Constants;
 public class AtomTalon extends WPI_TalonSRX {
 
     /**
-     * Auxiliary enum class to define Talon's subsystem.
+     * Auxiliary enum class to define Talon's closed-loop subsystem.
      */
     public enum Subsystem {
         DRIVETRAIN,
-        CLIMBER,
         SHOOTER
     }
 
@@ -64,9 +63,6 @@ public class AtomTalon extends WPI_TalonSRX {
         switch(s) {
             case DRIVETRAIN:
                 wheelDiameter = Constants.DrivetrainConstants.kWheelDiameterMeters;
-            case CLIMBER:
-                // UPDATE!!
-                wheelDiameter = 0;
             default:
                 // == case SHOOTER:
                 // UPDATE!!
