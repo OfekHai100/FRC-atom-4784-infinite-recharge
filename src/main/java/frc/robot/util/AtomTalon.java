@@ -63,14 +63,14 @@ public class AtomTalon extends WPI_TalonSRX {
         switch(s) {
             case DRIVETRAIN:
                 wheelDiameter = Constants.DrivetrainConstants.kWheelDiameterMeters;
+                super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, m_PID, m_timeout);
+                this.reset();
             default:
                 // == case SHOOTER:
-                // UPDATE!!
                 wheelDiameter = 0;
+                super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, m_PID, m_timeout);
         }
-        
-        super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, m_PID, m_timeout);
-        this.reset();
+
         this.m_distancePerPulse = Math.PI * wheelDiameter / Constants.kUPR;
     }
 

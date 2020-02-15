@@ -87,6 +87,18 @@ public final class Constants {
         public static final double kGeneratorHstPoint = 200.3425;
         // Generator Switch lowest point, in cm.
         public static final double kGeneratorLstPoint = 117.1575;
+        // The minimum height of the Outer Port with one Power Cell included, in cm.
+        public static final double kPowerPortMin = 220.455;
+        // The maximum height of the Outer Port with one Power Cell included, in cm.
+        public static final double kPowerPortMax = 278.655;
+        // Minimum distance from the Power Port when shooting angle is 45 degrees, in cm.
+        public static final double kDistanceMin = 136.1022204;
+        // Maximum distance from the Power Port when shooting angle is 45 degrees, in cm.
+        public static final double kDistanceMax = 172.0331325;
+        // The height of the center of the Inner Port, in cm.
+        public static final double kInnerPortHeight = 249.555;
+        // Minimum distance from the Inner Port when shooting angle is 45 degrees, in cm.
+        public static final double kInnerPortDistanceMin = 154.0676765;
     }
 
 }
