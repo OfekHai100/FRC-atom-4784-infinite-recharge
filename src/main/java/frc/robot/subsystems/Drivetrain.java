@@ -85,6 +85,15 @@ public class Drivetrain extends SubsystemBase {
   public void setVoltage(double left, double right) {
     m_left.setVoltage(left);
     m_right.setVoltage(right);
+    m_drive.feed();
+  }
+
+  /**
+   * Sets the maximum output of the Drivetrain, useful for slowing-down.
+   * @param max
+   */
+  public void setMax(double max) {
+    m_drive.setMaxOutput(max);
   }
 
   /**
