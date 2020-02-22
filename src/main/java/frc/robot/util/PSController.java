@@ -49,5 +49,21 @@ public class PSController extends Joystick {
     public static int getL2() {
         return 7;
     }
+
+    public static int getRight() {
+        return 9;
+    }
+
+    public static int getLeft() {
+        return 11;
+    }
+
+    public static int getUp() {
+        return 10;
+    }
+
+    public static int getDown() {
+        return 12;
+    }
     
 }

@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -31,6 +32,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Roller;
 import frc.robot.subsystems.Shooter;
 import frc.robot.util.PSController;
+import frc.robot.Robot;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -49,6 +51,8 @@ public class RobotContainer {
   PSController secondDriver  = new PSController(Constants.Ports.kSecond);
 
   JoystickButton intake = new JoystickButton(driver, PSController.getL2());
+
+  JoystickButton usingVision = new JoystickButton(secondDriver, PSController.getSquare());
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -70,6 +74,10 @@ public class RobotContainer {
     );
 
     intake.whenHeld(new IntakeCommand(m_roller));
+
+    usingVision.whenPressed(
+      new InstantCommand(() -> Robot.ledManager.setIsVision(Robot.ledManager.getIsVision() ? false : true))
+    );
   }
 
 
