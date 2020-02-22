@@ -9,7 +9,6 @@ package frc.robot.util;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -38,12 +37,13 @@ public class Dashboard {
                 alliance = "Red Alliance";
             }
 
-            if(DriverStation.getInstance().getMatchType() == MatchType.Qualification) {
-                matchType = "QUAL";
-            } else if(DriverStation.getInstance().getMatchType() == MatchType.Elimination) {
-                matchType = "ELIM";
-            } else {
-                matchType = "PRCT";
+            switch(DriverStation.getInstance().getMatchType()) {
+                case Qualification:
+                    matchType = "QUAL";
+                case Elimination:
+                    matchType = "ELIM";
+                default:
+                    matchType = "PRCT";
             }
 
             SmartDashboard.putNumber(matchType, matchNum);
