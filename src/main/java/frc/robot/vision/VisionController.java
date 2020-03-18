@@ -15,6 +15,16 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public class VisionController {
     
+    /**
+     * Auxiliary enum class to define target for the camera to calculate.
+     */
+    enum Target {
+        OUTER_PORT_DISTANCE,
+        OUTER_PORT_VELOCITY,
+        INNER_PORT_DISTANCE,
+        INNER_PORT_VELOCITY
+    }
+
     // Vision processing varaibles.
     private double m_targetYaw, m_targetPitch, m_targetArea;
     private boolean m_targetValid;
@@ -50,5 +60,29 @@ public class VisionController {
     public boolean isValid() {
         update();
         return m_targetValid;
+    }
+
+    /**
+     * This is the main method for the controller:
+     * It calculates parameters based on needed target and Shooter angle. Targets can be:
+     * 1. Outer Port Distance - Calculates the distance from the Robot to Outer Port (Vision-Tape), in meters.
+     * 2. Outer Port Velocity - Calculates the velocity needed to shoot Power Cell into the Outer Port, in TalonSRX Percent-Output.
+     * 3. Inner Port Distance - Calculates the distance from the Robot to Outer Port (Vision-Tape), in meters.
+     * 4. Inner Port Velocity - Calculates the velocity needed to shoot Power Cell into the Outer Port, in TalonSRX Percent-Output.
+     * 
+     * 
+     * 
+     * @param t
+     * @param angle
+     * @return
+     */
+    public double calculate(Target t, double angle) {
+        switch(t) {
+            case OUTER_PORT_DISTANCE:
+                update();
+
+        }
+        
+        return 0.0;
     }
 }

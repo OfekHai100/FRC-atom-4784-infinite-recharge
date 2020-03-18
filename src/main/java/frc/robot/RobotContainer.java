@@ -48,11 +48,11 @@ public class RobotContainer {
   private final Roller m_roller = new Roller();
 
   PSController driver = new PSController(Constants.Ports.kMain);
-  PSController secondDriver  = new PSController(Constants.Ports.kSecond);
+  PSController operator  = new PSController(Constants.Ports.kSecond);
 
   JoystickButton intake = new JoystickButton(driver, PSController.getL2());
 
-  JoystickButton usingVision = new JoystickButton(secondDriver, PSController.getSquare());
+  JoystickButton usingVision = new JoystickButton(operator, PSController.getSquare());
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.

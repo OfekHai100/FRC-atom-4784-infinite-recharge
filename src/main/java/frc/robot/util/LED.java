@@ -48,7 +48,7 @@ public class LED {
 
         m_state = State.INIT;
         runStrip();
-         m_ledStrip.start();
+        m_ledStrip.start();
     }
 
     /**

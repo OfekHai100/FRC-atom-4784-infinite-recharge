@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
     
-    public static final int kUPR = 4096; // CTRE Encoder spins 4096 units per rotation.
+    public static final int kEdgesPerRevolution = 4096; // CTR Mag Encoder.
+    public static final int kCyclesPerRevolution = 1024; // CTR Mag Encoder.
     public static final int kPIDIdx = 0; // Inner PID Loop.
     
     public static final class Ports {

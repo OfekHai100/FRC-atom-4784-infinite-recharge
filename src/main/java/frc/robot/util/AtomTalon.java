@@ -71,7 +71,7 @@ public class AtomTalon extends WPI_TalonSRX {
                 super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, m_PID, m_timeout);
         }
 
-        this.m_distancePerPulse = Math.PI * wheelDiameter / Constants.kUPR;
+        this.m_distancePerPulse = Math.PI * wheelDiameter / Constants.kEdgesPerRevolution;
     }
 
     /**
