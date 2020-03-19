@@ -20,8 +20,9 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+
+import frc.robot.Constants;
 
 /**
  * Vision prcoessing controller.
