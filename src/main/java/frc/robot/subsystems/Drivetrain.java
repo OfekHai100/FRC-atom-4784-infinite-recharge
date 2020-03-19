@@ -102,7 +102,6 @@ public class Drivetrain extends SubsystemBase {
    */
   public double getHeading() {
     double[] ypr = getYPR();
-    double angle = ypr[0];
     return Math.IEEEremainder(ypr[0], 360) * (Constants.DrivetrainConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
