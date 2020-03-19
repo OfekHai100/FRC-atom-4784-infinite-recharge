@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Class to control the Dashboard.
+ * Dashboard++.
  */
 public class Dashboard {
     
@@ -54,7 +54,7 @@ public class Dashboard {
 
     /**
      * Checks the color for position control (Shield Generator phase 3 only!), return the required color
-     * for the ColorSensorV3 which used for the Control Panel tasks.
+     * for the ColorSensorV3 which is used for the Control Panel tasks.
      * @return The required game color for the sensor.
      */
     public static String getGameColor() {

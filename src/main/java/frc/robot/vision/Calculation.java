@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 
 /**
  * This class represents result of a vision-calculation done in the {@link VisionController} class.
- * Every calculation is a set of Velocity, Angle, Distance.
+ * Every calculation is a set of Velocity, Angle and Distance.
  */
 public class Calculation {
 
-    private double velocity; // In TalonSRX Percent-Output units.
-    private double angle; // Angle correction of the shooter, in degrees.
-    private Trajectory distance; // Distance correction of the Robot, as a Trajectory.
+    private double m_velocity; // In TalonSRX Percent-Output units.
+    private double m_angle; // Angle correction of the Shooter, in degrees.
+    private Trajectory m_path; // Correction path of the Robot, as a Trajectory.
 
     /**
      * Constructor.
@@ -25,10 +25,10 @@ public class Calculation {
      * @param angle
      * @param distance
      */
-    public Calculation(double velocity, double angle, Trajectory distance) {
-        this.velocity = velocity;
-        this.angle = angle;
-        this.distance = distance;
+    public Calculation(double velocity, double angle, Trajectory path) {
+        this.m_velocity = velocity;
+        this.m_angle = angle;
+        this.m_path = path;
     }
 
     /**
@@ -36,7 +36,7 @@ public class Calculation {
      * @return velocity, in TalonSRX Percent-Output units.
      */
     public double getVelocity() {
-        return this.velocity;
+        return this.m_velocity;
     }
 
 
@@ -45,15 +45,15 @@ public class Calculation {
      * @return angle-correction, in degrees.
      */
     public double getAngle() {
-        return this.angle;
+        return this.m_angle;
     }
 
     /**
-     * Returns the distance-correction needed.
-     * @return distance-correction, as a Trajectory.
+     * Returns the correction-path needed.
+     * @return Correction-path, as a Trajectory.
      */
-    public Trajectory getDistance() {
-        return this.distance;
+    public Trajectory getPath() {
+        return this.m_path;
     }
 
 }

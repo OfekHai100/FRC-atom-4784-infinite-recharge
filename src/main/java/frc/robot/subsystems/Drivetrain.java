@@ -102,7 +102,13 @@ public class Drivetrain extends SubsystemBase {
    */
   public double getHeading() {
     double[] ypr = getYPR();
-    return Math.IEEEremainder(ypr[0], 360) ;
+    double angle = ypr[0];
+    
+    // Bounds the angle between -180 to 180:
+    while(angle >= 180) angle -= 360;
+    while(angle <= 180) angle += 360;
+    
+    return angle;
   }
 
   /**

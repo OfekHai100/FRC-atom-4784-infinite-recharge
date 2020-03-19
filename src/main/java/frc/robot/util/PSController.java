@@ -10,7 +10,7 @@ package frc.robot.util;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
- * Class for handling Playstation 4 controller as a Joystick.
+ * Class for handling Playstation 4 controller as a {@link Joystick}.
  */
 public class PSController extends Joystick {
 
@@ -40,7 +40,7 @@ public class PSController extends Joystick {
 
     /**
      * Get the Circle button value.
-     * @return Circlea button value
+     * @return Circle button value
      */
     public static int getCircle() {
         return 3;

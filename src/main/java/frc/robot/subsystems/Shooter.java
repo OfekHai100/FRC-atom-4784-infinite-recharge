@@ -16,7 +16,7 @@ import frc.robot.util.AtomTalon;
 import frc.robot.util.AtomTalon.Subsystem;
 
 public class Shooter extends SubsystemBase {
-  
+
   // FAKE PIDF VALUES!
   private AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.kPIDIdx, Constants.ShooterConstants.kSlotIdx, 0.1, 0, 1, 0);
   private VictorSPX m_shooterFront = new VictorSPX(Constants.Ports.kShooterFront);
@@ -53,9 +53,12 @@ public class Shooter extends SubsystemBase {
    * @param angle
    */
   public void goToAngle(double angle) {
-    double current = m_rotator.getSelectedSensorPosition() / 360;
-    double error = angle * current;
+    int error = (int) angle / 360 * Constants.kCyclesPerRevolution;
     m_rotator.set(ControlMode.Position, error);
+  }
+
+  public double getAngle() {
+    return m_rotator.getSelectedSensorPosition() / Constants.kEdgesPerRevolution * 360;
   }
 
   /**

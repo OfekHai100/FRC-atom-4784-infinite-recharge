@@ -9,22 +9,19 @@ package frc.robot.vision;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Shooter;
 
 /**
  * Vision prcoessing controller.
  */
 public class VisionController {
     
-    /**
-     * Auxiliary enum class to define target for the camera to calculate.
-     */
-    enum Target {
-        OUTER_PORT_DISTANCE,
-        OUTER_PORT_VELOCITY,
-        INNER_PORT_DISTANCE,
-        INNER_PORT_VELOCITY
-    }
-
     // Vision processing varaibles.
     private double m_targetYaw, m_targetPitch, m_targetArea;
     private boolean m_targetValid;
@@ -64,25 +61,45 @@ public class VisionController {
 
     /**
      * This is the main method for the controller:
-     * It calculates parameters based on needed target and Shooter angle. Targets can be:
-     * 1. Outer Port Distance - Calculates the distance from the Robot to Outer Port (Vision-Tape), in meters.
-     * 2. Outer Port Velocity - Calculates the velocity needed to shoot Power Cell into the Outer Port, in TalonSRX Percent-Output.
-     * 3. Inner Port Distance - Calculates the distance from the Robot to Outer Port (Vision-Tape), in meters.
-     * 4. Inner Port Velocity - Calculates the velocity needed to shoot Power Cell into the Outer Port, in TalonSRX Percent-Output.
+     * It calculates parameters based on Shooter angle and Robot position.
      * 
-     * 
-     * 
-     * @param t
-     * @param angle
-     * @return
+     * @param alpha - Current angle of Robot shooter, in degrees.
+     * @param position - Current position of the Robot, as a {@link Pose2d} object.
+     * @return Result as a {@link Calculation} object. 
      */
-    public double calculate(Target t, double angle) {
-        switch(t) {
-            case OUTER_PORT_DISTANCE:
-                update();
-
-        }
+    public Calculation calculate(double alpha, Pose2d position) {
         
-        return 0.0;
+        // Define variables:
+        double velocity;
+        double angle;
+        Trajectory path;
+
+        if(isValid()) {
+    
+            // First, Calculate velocity.
+            velocity = calculateVelocity();
+
+            if(velocity < 0.2 || velocity > 1.0) {
+
+            } else {
+                return new Calculation(velocity, 0.0, null);
+            }
+
+        } 
+        
+        return new Calculation(0.0, 0.0, null);
     }
+
+    /**
+     * Method to calculate the Velocity parameter of a {@link Calculation}.
+     * @return Velocity of the Shooter motor, in TalonSRX Percent-Output units.
+     */
+    private double calculateVelocity() {
+        double velocity;
+        update();
+        // Fake Function!
+        velocity = 0.0606 * m_targetPitch * m_targetPitch - 4E-15 * m_targetPitch + 5.9545;
+        return velocity;
+    }
+
 }
