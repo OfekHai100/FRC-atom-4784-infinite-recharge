@@ -46,14 +46,14 @@ public class Roller extends SubsystemBase {
    * Starts to spin the motors.
    */
   public void intake() {
-    m_roller.set(ControlMode.PercentOutput, 0.4);
+    m_roller.set(ControlMode.PercentOutput, 0.3);
   }
 
   /**
    * Starts to spin the motors in the opposite direction.
    */
   public void reverseIntake() {
-    m_roller.set(ControlMode.PercentOutput, -0.4);
+    m_roller.set(ControlMode.PercentOutput, -0.3);
   } 
 
   /**

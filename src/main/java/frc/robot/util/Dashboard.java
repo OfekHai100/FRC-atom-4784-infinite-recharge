@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Dashboard++.
  */
 public class Dashboard {
-    
+
     /**
      * Displays match data every match for the drivers.
      */

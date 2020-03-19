@@ -78,6 +78,8 @@ public final class Constants {
 
         public static final int kSlotIdxLeft = 1;
         public static final int kSlotIdxRight = 2;
+
+        public static final boolean kGyroReversed = false;
     }
 
     public static final class ShooterConstants {

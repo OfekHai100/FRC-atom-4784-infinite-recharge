@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 
 /**
  * This class represents result of a vision-calculation done in the {@link VisionController} class.
- * Every calculation is a set of Velocity, Angle and Distance.
+ * Every calculation is a set of Velocity, Angle and Path.
  */
 public class Calculation {
 
@@ -23,7 +23,7 @@ public class Calculation {
      * Constructor.
      * @param velocity
      * @param angle
-     * @param distance
+     * @param path
      */
     public Calculation(double velocity, double angle, Trajectory path) {
         this.m_velocity = velocity;

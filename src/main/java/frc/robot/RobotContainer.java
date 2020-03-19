@@ -34,6 +34,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Roller;
 import frc.robot.subsystems.Shooter;
 import frc.robot.util.PSController;
+import frc.robot.util.LED.State;
 import frc.robot.vision.Calculation;
 import frc.robot.vision.VisionController;
 
@@ -50,14 +51,18 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Roller m_roller = new Roller();
 
+  // Vision:
   private VisionController m_vision = new VisionController();
   private Calculation m_calculation;
 
+  // Joysticks:
   PSController driver = new PSController(Constants.Ports.kMain);
   PSController operator  = new PSController(Constants.Ports.kSecond);
 
+  // Driver buttons:
   JoystickButton intake = new JoystickButton(driver, PSController.getL2());
 
+  // Operator buttons:
   JoystickButton usingVision = new JoystickButton(operator, PSController.getSquare());
   JoystickButton shootUsingVision = new JoystickButton(operator, PSController.getR2());
 
@@ -82,19 +87,21 @@ public class RobotContainer {
     );
 
     // Intake command.
-    intake.whenHeld(new IntakeCommand(m_roller));
+    intake.whileHeld(new IntakeCommand(m_roller, m_shooter));
 
     // Sets the camera vision mode (Vision on/Vision off).
     usingVision.whenPressed(
-      new InstantCommand(() -> Robot.ledManager.setIsVision(Robot.ledManager.getIsVision() ? false : true))
+      new InstantCommand(() -> Robot.ledManager.setIsVision(Robot.ledManager.getOnVision() ? false : true))
     );
 
-    // Runs the sequence Calculate -> Correct Position -> Correct Angle -> Shoot.
+    // Runs the sequence Calculate -> Set LED -> Correct Position -> Correct Angle -> Shoot -> Set LED.
     shootUsingVision.whileHeld(new InstantCommand(() -> m_calculation = m_vision.calculate(m_shooter.getAngle(), m_drive.getPose()))
       .andThen(
+      new InstantCommand(() -> Robot.ledManager.setState(State.SHOOTER_VISION)),
       new RunCommand(() -> getTrajectoryCommand(m_calculation.getPath()), m_drive),
       new RunCommand(() -> m_shooter.goToAngle(m_calculation.getAngle()), m_shooter),
-      new RunCommand(() -> m_shooter.shoot(m_calculation.getVelocity()), m_shooter)
+      new RunCommand(() -> m_shooter.shoot(m_calculation.getVelocity()), m_shooter),
+      new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))
       )
     );
 
@@ -114,7 +121,8 @@ public class RobotContainer {
                                    Constants.DrivetrainConstants.ksVoltSecondsPerMeter,
                                    Constants.DrivetrainConstants.ksVoltSecondsSquaredPerMeter),
         Constants.DrivetrainConstants.kDriveKinematics,
-        10);
+        10
+      );
 
     TrajectoryConfig config = new TrajectoryConfig(Constants.DrivetrainConstants.kMaxSpeed, Constants.DrivetrainConstants.kMaxAcceleration)
       .setKinematics(Constants.DrivetrainConstants.kDriveKinematics).addConstraint(voltageConstraint);
@@ -141,7 +149,7 @@ public class RobotContainer {
   public Command getTrajectoryCommand(Trajectory path) {
     // Checks if a valid Trajectory is given, if not returns a new PrintCommand.
     if(path == null) {
-      return new PrintCommand("Invalid Trajectory given - Error or Calculation result!");
+      return new PrintCommand("Invalid Trajectory given - Error or a Calculation result!");
     }
     
     // RamseteCommand generation:

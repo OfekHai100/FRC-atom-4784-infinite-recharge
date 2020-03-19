@@ -19,22 +19,22 @@ public class Shooter extends SubsystemBase {
 
   // FAKE PIDF VALUES!
   private AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.kPIDIdx, Constants.ShooterConstants.kSlotIdx, 0.1, 0, 1, 0);
-  private VictorSPX m_shooterFront = new VictorSPX(Constants.Ports.kShooterFront);
-  private VictorSPX m_shooterRear = new VictorSPX(Constants.Ports.kShooterRear);
+  private VictorSPX m_shooter = new VictorSPX(Constants.Ports.kShooterFront);
+  private VictorSPX m_loader = new VictorSPX(Constants.Ports.kShooterRear);
   
   /**
    * Creates a new Shooter.
    */
   public Shooter() {
-    m_shooterFront.configFactoryDefault();
-    m_shooterRear.configFactoryDefault();
+    m_shooter.configFactoryDefault();
+    m_loader.configFactoryDefault();
 
-    m_shooterFront.setInverted(false);
-    m_shooterRear.setInverted(true);
+    m_shooter.setInverted(false);
+    m_loader.setInverted(true);
     m_rotator.setInverted(false);
 
-    m_shooterFront.configOpenloopRamp(0.3);
-    m_shooterRear.configOpenloopRamp(0.3);
+    m_shooter.configOpenloopRamp(0.3);
+    m_loader.configOpenloopRamp(0.3);
     m_rotator.configOpenloopRamp(0.4);
 
     m_rotator.configEncoder(Subsystem.SHOOTER);
@@ -45,7 +45,11 @@ public class Shooter extends SubsystemBase {
    * @param output
    */
   public void shoot(double output) {
-    m_shooterFront.set(ControlMode.PercentOutput, output);
+    m_shooter.set(ControlMode.PercentOutput, output);
+  }
+
+  public void load() {
+    m_loader.set(ControlMode.PercentOutput, -0.4);
   }
 
   /**
@@ -57,22 +61,33 @@ public class Shooter extends SubsystemBase {
     m_rotator.set(ControlMode.Position, error);
   }
 
+  /**
+   * Gets the current angle of the rotator.
+   * @return Current angle, in degrees.
+   */
   public double getAngle() {
-    return m_rotator.getSelectedSensorPosition() / Constants.kEdgesPerRevolution * 360;
+    return m_rotator.getSelectedSensorPosition() / Constants.kCyclesPerRevolution * 360;
   }
 
   /**
-   * Stops the front shooter motor.
+   * Stops the shooter motor.
    */
   public void stopShooter() {
-    m_shooterFront.set(ControlMode.PercentOutput, 0);
+    m_shooter.set(ControlMode.PercentOutput, 0.0);
+  }
+
+  /**
+   * Stops the loader motor.
+   */
+  public void stopLoader() {
+    m_loader.set(ControlMode.PercentOutput, 0.0);
   }
 
   /**
    * Stops the rotator motor.
    */
   public void stopRotator() {
-    m_rotator.set(ControlMode.PercentOutput, 0);
+    m_rotator.set(ControlMode.PercentOutput, 0.0);
   }
 
   @Override
