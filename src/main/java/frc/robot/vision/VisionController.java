@@ -208,7 +208,7 @@ public class VisionController {
      * This method finds the needed {@link Trajectory} for the position-correction component of a {@link Calculation}.
      * It starts by creating configuration for the path, then finds it's waypoint and endpoint and in the end returns final path.
      * @param position of the Robot.
-     * @param target - {@link Target} is what the path is based on. A targer can be a path that is CLOSER to the Power Port,
+     * @param target - {@link Target} is what the path is based on. A target can be a path that is CLOSER to the Power Port,
      *  or FURTHER from it.
      * @return Path-Correction, as a {@link Trajectory} object.
      */
@@ -260,7 +260,7 @@ public class VisionController {
                 waypoint = new Translation2d(0.306, -2.429); // Red Power Port coordinates.
                 omega = 1;
             }
-            Pose2d endpoint = new Pose2d (position.getTranslation().plus(waypoint), new Rotation2d(omega, 0));
+            Pose2d endpoint = new Pose2d(position.getTranslation().plus(waypoint), new Rotation2d(omega, 0));
 
             path = TrajectoryGenerator.generateTrajectory(
                 position, 

@@ -19,6 +19,8 @@ public class Roller extends SubsystemBase {
   
   private VictorSPX m_roller = new VictorSPX(Constants.Ports.kRoller);
   private DoubleSolenoid m_cylinder = new DoubleSolenoid(Constants.Ports.kCylinderForward, Constants.Ports.kCylinderReverse);
+
+  private boolean m_reverse;
   
   /**
    * Creates a new Roller.
@@ -26,6 +28,8 @@ public class Roller extends SubsystemBase {
   public Roller() {
     m_roller.configFactoryDefault();
     m_roller.setInverted(true);
+
+    m_reverse = false;
   }
 
   /**
@@ -46,21 +50,30 @@ public class Roller extends SubsystemBase {
    * Starts to spin the motors.
    */
   public void intake() {
-    m_roller.set(ControlMode.PercentOutput, 0.3);
+    m_roller.set(ControlMode.PercentOutput, m_reverse ? -0.3 : 0.3);
   }
-
-  /**
-   * Starts to spin the motors in the opposite direction.
-   */
-  public void reverseIntake() {
-    m_roller.set(ControlMode.PercentOutput, -0.3);
-  } 
 
   /**
    * Stops the motor.
    */
   public void stop() {
     m_roller.set(ControlMode.PercentOutput, 0);
+  }
+
+  /**
+   * Sets the direction of intake, true for outwards, false (default) for inward.
+   * @param reverse
+   */
+  public void setReverse(boolean reverse) {
+    this.m_reverse = reverse;
+  }
+
+  /**
+   * Returns the current direction of the mechanism.
+   * @return current direction - true for reversed, false for default.
+   */
+  public boolean getReverse() {
+    return this.m_reverse;
   }
 
   @Override

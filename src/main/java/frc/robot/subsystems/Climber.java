@@ -17,6 +17,8 @@ public class Climber extends SubsystemBase {
   
   private VictorSPX m_leftClimber = new VictorSPX(Constants.Ports.kLeftClimber);
   private VictorSPX m_rightClimber = new VictorSPX(Constants.Ports.kRightClimber);
+
+  private boolean m_reverse;
   
   /**
    * Creates a new Climber.
@@ -27,22 +29,22 @@ public class Climber extends SubsystemBase {
 
     m_leftClimber.setInverted(false);
     m_rightClimber.setInverted(false);
+
+    m_reverse = false;
   }
 
   /**
    * Sets power for the left climber.
-   * @param left
    */
-  public void climbLeft(double left) {
-    m_leftClimber.set(ControlMode.PercentOutput, 0.4);
+  public void climbLeft() {
+    m_leftClimber.set(ControlMode.PercentOutput, m_reverse ? -0.4 : 0.4);
   }
 
   /**
    * Sets power for the right climber.
-   * @param right
    */
-  public void climbRight(double right) {
-    m_rightClimber.set(ControlMode.PercentOutput, 0.4);
+  public void climbRight() {
+    m_rightClimber.set(ControlMode.PercentOutput, m_reverse ? -0.4 : 0.4);
   }
 
   /**
@@ -57,6 +59,22 @@ public class Climber extends SubsystemBase {
    */
   public void stopRight() {
     m_rightClimber.set(ControlMode.PercentOutput, 0);
+  }
+
+  /**
+   * Sets the direction of climbing, true for downwards, false (default) for upward.
+   * @param reverse
+   */
+  public void setReverse(boolean reverse) {
+    this.m_reverse = reverse;
+  } 
+
+  /**
+   * Returns the current direction of the mechanism.
+   * @return current direction - true for reversed, false for default.
+   */
+  public boolean getReverse() {
+    return this.m_reverse;
   }
  
   @Override

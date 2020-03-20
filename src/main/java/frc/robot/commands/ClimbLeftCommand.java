@@ -8,33 +8,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Roller;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Climber;
 
-public class IntakeCommand extends CommandBase {
-  
-  private final Roller m_roller;
-  private final Shooter m_shooter;
+public class ClimbLeftCommand extends CommandBase {
 
-  private boolean m_reverse;
-  
+  private Climber m_climber; 
+
   /**
-   * Creates a new IntakeCommand.
+   * Creates a new ClimbLeftCommand.
    */
-  public IntakeCommand(Roller roller, Shooter shooter) {
-    m_roller = roller;
-    m_shooter = shooter;
-    m_reverse = m_roller.getReverse();
+  public ClimbLeftCommand(Climber climber) {
+    m_climber = climber;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(roller, shooter);
+    addRequirements(m_climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_roller.openRoller();
-    m_roller.intake();
-    m_shooter.load(m_reverse);
+    m_climber.climbLeft();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -45,9 +37,7 @@ public class IntakeCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_roller.stop();
-    m_roller.closeRoller();
-    m_shooter.stopLoader();
+    m_climber.stopLeft();
   }
 
   // Returns true when the command should end.

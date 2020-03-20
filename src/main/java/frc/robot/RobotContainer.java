@@ -27,7 +27,8 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import frc.robot.commands.ClimbLeftCommand;
+import frc.robot.commands.ClimbRightCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -61,6 +62,10 @@ public class RobotContainer {
 
   // Driver buttons:
   JoystickButton intake = new JoystickButton(driver, PSController.getL2());
+  JoystickButton reverseIntake = new JoystickButton(driver, PSController.getUp());
+  JoystickButton climbLeft = new JoystickButton(driver, PSController.getL1());
+  JoystickButton climbRight = new JoystickButton(driver, PSController.getR1());
+  JoystickButton reverseClimb = new JoystickButton(driver, PSController.getDown());
 
   // Operator buttons:
   JoystickButton usingVision = new JoystickButton(operator, PSController.getSquare());
@@ -81,25 +86,31 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Default arcade drive command.
+    // Default arcade drive command:
     m_drive.setDefaultCommand(
       new RunCommand(() -> m_drive.arcade(-driver.getY(), driver.getX()), m_drive)
     );
 
-    // Intake command.
-    intake.whileHeld(new IntakeCommand(m_roller, m_shooter));
+    // Intake commands:
+    intake.whenHeld(new IntakeCommand(m_roller, m_shooter));
+    reverseIntake.whenPressed(new InstantCommand(() -> m_roller.setReverse(m_roller.getReverse() ? false : true)));
 
-    // Sets the camera vision mode (Vision on/Vision off).
+    // Climb commands:
+    climbLeft.whenHeld(new ClimbLeftCommand(m_climber));
+    climbRight.whenHeld(new ClimbRightCommand(m_climber));
+    reverseClimb.whenPressed(new InstantCommand(() -> m_climber.setReverse(m_climber.getReverse() ? false : true)));
+
+    // Sets the camera vision mode (Vision on/Vision off):
     usingVision.whenPressed(
       new InstantCommand(() -> Robot.ledManager.setIsVision(Robot.ledManager.getOnVision() ? false : true))
     );
 
-    // Runs the sequence Calculate -> Set LED -> Correct Position -> Correct Angle -> Shoot -> Set LED.
-    shootUsingVision.whileHeld(new InstantCommand(() -> m_calculation = m_vision.calculate(m_shooter.getAngle(), m_drive.getPose()))
+    // Runs the sequence Calculate -> Set LED -> Correct Position -> Correct Angle -> Shoot -> Set LED:
+    shootUsingVision.whenHeld(new InstantCommand(() -> m_calculation = m_vision.calculate(m_shooter.getAngle(), m_drive.getPose()))
       .andThen(
       new InstantCommand(() -> Robot.ledManager.setState(State.SHOOTER_VISION)),
       new RunCommand(() -> getTrajectoryCommand(m_calculation.getPath()), m_drive),
-      new RunCommand(() -> m_shooter.goToAngle(m_calculation.getAngle()), m_shooter),
+      new InstantCommand(() -> m_shooter.goToAngle(m_calculation.getAngle()), m_shooter),
       new RunCommand(() -> m_shooter.shoot(m_calculation.getVelocity()), m_shooter),
       new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))
       )

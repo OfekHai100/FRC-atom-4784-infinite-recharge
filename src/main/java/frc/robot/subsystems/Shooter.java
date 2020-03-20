@@ -48,8 +48,12 @@ public class Shooter extends SubsystemBase {
     m_shooter.set(ControlMode.PercentOutput, output);
   }
 
-  public void load() {
-    m_loader.set(ControlMode.PercentOutput, -0.4);
+  /**
+   * Activates the Power Cell load motor.
+   * @param reverse the direction of the motor, into the Shooter or out, deteremined by driver.
+   */
+  public void load(boolean reverse) {
+    m_loader.set(ControlMode.PercentOutput, reverse ? 0.4 : -0.4);
   }
 
   /**
