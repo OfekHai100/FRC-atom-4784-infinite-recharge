@@ -117,5 +117,13 @@ public class PSController extends Joystick {
     public static int getDown() {
         return 12;
     }
+
+    /**
+     * Get the Pad button value
+     * @return Pad button value
+     */
+    public static int getPad() {
+        return 15;
+    }
     
 }

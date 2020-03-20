@@ -56,6 +56,7 @@ public class AtomTalon extends WPI_TalonSRX {
 
     /**
      * Configures the Talon to use CTRE Mag Encoder as it's sensor.
+     * @param s Subsystem that requires the encoder.
      */
     public void configEncoder(Subsystem s) {
         double wheelDiameter;

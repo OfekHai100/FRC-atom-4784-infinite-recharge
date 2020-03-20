@@ -46,6 +46,7 @@ public class Shooter extends SubsystemBase {
    */
   public void shoot(double output) {
     m_shooter.set(ControlMode.PercentOutput, output);
+    load(false);
   }
 
   /**
@@ -63,6 +64,20 @@ public class Shooter extends SubsystemBase {
   public void goToAngle(double angle) {
     int error = (int) angle / 360 * Constants.kCyclesPerRevolution;
     m_rotator.set(ControlMode.Position, error);
+  }
+
+  /**
+   * Resets the angle to starting configuration - 45 degrees.
+   */
+  public void resetAngle() {
+    goToAngle(45.0);
+  }
+
+  /**
+   * Sets the Shooter angle to loading angle.
+   */
+  public void loadingAngle() {
+    goToAngle(72.5);
   }
 
   /**
@@ -92,6 +107,15 @@ public class Shooter extends SubsystemBase {
    */
   public void stopRotator() {
     m_rotator.set(ControlMode.PercentOutput, 0.0);
+  }
+
+  /**
+   * Stops all motors.
+   */
+  public void stopAll() {
+    stopShooter();
+    stopLoader();
+    stopRotator();
   }
 
   @Override

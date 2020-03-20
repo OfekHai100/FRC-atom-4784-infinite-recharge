@@ -22,12 +22,16 @@ public class LED {
     public enum State {
         INIT,
         SHOOTER_VISION,
+        SHOOTER_TRENCH,
+        SHOOTER_PORT,
+        SHOOTER_SIMPLE,
         AUTO,
         TELEOP
     }
 
     private State m_state;
     private boolean m_onVision;
+    private boolean m_switched;
     private AddressableLED m_ledStrip;
     private AddressableLED m_ledRing;
     private AddressableLEDBuffer m_ledStripBuffer;
@@ -48,6 +52,7 @@ public class LED {
         }
 
         m_state = State.INIT;
+        m_switched = true;
         runStrip();
         m_ledStrip.start();
     }
@@ -58,6 +63,7 @@ public class LED {
      */
     public void setState(State state) {
         m_state = state;
+        m_switched = true;
     }
 
     /**
@@ -93,6 +99,21 @@ public class LED {
                 r = 255;
                 g = 255;
                 b = 255;
+            case SHOOTER_TRENCH:
+                // Yellow
+                r = 255;
+                g = 255;
+                b = 0;
+            case SHOOTER_PORT:
+                // Purple
+                r = 153;
+                g = 0;
+                b = 153;
+            case SHOOTER_SIMPLE:
+                // Light Blue
+                r = 51;
+                g = 255;
+                b = 255;
             case AUTO:
                 // Green
                 r = 0;
@@ -106,8 +127,11 @@ public class LED {
                 b = 0;
         }
         
-        for(var i = 0 ; i < m_ledStripBuffer.getLength() ; i++) {
-            m_ledStripBuffer.setRGB(i, r, g, b);
+        if(m_switched) {
+            m_switched = false;
+            for(var i = 0 ; i < m_ledStripBuffer.getLength() ; i++) {
+                m_ledStripBuffer.setRGB(i, r, g, b);
+            }
         }
 
         m_ledStrip.setData(m_ledStripBuffer);

@@ -123,7 +123,7 @@ public class VisionController {
             angle = calculateAngle();
             if(!inRange(alpha, angle)) {
                 // Angle correction is needed:
-                if(angle < 31.4 || angle > 78.9) {
+                if(angle < 31.4 || angle > 81.2) {
                     // Position correction is needed:
                     if(angle < 31.4) {
                         // We need to get closer to the target:
