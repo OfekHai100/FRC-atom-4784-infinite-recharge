@@ -53,6 +53,8 @@ public class AtomTalon extends WPI_TalonSRX {
         super.config_kI(m_Slot, kI);
         super.config_kD(m_Slot, kD);
         super.config_kF(m_Slot, kF);
+
+        super.selectProfileSlot(m_Slot, m_PID);
     }
 
     /**
