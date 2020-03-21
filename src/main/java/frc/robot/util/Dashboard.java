@@ -46,13 +46,13 @@ public class Dashboard {
      * Displays match data every match for the drivers.
      */
     public static void putMatchData() {
+        String alliance;
+        String matchType;
+        String event;
+        int matchNum;
+        int station;
+        
         if(DriverStation.getInstance().isFMSAttached()) {
-            String alliance;
-            String matchType;
-            String event;
-            int matchNum;
-            int station;
-            
             matchNum = DriverStation.getInstance().getMatchNumber();
             event = DriverStation.getInstance().getEventName();
             station = DriverStation.getInstance().getLocation();
@@ -75,6 +75,16 @@ public class Dashboard {
             SmartDashboard.putNumber(matchType, matchNum);
             SmartDashboard.putString(alliance, "Station "+station);
             SmartDashboard.putString("Competing at:", event);
+        } else {
+            alliance = "Red Alliance";
+            matchType = "ATOM";
+            event = "Practice Session";
+            matchNum = 4784;
+            station = 4784;
+
+            SmartDashboard.putNumber(matchType, matchNum);
+            SmartDashboard.putString(alliance, "Station "+station);
+            SmartDashboard.putString("Status:", event);
         }
     }
 
