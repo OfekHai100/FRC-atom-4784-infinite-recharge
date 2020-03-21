@@ -58,13 +58,13 @@ public class Shooter extends SubsystemBase {
 
     m_shooter.configOpenloopRamp(0.3);
     m_loader.configOpenloopRamp(0.3);
-    m_rotator.configOpenloopRamp(0.4);
+    m_rotator.configClosedloopRamp(0.4);
 
     m_rotator.configEncoder(Subsystem.SHOOTER);
   }
 
   /**
-   * Sets output for the shooting motor, determined by vision processing.
+   * Sets output for the shooting motor, determined by vision processing or by default pre-determined values.
    * @param output
    */
   public void shoot(double output) {
@@ -85,8 +85,12 @@ public class Shooter extends SubsystemBase {
    * @param angle
    */
   public void goToAngle(double angle) {
-    int error = m_rotator.degreesToUnits(angle);
-    m_rotator.set(ControlMode.Position, error, DemandType.ArbitraryFeedForward, m_rotator.calculateCoisneScalar());
+    int setpoint = m_rotator.degreesToUnits(angle);
+    int current = m_rotator.getSelectedSensorPosition();
+    m_rotator.set(ControlMode.Position, setpoint, DemandType.ArbitraryFeedForward, m_rotator.calculateCoisneScalar());
+    while(current - 1 < setpoint) {
+      current  = m_rotator.getSelectedSensorPosition();
+    }
   }
 
   /**
