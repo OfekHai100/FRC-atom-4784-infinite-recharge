@@ -208,7 +208,7 @@ public class VisionController {
      * This method finds the needed {@link Trajectory} for the position-correction component of a {@link Calculation}.
      * It starts by creating configuration for the path, then finds it's waypoint and endpoint and in the end returns final path.
      * @param position of the Robot.
-     * @param target - {@link Target} is what the path is based on. A target can be a path that is CLOSER to the Power Port,
+     * @param target - A {@link Target} is what the path is based on. A target can be a path that drives CLOSER to the Power Port,
      *  or FURTHER from it.
      * @return Path-Correction, as a {@link Trajectory} object.
      */
@@ -235,11 +235,13 @@ public class VisionController {
         if(target == Target.CLOSER) {
             Pose2d endpoint;
             if(side == Alliance.Blue) {
-                endpoint = new Pose2d(15.714, -5.808, new Rotation2d(-1, 0)); // Blue Power Port coordinates.
+                endpoint = Constants.FieldConstants.kBluePowerPort; // Blue Power Port coordinates.
             } else {
-                endpoint = new Pose2d(0.306, -2.429, new Rotation2d(1, 0)); // Red Power Port coordinates.
+                endpoint = Constants.FieldConstants.kRedPowerPort; // Red Power Port coordinates.
+
             }
-            Translation2d waypoint = position.getTranslation().minus(endpoint.getTranslation());
+
+            Translation2d waypoint = calculateWaypoint(position, endpoint);
 
             path = TrajectoryGenerator.generateTrajectory(
                 position, 
@@ -249,18 +251,23 @@ public class VisionController {
                 endpoint, 
                 config
             );
+
         } else {
             // == FURTHER
-            Translation2d waypoint;
-            int omega;
+            double x, y, omega;
+
             if(side == Alliance.Blue) {
-                waypoint = new Translation2d(15.714, -5.808); // Blue Power Port coordinates.
-                omega = -1;
+                x = position.getTranslation().getX() - (Constants.FieldConstants.kBluePowerPort.getTranslation().getX() - position.getTranslation().getX());
+                y = (Constants.FieldConstants.kBluePowerPort.getTranslation().getY() + position.getTranslation().getY()) / 2.0;
+                omega = 1.0;
             } else {
-                waypoint = new Translation2d(0.306, -2.429); // Red Power Port coordinates.
-                omega = 1;
+                x = position.getTranslation().getX() - (position.getTranslation().getX() - Constants.FieldConstants.kRedPowerPort.getTranslation().getX());
+                y = (Constants.FieldConstants.kRedPowerPort.getTranslation().getY() + position.getTranslation().getY()) / 2.0;
+                omega = -1.0;
             }
-            Pose2d endpoint = new Pose2d(position.getTranslation().plus(waypoint), new Rotation2d(omega, 0));
+            
+            Pose2d endpoint = new Pose2d(new Translation2d(x, y), new Rotation2d(omega, 0));
+            Translation2d waypoint = calculateWaypoint(position, endpoint);
 
             path = TrajectoryGenerator.generateTrajectory(
                 position, 
@@ -275,6 +282,20 @@ public class VisionController {
         // In the end, return final path.
         return path;
 
+    }
+
+    /**
+     * This method calculates waypoint between initpoint and endpoint in a position-correction path. 
+     * This is a simple average calculation.
+     * @param initpoint Current position of the Robot, initpoint, as a {@link Pose2d}.
+     * @param endpoint Endpoint of the path, as a {@link Pose2d}.
+     * @return Calculated waypoint, as a {@link Translation2d}.
+     */
+    private Translation2d calculateWaypoint(Pose2d initpoint, Pose2d endpoint) {
+        double x, y;
+        x = (endpoint.getTranslation().getX() + initpoint.getTranslation().getX()) / 2.0;
+        y = (endpoint.getTranslation().getY() + initpoint.getTranslation().getY()) / 2.0;
+        return new Translation2d(x, y);
     }
 
 }

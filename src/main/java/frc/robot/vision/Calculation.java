@@ -10,14 +10,14 @@ package frc.robot.vision;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 
 /**
- * This class represents result of a vision-calculation done in the {@link VisionController} class.
+ * This class represents a result of a vision-calculation done in the {@link VisionController} class.
  * Every calculation is a set of Velocity, Angle and Path.
  */
 public class Calculation {
 
     private double m_velocity; // In TalonSRX Percent-Output units.
-    private double m_angle; // Angle correction of the Shooter, in degrees.
-    private Trajectory m_path; // Correction path of the Robot, as a Trajectory.
+    private double m_angle; // Angle--correction of the Shooter, in degrees.
+    private Trajectory m_path; // Position-Correction path of the Robot, as a Trajectory.
 
     /**
      * Constructor.
@@ -49,8 +49,8 @@ public class Calculation {
     }
 
     /**
-     * Returns the correction-path needed.
-     * @return Correction-path, as a Trajectory.
+     * Returns the position-correction path needed.
+     * @return Position-correction path, as a {@link Trajectory}.
      */
     public Trajectory getPath() {
         return this.m_path;

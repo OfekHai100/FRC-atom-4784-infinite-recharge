@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Shooter.Position;
 
 public class ShootFromTrenchCommand extends CommandBase {
   
@@ -26,7 +27,7 @@ public class ShootFromTrenchCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooter.goToAngle(32.644);
+    m_shooter.goToPosition(Position.TRENCH);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,7 +39,7 @@ public class ShootFromTrenchCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooter.resetAngle();
+    m_shooter.goToPosition(Position.STARTING_CONFIGURATION);
     m_shooter.stopAll();
   }
 

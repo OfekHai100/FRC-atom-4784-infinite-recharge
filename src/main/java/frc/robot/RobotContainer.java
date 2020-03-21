@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.ClimbLeftCommand;
@@ -39,6 +40,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Roller;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Shooter.Position;
 import frc.robot.util.PSController;
 import frc.robot.util.LED.State;
 import frc.robot.vision.Calculation;
@@ -71,6 +73,7 @@ public class RobotContainer {
   JoystickButton climbLeft = new JoystickButton(driver, PSController.getL1());
   JoystickButton climbRight = new JoystickButton(driver, PSController.getR1());
   JoystickButton reverseClimb = new JoystickButton(driver, PSController.getDown());
+  JoystickButton lowerShooter = new JoystickButton(driver, PSController.getIx());
   JoystickButton driverAbort = new JoystickButton(driver, PSController.getPad());
   
   // Operator buttons:
@@ -79,6 +82,7 @@ public class RobotContainer {
   JoystickButton shootFromTrench = new JoystickButton(operator, PSController.getR1());
   JoystickButton shootFromPort = new JoystickButton(operator, PSController.getL1());
   JoystickButton simpleShoot = new JoystickButton(operator, PSController.getSquare());
+  JoystickButton resetShooter = new JoystickButton(driver, PSController.getIx());
   JoystickButton operatorAbort = new JoystickButton(driver, PSController.getPad());
 
   /**
@@ -121,8 +125,9 @@ public class RobotContainer {
       new InstantCommand(() -> Robot.ledManager.setState(State.SHOOTER_VISION)),
       new RunCommand(() -> getTrajectoryCommand(m_calculation.getPath()), m_drive),
       new InstantCommand(() -> m_shooter.goToAngle(m_calculation.getAngle()), m_shooter),
-      new RunCommand(() -> m_shooter.shoot(m_calculation.getVelocity()), m_shooter),
-      new InstantCommand(() -> m_shooter.resetAngle()),
+      new RunCommand(() -> m_shooter.shoot(m_calculation.getVelocity()), m_shooter).withTimeout(4.5),
+      new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION)),
+      new WaitCommand(2.0),
       new InstantCommand(() -> m_shooter.stopAll()),
       new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))
       )
@@ -135,6 +140,10 @@ public class RobotContainer {
       .andThen(new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))));
     simpleShoot.whenHeld((new SimpleShootCommand(m_shooter).beforeStarting(() -> Robot.ledManager.setState(State.SHOOTER_SIMPLE)))
       .andThen(new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))));
+
+    // Shooter position commands:
+    lowerShooter.whenPressed(new InstantCommand(() -> m_shooter.goToPosition(Position.LOWEST_POSITION)));
+    resetShooter.whenPressed(new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION)));
 
     // Abort commands:
     driverAbort.whenPressed(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));

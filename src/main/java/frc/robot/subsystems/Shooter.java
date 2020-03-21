@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,6 +23,24 @@ public class Shooter extends SubsystemBase {
   private VictorSPX m_shooter = new VictorSPX(Constants.Ports.kShooterFront);
   private VictorSPX m_loader = new VictorSPX(Constants.Ports.kShooterRear);
   
+  public enum Position {
+    STARTING_CONFIGURATION(45.0),
+    LOWEST_POSITION(31.4),
+    LOADING(72.5),
+    PORT(80.0),
+    TRENCH(32.644);
+
+    private double m_angle;
+
+    Position(double angle) {
+      this.m_angle = angle;
+    }
+
+    public double getPositionAngle() {
+      return this.m_angle;
+    }
+  }
+
   /**
    * Creates a new Shooter.
    */
@@ -31,7 +50,8 @@ public class Shooter extends SubsystemBase {
 
     m_shooter.setInverted(false);
     m_loader.setInverted(true);
-    m_rotator.setInverted(false);
+    m_rotator.setInverted(true);
+    m_rotator.setSensorPhase(true);
 
     m_shooter.configOpenloopRamp(0.3);
     m_loader.configOpenloopRamp(0.3);
@@ -62,22 +82,16 @@ public class Shooter extends SubsystemBase {
    * @param angle
    */
   public void goToAngle(double angle) {
-    int error = (int) angle / 360 * Constants.kCyclesPerRevolution;
-    m_rotator.set(ControlMode.Position, error);
+    int error = m_rotator.degreesToUnits(angle);
+    m_rotator.set(ControlMode.Position, error, DemandType.ArbitraryFeedForward, m_rotator.calculateCoisneScalar());
   }
 
   /**
-   * Resets the angle to starting configuration - 45 degrees.
+   * Sets the shooter to specific angle determined by a {@link Position}.
+   * @param position of the Shooter to set, as {@link Position} object.
    */
-  public void resetAngle() {
-    goToAngle(45.0);
-  }
-
-  /**
-   * Sets the Shooter angle to loading angle.
-   */
-  public void loadingAngle() {
-    goToAngle(72.5);
+  public void goToPosition(Position position) {
+    goToAngle(position.getPositionAngle());
   }
 
   /**
@@ -115,7 +129,6 @@ public class Shooter extends SubsystemBase {
   public void stopAll() {
     stopShooter();
     stopLoader();
-    stopRotator();
   }
 
   @Override

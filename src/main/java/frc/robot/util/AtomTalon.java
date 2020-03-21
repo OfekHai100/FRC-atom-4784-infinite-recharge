@@ -29,6 +29,7 @@ public class AtomTalon extends WPI_TalonSRX {
     private int m_PID; // PID Index.
     private int m_Slot; // Slot Index
     private double m_distancePerPulse; // Distance traveled per encoder pulse.
+    private double m_ticksPerDegree; // Encoder pulse per degree.
     private int m_timeout = 10; // Timeout = 10ms.
     
     /**
@@ -59,20 +60,16 @@ public class AtomTalon extends WPI_TalonSRX {
      * @param s Subsystem that requires the encoder.
      */
     public void configEncoder(Subsystem s) {
-        double wheelDiameter;
-        
         switch(s) {
             case DRIVETRAIN:
-                wheelDiameter = Constants.DrivetrainConstants.kWheelDiameterMeters;
                 super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, m_PID, m_timeout);
                 this.reset();
+                this.m_distancePerPulse = Math.PI * Constants.DrivetrainConstants.kWheelDiameterMeters / Constants.kEdgesPerRevolution;
             default:
                 // == case SHOOTER:
-                wheelDiameter = 0;
                 super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, m_PID, m_timeout);
+                this.m_ticksPerDegree = Constants.kEdgesPerRevolution / (3 * 360); // (4096 / 1080) 1:3 Gearbox.
         }
-
-        this.m_distancePerPulse = Math.PI * wheelDiameter / Constants.kEdgesPerRevolution;
     }
 
     /**
@@ -98,6 +95,24 @@ public class AtomTalon extends WPI_TalonSRX {
      */
     public int metersToUnits(double meters) {
         return (int) (meters / this.m_distancePerPulse);
+    }
+
+    /**
+     * Convert sensor units to degrees.
+     * @param units
+     * @return degrees.
+     */
+    public double unitsToDegrees(int units) {
+        return units * this.m_ticksPerDegree;
+    }
+
+    /**
+     * Convert degrees to sensor units.
+     * @param degrees
+     * @return units.
+     */
+    public int degreesToUnits(double degrees) {
+        return (int) (degrees / this.m_ticksPerDegree);
     }
 
     /**
@@ -130,6 +145,20 @@ public class AtomTalon extends WPI_TalonSRX {
      */
     public double getVelocityFeet() {
         return Units.metersToFeet(getVelocityMeters());
+    }
+
+    /**
+     * Calculates the cosine scalar needed for {@link Shooter} Arbitarty Feed-Forward.
+     * @return Calculated cosine scalar.
+     */
+    public double calculateCoisneScalar() {
+        double current = super.getSelectedSensorPosition();
+        double degrees = (current - Constants.ShooterConstants.kLowestPosition) / this.m_ticksPerDegree;
+        double radians = Units.degreesToRadians(degrees);
+        double scalar = Math.cos(radians);
+
+        double maxFeedForward = 0.07;
+        return maxFeedForward * scalar;
     }
 
 }

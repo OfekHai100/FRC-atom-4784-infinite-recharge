@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 /**
@@ -84,6 +86,8 @@ public final class Constants {
 
     public static final class ShooterConstants {
         public static final int kSlotIdx = 3;
+
+        public static final int kLowestPosition = 891;
     }
     
     public static final class FieldConstants {
@@ -103,6 +107,10 @@ public final class Constants {
         public static final double kInnerPortHeight = 249.555;
         // Minimum distance from the Inner Port when shooting angle is 45 degrees, in cm.
         public static final double kInnerPortDistanceMin = 154.0676765;
+        // Blue Power Port coordinates, as a Pose2d object.
+        public static final Pose2d kBluePowerPort = new Pose2d(15.714, -5.808, new Rotation2d(1, 0));
+        // Red Power Port coordinates, as a Pose2d object.
+        public static final Pose2d kRedPowerPort = new Pose2d(0.306, -2.429, new Rotation2d(-1, 0));
     }
 
 }

@@ -17,7 +17,7 @@ import frc.robot.Constants;
 public class LED {
 
     /**
-     * Enum for Robot state.
+     * Enum for current Robot state, based on action or match period.
      */
     public enum State {
         INIT,
@@ -50,6 +50,7 @@ public class LED {
         for(var i = 0 ; i < m_ledRingBuffer.getLength() ; i++) {
             m_ledRingBuffer.setRGB(i, 0, 255, 0); // Set to green.
         }
+        m_ledRing.setData(m_ledRingBuffer);
 
         m_state = State.INIT;
         m_switched = true;

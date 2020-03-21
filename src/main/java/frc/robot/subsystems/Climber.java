@@ -30,6 +30,9 @@ public class Climber extends SubsystemBase {
     m_leftClimber.setInverted(false);
     m_rightClimber.setInverted(false);
 
+    m_leftClimber.configOpenloopRamp(0.3);
+    m_rightClimber.configOpenloopRamp(0.3);
+
     m_reverse = false;
   }
 
