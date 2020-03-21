@@ -128,11 +128,13 @@ public class VisionController {
                     if(angle < 31.4) {
                         // We need to get closer to the target:
                         path = calculatePath(position, Target.CLOSER);
+                        angle = calculateAngle();
                         velocity = calculateVelocity();
                         return new Calculation(velocity, angle, path);
                     } else {
                         // We need to get further from the target.
                         path = calculatePath(position, Target.FURTHER);
+                        angle = calculateAngle();
                         velocity = calculateVelocity();
                         return new Calculation(velocity, angle, path);
                     }
@@ -147,11 +149,13 @@ public class VisionController {
                         // We need to get further from the target.
                         path = calculatePath(position, Target.FURTHER);
                         angle = calculateAngle();
+                        velocity = calculateVelocity();
                         return new Calculation(velocity, angle, path);
                     } else {
                         // We need to get closer to the target
                         path = calculatePath(position, Target.CLOSER);
                         angle = calculateAngle();
+                        velocity = calculateVelocity();
                         return new Calculation(velocity, angle, path);
                     }
                 } else {
