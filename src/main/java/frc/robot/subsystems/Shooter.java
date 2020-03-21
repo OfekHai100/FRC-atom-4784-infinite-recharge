@@ -10,9 +10,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants;
 import frc.robot.util.AtomTalon;
 import frc.robot.util.AtomTalon.Subsystem;
@@ -20,7 +20,7 @@ import frc.robot.util.AtomTalon.Subsystem;
 public class Shooter extends SubsystemBase {
 
   // FAKE PIDF VALUES!
-  private AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.kPIDIdx, Constants.ShooterConstants.kSlotIdx, 0.1, 0, 1, 0);
+  private static AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.kPIDIdx, Constants.ShooterConstants.kSlotIdx, 0.1, 0, 1, 0);
   private VictorSPX m_shooter = new VictorSPX(Constants.Ports.kShooterFront);
   private VictorSPX m_loader = new VictorSPX(Constants.Ports.kShooterRear);
   
@@ -137,6 +137,15 @@ public class Shooter extends SubsystemBase {
   public void stopAll() {
     stopShooter();
     stopLoader();
+  }
+
+
+  /**
+   * This method is used for the Pigeon IMU object in the Drivetrain class.
+   * @return Talon which connected to the Pigeon, as a {@link AtomTalon} object.
+   */
+  public static AtomTalon getTalon() {
+    return m_rotator;
   }
 
   @Override
