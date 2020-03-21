@@ -25,6 +25,7 @@ public class Dashboard {
      * Displays the {@link Path} chooser at the begining of every match.
      */
     public static void putChooser() {
+        SmartDashboard.putData(m_chooser);
         m_chooser.addOption("Red Port", Path.RED_PORT);
         m_chooser.addOption("Red Middle", Path.RED_MIDDLE);
         m_chooser.addOption("Red Blue-Feeder", Path.RED_BLUE_FEEDER);
