@@ -106,6 +106,7 @@ public class PathManager {
             case BLUE_MIDDLE:
                 position = new Pose2d(new Translation2d(13.013, -3.309), new Rotation2d(1, 0));
             default:
+                // = case Blue_Red_Feeder:
                 position = new Pose2d(new Translation2d(13.013, -2.56), new Rotation2d(1, 0));
         }
 
