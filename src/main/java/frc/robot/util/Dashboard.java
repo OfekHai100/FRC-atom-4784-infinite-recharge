@@ -18,8 +18,12 @@ import frc.robot.pathing.PathManager.Path;
  */
 public class Dashboard {
 
+    // Path chooser:
     private static SendableChooser<Path> m_chooser = new SendableChooser<Path>();
 
+    /**
+     * Displays the {@link Path} chooser at the begining of every match.
+     */
     public static void putChooser() {
         m_chooser.addOption("Red Port", Path.RED_PORT);
         m_chooser.addOption("Red Middle", Path.RED_MIDDLE);
@@ -29,6 +33,10 @@ public class Dashboard {
         m_chooser.addOption("Blue Red-Feeder", Path.BLUE_RED_FEEDER);
     }
 
+    /**
+     * Returns the selected path for autonomous routine.
+     * @return Selected path.
+     */
     public static Path getSelectedPath() {
         return m_chooser.getSelected();
     }
