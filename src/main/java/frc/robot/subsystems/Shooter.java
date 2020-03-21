@@ -24,7 +24,7 @@ public class Shooter extends SubsystemBase {
   private VictorSPX m_loader = new VictorSPX(Constants.Ports.kShooterRear);
   
   /**
-   * Enum to store all default position of the Shooter.
+   * Enum to store all default positions of the Shooter.
    */
   public enum Position {
     STARTING_CONFIGURATION(45.0),
