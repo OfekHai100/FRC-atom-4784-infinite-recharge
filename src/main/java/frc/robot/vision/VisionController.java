@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 
 import frc.robot.Constants;
+import frc.robot.pathing.Configuration;
 
 /**
  * Vision prcoessing controller.
@@ -219,21 +220,10 @@ public class VisionController {
     private Trajectory calculatePath(Pose2d position, Target target) {
         
         Trajectory path;
+        Configuration config = Configuration.getConfiguration();
         Alliance side = DriverStation.getInstance().getAlliance();
 
-        // The voltage constraint for the trajectory:
-        var voltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(Constants.DrivetrainConstants.ksVolts,
-                                       Constants.DrivetrainConstants.ksVoltSecondsPerMeter,
-                                       Constants.DrivetrainConstants.ksVoltSecondsSquaredPerMeter),
-            Constants.DrivetrainConstants.kDriveKinematics,
-            10
-        );
-
-        // The configuration of the trajectory:
-        TrajectoryConfig config = new TrajectoryConfig(Constants.DrivetrainConstants.kMaxSpeed, Constants.DrivetrainConstants.kMaxAcceleration)
-            .setKinematics(Constants.DrivetrainConstants.kDriveKinematics).addConstraint(voltageConstraint);
+        TrajectoryConfig trajectoryConfig = config.getConfig();
 
         // Find interior waypoint and endpoint:
         if(target == Target.CLOSER) {
@@ -253,7 +243,7 @@ public class VisionController {
                     waypoint
                 ), 
                 endpoint, 
-                config
+                trajectoryConfig
             );
 
         } else {
@@ -279,7 +269,7 @@ public class VisionController {
                     waypoint
                 ), 
                 endpoint, 
-                config
+                trajectoryConfig
             );
         }
 

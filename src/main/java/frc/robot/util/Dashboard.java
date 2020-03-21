@@ -9,12 +9,29 @@ package frc.robot.util;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.pathing.PathManager.Path;
 
 /**
  * Dashboard++.
  */
 public class Dashboard {
+
+    private static SendableChooser<Path> m_chooser = new SendableChooser<Path>();
+
+    public static void putChooser() {
+        m_chooser.addOption("Red Port", Path.RED_PORT);
+        m_chooser.addOption("Red Middle", Path.RED_MIDDLE);
+        m_chooser.addOption("Red Blue-Feeder", Path.RED_BLUE_FEEDER);
+        m_chooser.addOption("Blue Port", Path.BLUE_PORT);
+        m_chooser.addOption("Blue Middle", Path.BLUE_MIDDLE);
+        m_chooser.addOption("Blue Red-Feeder", Path.BLUE_RED_FEEDER);
+    }
+
+    public static Path getSelectedPath() {
+        return m_chooser.getSelected();
+    }
 
     /**
      * Displays match data every match for the drivers.

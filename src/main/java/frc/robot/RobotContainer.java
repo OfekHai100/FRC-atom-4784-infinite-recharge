@@ -7,20 +7,12 @@
 
 package frc.robot;
 
-import java.util.List;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -36,6 +28,8 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShootFromPortCommand;
 import frc.robot.commands.ShootFromTrenchCommand;
 import frc.robot.commands.SimpleShootCommand;
+import frc.robot.pathing.PathManager;
+import frc.robot.pathing.PathManager.Path;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Roller;
@@ -120,18 +114,7 @@ public class RobotContainer {
     );
 
     // Runs the sequence Calculate -> Set LED -> Correct Position -> Correct Angle -> Shoot -> Reset angle -> Stop motors -> Set LED:
-    shootUsingVision.whenHeld(new InstantCommand(() -> m_calculation = m_vision.calculate(m_shooter.getAngle(), m_drive.getPose()))
-      .andThen(
-      new InstantCommand(() -> Robot.ledManager.setState(State.SHOOTER_VISION)),
-      new RunCommand(() -> getTrajectoryCommand(m_calculation.getPath()), m_drive),
-      new InstantCommand(() -> m_shooter.goToAngle(m_calculation.getAngle()), m_shooter),
-      new RunCommand(() -> m_shooter.shoot(m_calculation.getVelocity()), m_shooter).withTimeout(4.5),
-      new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION)),
-      new WaitCommand(2.0),
-      new InstantCommand(() -> m_shooter.stopAll()),
-      new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))
-      )
-    );
+    shootUsingVision.whenHeld(getVisionCommand());
 
     // Other Shooter commands:
     shootFromTrench.whenHeld((new ShootFromTrenchCommand(m_shooter).beforeStarting(() -> Robot.ledManager.setState(State.SHOOTER_TRENCH)))
@@ -154,51 +137,33 @@ public class RobotContainer {
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
+   * @param path to use in autonomous routine.
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // THIS CODE WILL CREATE 'S' SHAPED TRAJECTORY.
-    
-    var voltageConstraint =
-      new DifferentialDriveVoltageConstraint(
-        new SimpleMotorFeedforward(Constants.DrivetrainConstants.ksVolts,
-                                   Constants.DrivetrainConstants.ksVoltSecondsPerMeter,
-                                   Constants.DrivetrainConstants.ksVoltSecondsSquaredPerMeter),
-        Constants.DrivetrainConstants.kDriveKinematics,
-        10
-      );
+  public Command getAutonomousCommand(Path path) {
+    Trajectory trajectory;
+    trajectory = PathManager.generateTrajectory(path);
 
-    TrajectoryConfig config = new TrajectoryConfig(Constants.DrivetrainConstants.kMaxSpeed, Constants.DrivetrainConstants.kMaxAcceleration)
-      .setKinematics(Constants.DrivetrainConstants.kDriveKinematics).addConstraint(voltageConstraint);
+    m_drive.resetOdometry(PathManager.getStartingPosition(path));
 
-    Trajectory path = TrajectoryGenerator.generateTrajectory(
-      new Pose2d(0, 0, new Rotation2d(0)),
-      List.of(
-        new Translation2d(1, 1),
-        new Translation2d(2, -1)
-      ), 
-      new Pose2d(3, 0, new Rotation2d(0)), 
-      config);
-
-    Command auto = getTrajectoryCommand(path);
-
+    Command auto = getTrajectoryCommand(trajectory).andThen(getVisionCommand());
     return auto;
   }
 
   /**
-   * This method returns RamseteCommand based on a given trajectory.
+   * This method returns {@link RamseteCommand} based on a given trajectory.
    * @param path as a {@link Trajectory} object.
-   * @return Command.
+   * @return Trajectory command.
    */
-  public Command getTrajectoryCommand(Trajectory path) {
+  public Command getTrajectoryCommand(Trajectory trajectory) {
     // Checks if a valid Trajectory is given, if not returns a new PrintCommand.
-    if(path == null) {
+    if(trajectory == null) {
       return new PrintCommand("Invalid Trajectory given - Error or a Calculation result!");
     }
     
     // RamseteCommand generation:
-    RamseteCommand command = new RamseteCommand(
-      path, 
+    RamseteCommand trajectoryCommand = new RamseteCommand(
+      trajectory, 
       m_drive::getPose, 
       new RamseteController(Constants.DrivetrainConstants.kRamseteB, Constants.DrivetrainConstants.kRamseteZeta), 
       new SimpleMotorFeedforward(Constants.DrivetrainConstants.ksVolts,
@@ -212,7 +177,27 @@ public class RobotContainer {
       m_drive
     );
 
-    return command;
+    return trajectoryCommand;
+  }
+
+  /**
+   * This method returns {@link Command} used for shooting using vision.
+   * @return Vision command.
+   */
+  public Command getVisionCommand() {
+    Command visionCommand = new InstantCommand(() -> m_calculation = m_vision.calculate(m_shooter.getAngle(), m_drive.getPose()))
+    .andThen(
+      new InstantCommand(() -> Robot.ledManager.setState(State.SHOOTER_VISION)),
+      new RunCommand(() -> getTrajectoryCommand(m_calculation.getPath()), m_drive),
+      new InstantCommand(() -> m_shooter.goToAngle(m_calculation.getAngle()), m_shooter),
+      new RunCommand(() -> m_shooter.shoot(m_calculation.getVelocity()), m_shooter).withTimeout(4.5),
+      new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION)),
+      new WaitCommand(2.0),
+      new InstantCommand(() -> m_shooter.stopAll()),
+      new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))
+    );
+    
+    return visionCommand;
   }
 
 }

@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    Dashboard.putChooser();
     ledManager = new LED();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -75,7 +76,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     ledManager.setState(State.AUTO);
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand(Dashboard.getSelectedPath());
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
