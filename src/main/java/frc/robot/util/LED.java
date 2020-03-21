@@ -32,6 +32,7 @@ public class LED {
     private State m_state;
     private boolean m_onVision;
     private boolean m_switched;
+    private boolean m_passed;
     private AddressableLED m_ledStrip;
     private AddressableLED m_ledRing;
     private AddressableLEDBuffer m_ledStripBuffer;
@@ -54,7 +55,6 @@ public class LED {
 
         m_state = State.INIT;
         m_switched = true;
-        runStrip();
         m_ledStrip.start();
     }
 
@@ -73,6 +73,7 @@ public class LED {
      */
     public void setIsVision(boolean isVision) {
         m_onVision = isVision;
+        m_passed = false;
     }
 
     /**
@@ -133,19 +134,20 @@ public class LED {
             for(var i = 0 ; i < m_ledStripBuffer.getLength() ; i++) {
                 m_ledStripBuffer.setRGB(i, r, g, b);
             }
+            m_ledStrip.setData(m_ledStripBuffer);
         }
-
-        m_ledStrip.setData(m_ledStripBuffer);
     }
 
     /**
      * Runs the LED ring, green when using vision.
      */
     public void runRing() {
-        if(m_onVision) {
+        if(m_onVision && !m_passed) {
             m_ledRing.start();
-        } else {
+            m_passed = true;
+        } else if(!m_passed) {
             m_ledRing.stop();
+            m_passed = true;
         }
     }
 
