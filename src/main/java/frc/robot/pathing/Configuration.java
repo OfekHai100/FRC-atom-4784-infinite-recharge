@@ -13,26 +13,41 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 import frc.robot.Constants;
 
 /**
- * Add your docs here.
+ * This class represents a configuration of a trajectory.
  */
 public class Configuration {
 
     private TrajectoryConfig m_config;
     private DifferentialDriveVoltageConstraint m_voltageConstraint;
 
+    /**
+     * Constructor.
+     */
     private Configuration(TrajectoryConfig config, DifferentialDriveVoltageConstraint voltageConstraint) {
         this.m_config = config;
         this.m_voltageConstraint = voltageConstraint;
     }
 
+    /**
+     * Returns the trajectory configuration.
+     * @return Configuration, as a {@link TrajectoryConfig} object.
+     */
     public TrajectoryConfig getConfig() {
         return this.m_config;
     }
 
+    /**
+     * Returns the trajectory voltage constraint.
+     * @return Voltage constraint, as a {@link DifferentialDriveVoltageConstraint} object.
+     */
     public DifferentialDriveVoltageConstraint getVoltageConstraint() {
         return this.m_voltageConstraint;
     }
 
+    /**
+     * This method generates a new Configuration object and returns it.
+     * @return Configuration.
+     */
     public static Configuration getConfiguration() {
         TrajectoryConfig config;
         DifferentialDriveVoltageConstraint voltageConstraint;
