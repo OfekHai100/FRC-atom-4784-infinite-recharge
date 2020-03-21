@@ -65,11 +65,13 @@ public class Drivetrain extends SubsystemBase {
     m_leftFront.configEncoder(Subsystem.DRIVETRAIN);
     m_rightFront.configEncoder(Subsystem.DRIVETRAIN);
 
+    zero();
+
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
 
   /**
-   * Drive using Arcade-Drive
+   * Drive using Arcade-Drive.
    * @param y value of the joystick.
    * @param x value of the joystick.
    */
@@ -116,24 +118,24 @@ public class Drivetrain extends SubsystemBase {
   }
 
   /**
-   * Get the current position.
-   * @return current position.
+   * Get the current position of the Robot.
+   * @return Current position.
    */
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
 
   /**
-   * Get the current wheel speeds.
-   * @return current wheel speeds.
+   * Get the current wheel speeds of the Robot.
+   * @return Current wheel speeds.
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(m_leftFront.getVelocityMeters(), m_rightFront.getVelocityMeters());
   }
 
   /**
-   * Get the average distance traveled.
-   * @return average distance.
+   * Get the average distance traveled by the Robot.
+   * @return Average distance.
    */
   public double getDistance() {
     return (m_leftFront.getDistanceMeters() + m_rightFront.getDistanceMeters()) / 2.0;
@@ -164,6 +166,10 @@ public class Drivetrain extends SubsystemBase {
     m_pigeon.setYaw(0);
   }
 
+  /**
+   * Resets Robot odometry.
+   * @param pose current position of the Robot, as a {@link Pose2d} obejct.
+   */
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
     m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
