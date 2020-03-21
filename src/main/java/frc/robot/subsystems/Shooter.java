@@ -99,7 +99,7 @@ public class Shooter extends SubsystemBase {
    * @return Current angle, in degrees.
    */
   public double getAngle() {
-    return m_rotator.getSelectedSensorPosition() / Constants.kCyclesPerRevolution * 360;
+    return m_rotator.unitsToDegrees(m_rotator.getSelectedSensorPosition());
   }
 
   /**
