@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.AtomTalon;
@@ -179,5 +180,8 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftFront.getDistanceMeters(), m_rightFront.getDistanceMeters());
+    SmartDashboard.putNumber("Robot Heading:", getHeading());
+    SmartDashboard.putNumber("Left Encoder:", m_leftFront.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Right Encoder:", m_rightFront.getSelectedSensorPosition());
   }
 }
