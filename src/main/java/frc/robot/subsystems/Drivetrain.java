@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -68,7 +69,7 @@ public class Drivetrain extends SubsystemBase {
     m_leftFront.configEncoder(Subsystem.DRIVETRAIN);
     m_rightFront.configEncoder(Subsystem.DRIVETRAIN);
 
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    m_pigeon.enterCalibrationMode(CalibrationMode.BootTareGyroAccel);
   }
 
   /**
@@ -165,6 +166,14 @@ public class Drivetrain extends SubsystemBase {
    */
   public void zero() {
     m_pigeon.setYaw(0);
+  }
+
+  /**
+   * Inits Robot odometry
+   * @param pose current position of the Robot, as a {@link Pose2d} obejct.
+   */
+  public void initOdometry(Pose2d pose) {
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()), pose);
   }
 
   /**
