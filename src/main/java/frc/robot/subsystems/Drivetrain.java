@@ -169,7 +169,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   /**
-   * Inits Robot odometry
+   * Inits Robot odometry.
    * @param pose current position of the Robot, as a {@link Pose2d} obejct.
    */
   public void initOdometry(Pose2d pose) {
