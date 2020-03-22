@@ -41,7 +41,7 @@ public class VisionController {
     private final double kMaxAngle = Constants.ShooterConstants.kMaxAngle;
 
     /**
-     * This enum represents the required target for the Path component in a {@link Calculation} object.
+     * This enum represents the required target for the position-correction component in a {@link Calculation} object.
      * Target can be: further from the Power Port or closer to it.  
      */
     enum Target {
