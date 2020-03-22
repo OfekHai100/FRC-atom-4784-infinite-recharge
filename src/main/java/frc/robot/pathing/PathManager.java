@@ -92,34 +92,26 @@ public class PathManager {
      * @return Starting position, as a {@link Pose2d}.
      */
     public static Pose2d getStartingPosition(Path path) {
-        Pose2d position;
 
         switch(path) {
             case RED_PORT:
-                position = new Pose2d(new Translation2d(3.019, -2.453), new Rotation2d(-1, 0));
-                break;
+                return new Pose2d(new Translation2d(3.019, -2.453), new Rotation2d(-1, 0));
             case RED_MIDDLE:
-                position = new Pose2d(new Translation2d(3.019, -5.046), new Rotation2d(-1, 0));
-                break;
+                return new Pose2d(new Translation2d(3.019, -5.046), new Rotation2d(-1, 0));
             case RED_BLUE_FEEDER:
-                position = new Pose2d(new Translation2d(3.019, -5.641), new Rotation2d(-1, 0));
-                break;
+                return new Pose2d(new Translation2d(3.019, -5.641), new Rotation2d(-1, 0));
             case BLUE_PORT:
-                position = new Pose2d(new Translation2d(13.013, -5.796), new Rotation2d(1, 0));
-                break;
+                return new Pose2d(new Translation2d(13.013, -5.796), new Rotation2d(1, 0));
             case BLUE_MIDDLE:
-                position = new Pose2d(new Translation2d(13.013, -3.309), new Rotation2d(1, 0));
-                break;
+                return new Pose2d(new Translation2d(13.013, -3.309), new Rotation2d(1, 0));
             case BLUE_RED_FEEDER:
-                // = case Blue_Red_Feeder:
-                position = new Pose2d(new Translation2d(13.013, -2.56), new Rotation2d(1, 0));
-                break;
+                return new Pose2d(new Translation2d(13.013, -2.56), new Rotation2d(1, 0));
             default:
                 // Can not reach here!
-                position = new Pose2d();
         }
 
-        return position;
+        // Can not reach here!
+        return null;
     }
 
 }
