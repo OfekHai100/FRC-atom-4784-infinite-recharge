@@ -79,7 +79,7 @@ public class LED {
 
     /**
      * Return true if the Robot is using vision, false if not.
-     * @return isVision
+     * @return onVision
      */
     public boolean getOnVision() {
         return m_onVision;
