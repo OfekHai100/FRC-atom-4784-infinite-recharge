@@ -58,8 +58,8 @@ public class AtomTalon extends WPI_TalonSRX {
 
     /**
      * Constructor for AtomTalon for specific Velocity-control.
-     * @param port
-     * @param slotIdx
+     * @param port of the Talon.
+     * @param slotIdx - slot to store PIDF constants (1-4).
      * @param kp
      */
     public AtomTalon(int port, int slotIdx, double kP) {
