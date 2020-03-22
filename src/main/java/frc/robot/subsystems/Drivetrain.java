@@ -68,8 +68,6 @@ public class Drivetrain extends SubsystemBase {
     m_leftFront.configEncoder(Subsystem.DRIVETRAIN);
     m_rightFront.configEncoder(Subsystem.DRIVETRAIN);
 
-    zero();
-
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
 
