@@ -57,7 +57,7 @@ public class PathManager {
         Trajectory finalTrajectory;
         
         try {
-            java.nio.file.Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(json);
+            var trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(json);
             finalTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
         } catch(IOException ex) {
             DriverStation.reportError("Can not generate trajectory! " + json, ex.getStackTrace());
