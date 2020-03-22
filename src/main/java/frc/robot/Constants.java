@@ -87,7 +87,12 @@ public final class Constants {
     public static final class ShooterConstants {
         public static final int kSlotIdx = 3;
 
-        public static final int kLowestPosition = 891;
+        public static final double kMinVelocity = 0.2;
+        public static final double kMaxVelocity = 1;
+        public static final double kMinAngle = 31.4;
+        public static final double kMaxAngle = 81.2;
+
+        public static final int kLowestPosition = 891; // In sensor units
     }
     
     public static final class FieldConstants {

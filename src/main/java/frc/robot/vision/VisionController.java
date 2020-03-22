@@ -35,10 +35,10 @@ public class VisionController {
     private NetworkTableInstance m_table;
     private NetworkTable m_camera;
 
-    private final double kMinVelocity = 0.2;
-    private final double kMaxVelocity = 1;
-    private final double kMinAngle = 31.4;
-    private final double kMaxAngle = 81.2;
+    private final double kMinVelocity = Constants.ShooterConstants.kMinVelocity;
+    private final double kMaxVelocity = Constants.ShooterConstants.kMaxVelocity;
+    private final double kMinAngle = Constants.ShooterConstants.kMinAngle;
+    private final double kMaxAngle = Constants.ShooterConstants.kMaxAngle;
 
     /**
      * This enum represents the required target for the Path component in a {@link Calculation} object.
