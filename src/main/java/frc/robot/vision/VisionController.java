@@ -213,7 +213,7 @@ public class VisionController {
      * @param position of the Robot.
      * @param target - A {@link Target} is what the path is based on. A target can be a path that drives CLOSER to the Power Port,
      *  or FURTHER from it.
-     * @return Path-Correction, as a {@link Trajectory} object.
+     * @return Position-Correction, as a {@link Trajectory} object.
      */
     private Trajectory calculatePath(Pose2d position, Target target) {
         
@@ -246,19 +246,20 @@ public class VisionController {
 
         } else {
             // == FURTHER
-            double x, y, omega;
+            double x, y;
+            Rotation2d omega;
 
             if(side == Alliance.Blue) {
                 x = position.getTranslation().getX() - (Constants.FieldConstants.kBluePowerPort.getTranslation().getX() - position.getTranslation().getX());
                 y = (Constants.FieldConstants.kBluePowerPort.getTranslation().getY() + position.getTranslation().getY()) / 2.0;
-                omega = 1.0;
+                omega = position.getRotation().minus(new Rotation2d(1, 0));
             } else {
                 x = position.getTranslation().getX() - (position.getTranslation().getX() - Constants.FieldConstants.kRedPowerPort.getTranslation().getX());
                 y = (Constants.FieldConstants.kRedPowerPort.getTranslation().getY() + position.getTranslation().getY()) / 2.0;
-                omega = -1.0;
+                omega = position.getRotation().minus(new Rotation2d(-1, 0));
             }
             
-            Pose2d endpoint = new Pose2d(new Translation2d(x, y), new Rotation2d(omega, 0));
+            Pose2d endpoint = new Pose2d(new Translation2d(x, y), omega);
             Translation2d waypoint = calculateWaypoint(position, endpoint);
 
             path = TrajectoryGenerator.generateTrajectory(
