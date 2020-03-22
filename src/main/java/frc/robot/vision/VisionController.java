@@ -35,6 +35,11 @@ public class VisionController {
     private NetworkTableInstance m_table;
     private NetworkTable m_camera;
 
+    private final double kMinVelocity = 0.2;
+    private final double kMaxVelocity = 1;
+    private final double kMinAngle = 31.4;
+    private final double kMaxAngle = 81.2;
+
     /**
      * This enum represents the required target for the Path component in a {@link Calculation} object.
      * Target can be: further from the Power Port or closer to it.  
@@ -122,9 +127,9 @@ public class VisionController {
             angle = calculateAngle();
             if(!inRange(alpha, angle)) {
                 // Angle correction is needed:
-                if(angle < 31.4 || angle > 81.2) {
+                if(checkAngle(angle)) {
                     // Position correction is needed:
-                    if(angle < 31.4) {
+                    if(angle < kMinAngle) {
                         // We need to get closer to the target:
                         path = calculatePath(position, Target.CLOSER);
                         angle = calculateAngle();
@@ -142,9 +147,9 @@ public class VisionController {
                     return new Calculation(velocity, angle, null);
                 }
             } else {
-                if(velocity < 0.2 || velocity > 1) {
+                if(checkVelocity(velocity)) {
                     // Position correction is needed:
-                    if(velocity < 0.2) {
+                    if(velocity < kMinVelocity) {
                         // We need to get further from the target.
                         path = calculatePath(position, Target.FURTHER);
                         angle = calculateAngle();
@@ -208,6 +213,30 @@ public class VisionController {
     }
 
     /**
+     * Checks if the calculated velocity is between the min and the max values determined.
+     * @param velocity as calculated
+     * @return True if in the range, false if not.
+     */
+    private boolean checkVelocity(double velocity) {
+        if(velocity >= kMinVelocity && velocity <= kMaxVelocity) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the calculated angle is between the min and the max values determined.
+     * @param angle as calculated
+     * @return True if in the range, false if not.
+     */
+    private boolean checkAngle(double angle) {
+        if(angle >= kMinAngle && angle <= kMaxAngle) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * This method finds the needed {@link Trajectory} for the position-correction component of a {@link Calculation}.
      * It starts by creating configuration for the path, then finds it's waypoint and endpoint and in the end returns final path.
      * @param position of the Robot.
@@ -225,14 +254,20 @@ public class VisionController {
 
         // Find interior waypoint and endpoint:
         if(target == Target.CLOSER) {
-            Pose2d endpoint;
+            double x, y;
+            Rotation2d omega;
+            
             if(side == Alliance.Blue) {
-                endpoint = Constants.FieldConstants.kBluePowerPort; // Blue Power Port coordinates.
+                x = (Constants.FieldConstants.kBluePowerPort.getTranslation().getX() - position.getTranslation().getX()) / 2.0;
+                y = (Constants.FieldConstants.kBluePowerPort.getTranslation().getY() + position.getTranslation().getY()) / 2.0;
+                omega = position.getRotation().minus(new Rotation2d(1, 0));
             } else {
-                endpoint = Constants.FieldConstants.kRedPowerPort; // Red Power Port coordinates.
-
+                x = (position.getTranslation().getX() - Constants.FieldConstants.kRedPowerPort.getTranslation().getX()) / 2.0;
+                y = (Constants.FieldConstants.kRedPowerPort.getTranslation().getY() + position.getTranslation().getY()) / 2.0;
+                omega = position.getRotation().minus(new Rotation2d(-1, 0));
             }
 
+            Pose2d endpoint = new Pose2d(x, y, omega);
             Translation2d waypoint = calculateWaypoint(position, endpoint);
 
             path = TrajectoryGenerator.generateTrajectory(
@@ -250,11 +285,11 @@ public class VisionController {
             Rotation2d omega;
 
             if(side == Alliance.Blue) {
-                x = position.getTranslation().getX() - (Constants.FieldConstants.kBluePowerPort.getTranslation().getX() - position.getTranslation().getX());
+                x = position.getTranslation().getX() - ((Constants.FieldConstants.kBluePowerPort.getTranslation().getX() - position.getTranslation().getX()) / 2.0);
                 y = (Constants.FieldConstants.kBluePowerPort.getTranslation().getY() + position.getTranslation().getY()) / 2.0;
                 omega = position.getRotation().minus(new Rotation2d(1, 0));
             } else {
-                x = position.getTranslation().getX() - (position.getTranslation().getX() - Constants.FieldConstants.kRedPowerPort.getTranslation().getX());
+                x = position.getTranslation().getX() - ((position.getTranslation().getX() - Constants.FieldConstants.kRedPowerPort.getTranslation().getX()) / 2.0);
                 y = (Constants.FieldConstants.kRedPowerPort.getTranslation().getY() + position.getTranslation().getY()) / 2.0;
                 omega = position.getRotation().minus(new Rotation2d(-1, 0));
             }
