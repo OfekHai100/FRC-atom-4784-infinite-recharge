@@ -181,7 +181,8 @@ public class RobotContainer {
   }
 
   /**
-   * This method returns {@link Command} used for shooting using vision.
+   * This method returns {@link Command} used for shooting using vision, based on a {@link Calculation} generated
+   * by the {@link VisionController} class.
    * @return Vision command.
    */
   public Command getVisionCommand() {
