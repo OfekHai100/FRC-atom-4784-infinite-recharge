@@ -19,8 +19,8 @@ import frc.robot.util.AtomTalon.Subsystem;
 
 public class Shooter extends SubsystemBase {
 
-  // FAKE PIDF VALUES!
-  private static AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.kPIDIdx, Constants.ShooterConstants.kSlotIdx, 0.1, 0, 1, 0);
+  // FAKE P VALUE!
+  private static AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.ShooterConstants.kSlotIdx, 0.1);
   private VictorSPX m_shooter = new VictorSPX(Constants.Ports.kShooterFront);
   private VictorSPX m_loader = new VictorSPX(Constants.Ports.kShooterRear);
   

@@ -27,8 +27,8 @@ public class AtomTalon extends WPI_TalonSRX {
         SHOOTER
     }
 
-    private int m_PID; // PID Index.
-    private int m_Slot; // Slot Index
+    private int m_PID = 0; // PID Index - Inner (0) or Outer (1), we use inner.
+    private int m_slot; // Slot Index
     private double m_distancePerPulse; // Distance traveled per encoder pulse.
     private double m_ticksPerDegree; // Encoder pulse per degree.
     private int m_timeout = 10; // Timeout = 10ms.
@@ -36,26 +36,34 @@ public class AtomTalon extends WPI_TalonSRX {
     /**
      * Constructor for AtomTalon.
      * @param port of the Talon.
-     * @param pidIdx - Inner (0) or Outer (1), we use inner.
      * @param slotIdx - slot to store PIDF constants (1-4).
      * @param kP
      * @param kI
      * @param kD
      * @param kF
      */
-    public AtomTalon(int port, int pidIdx, int slotIdx, double kP, double kI, double kD, double kF) {
+    public AtomTalon(int port, int slotIdx, double kP, double kI, double kD, double kF) {
         super(port);
         super.configFactoryDefault();
 
-        this.m_PID = pidIdx;
-        this.m_Slot = slotIdx;
+        this.m_slot = slotIdx;
 
-        super.config_kP(m_Slot, kP);
-        super.config_kI(m_Slot, kI);
-        super.config_kD(m_Slot, kD);
-        super.config_kF(m_Slot, kF);
+        super.config_kP(m_slot, kP);
+        super.config_kI(m_slot, kI);
+        super.config_kD(m_slot, kD);
+        super.config_kF(m_slot, kF);
 
-        super.selectProfileSlot(m_Slot, m_PID);
+        super.selectProfileSlot(m_slot, m_PID);
+    }
+
+    /**
+     * Constructor for AtomTalon for specific Velocity-control.
+     * @param port
+     * @param slotIdx
+     * @param kp
+     */
+    public AtomTalon(int port, int slotIdx, double kP) {
+        this(port, slotIdx, kP, 0.0, 0.0, 0.0);
     }
 
     /**

@@ -27,9 +27,9 @@ import frc.robot.util.AtomTalon.Subsystem;
 
 public class Drivetrain extends SubsystemBase {
   
-  // FAKE PIDF VALUES!
-  private static AtomTalon m_leftFront = new AtomTalon(Constants.Ports.kLeftMaster, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdxLeft, 0.1, 0, 1, 0);
-  private static AtomTalon m_rightFront = new AtomTalon(Constants.Ports.kRightSlave, Constants.kPIDIdx, Constants.DrivetrainConstants.kSlotIdxRight, 0.1, 0, 1, 0);
+  // FAKE P VALUE!
+  private static AtomTalon m_leftFront = new AtomTalon(Constants.Ports.kLeftMaster, Constants.DrivetrainConstants.kSlotIdxLeft, 0.1);
+  private static AtomTalon m_rightFront = new AtomTalon(Constants.Ports.kRightSlave, Constants.DrivetrainConstants.kSlotIdxRight, 0.1);
 
   private static WPI_VictorSPX m_leftRear = new WPI_VictorSPX(Constants.Ports.kLeftSlave);
   private static WPI_VictorSPX m_rightRear = new WPI_VictorSPX(Constants.Ports.kRightSlave);
