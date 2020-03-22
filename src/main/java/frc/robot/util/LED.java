@@ -21,13 +21,33 @@ public class LED {
      * Enum for current Robot state, based on action or match period.
      */
     public enum State {
-        INIT,
-        SHOOTER_VISION,
-        SHOOTER_TRENCH,
-        SHOOTER_PORT,
-        SHOOTER_SIMPLE,
-        AUTO,
-        TELEOP
+        INIT(255, 153 ,51), // Light Orange
+        SHOOTER_VISION(255, 255, 255), // White
+        SHOOTER_TRENCH(255, 255, 0), // Yellow
+        SHOOTER_PORT(153, 0, 153), // Purple
+        SHOOTER_SIMPLE(51, 255, 255), // Light Blue
+        AUTO(0, 255, 0), // Green
+        TELEOP(204, 0, 0); // Dark Red
+
+        private int m_red, m_green, m_blue;
+
+        State(int r, int g, int b) {
+            m_red = r;
+            m_green = g;
+            m_blue = b;
+        }
+
+        public int getR() {
+            return this.m_red;
+        }
+
+        public int getG() {
+            return this.m_green;
+        }
+
+        public int getB() {
+            return this.m_blue;
+        }
     }
 
     private State m_state;
@@ -88,52 +108,11 @@ public class LED {
     /**
      * Runs the LED strip, based on Robot state.
      */
-    public void runStrip() {
-        int r, g, b;
-        
-        switch(m_state) {
-            case INIT:
-                // Light Orange
-                r = 255;
-                g = 153;
-                b = 51;
-            case SHOOTER_VISION:
-                // White
-                r = 255;
-                g = 255;
-                b = 255;
-            case SHOOTER_TRENCH:
-                // Yellow
-                r = 255;
-                g = 255;
-                b = 0;
-            case SHOOTER_PORT:
-                // Purple
-                r = 153;
-                g = 0;
-                b = 153;
-            case SHOOTER_SIMPLE:
-                // Light Blue
-                r = 51;
-                g = 255;
-                b = 255;
-            case AUTO:
-                // Green
-                r = 0;
-                g = 255;
-                b = 0;
-            default:
-                // = case Teleop:    
-                // Dark Red
-                r = 204;
-                g = 0;
-                b = 0;
-        }
-        
+    public void runStrip() {        
         if(m_switched) {
             m_switched = false;
             for(var i = 0 ; i < m_ledStripBuffer.getLength() ; i++) {
-                m_ledStripBuffer.setRGB(i, r, g, b);
+                m_ledStripBuffer.setRGB(i, m_state.getR(), m_state.getG(), m_state.getB());
             }
             m_ledStrip.setData(m_ledStripBuffer);
         }
