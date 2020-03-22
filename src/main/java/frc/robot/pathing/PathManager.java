@@ -97,17 +97,26 @@ public class PathManager {
         switch(path) {
             case RED_PORT:
                 position = new Pose2d(new Translation2d(3.019, -2.453), new Rotation2d(-1, 0));
+                break;
             case RED_MIDDLE:
                 position = new Pose2d(new Translation2d(3.019, -5.046), new Rotation2d(-1, 0));
+                break;
             case RED_BLUE_FEEDER:
                 position = new Pose2d(new Translation2d(3.019, -5.641), new Rotation2d(-1, 0));
+                break;
             case BLUE_PORT:
                 position = new Pose2d(new Translation2d(13.013, -5.796), new Rotation2d(1, 0));
+                break;
             case BLUE_MIDDLE:
                 position = new Pose2d(new Translation2d(13.013, -3.309), new Rotation2d(1, 0));
-            default:
+                break;
+            case BLUE_RED_FEEDER:
                 // = case Blue_Red_Feeder:
                 position = new Pose2d(new Translation2d(13.013, -2.56), new Rotation2d(1, 0));
+                break;
+            default:
+                // Can not reach here!
+                position = new Pose2d();
         }
 
         return position;
