@@ -144,7 +144,7 @@ public class RobotContainer {
     Trajectory trajectory;
     trajectory = PathManager.generateTrajectory(path);
 
-    m_drive.initOdometry(PathManager.getStartingPosition(path));
+    m_drive.resetOdometry(PathManager.getStartingPosition(path));
 
     Command auto = getTrajectoryCommand(trajectory).andThen(getVisionCommand());
     return auto;

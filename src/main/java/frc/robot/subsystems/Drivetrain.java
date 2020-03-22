@@ -69,7 +69,7 @@ public class Drivetrain extends SubsystemBase {
     m_leftFront.configEncoder(Subsystem.DRIVETRAIN);
     m_rightFront.configEncoder(Subsystem.DRIVETRAIN);
 
-    m_pigeon.enterCalibrationMode(CalibrationMode.BootTareGyroAccel);
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
 
   /**
@@ -166,14 +166,6 @@ public class Drivetrain extends SubsystemBase {
    */
   public void zero() {
     m_pigeon.setYaw(0);
-  }
-
-  /**
-   * Inits Robot odometry.
-   * @param pose current position of the Robot, as a {@link Pose2d} obejct.
-   */
-  public void initOdometry(Pose2d pose) {
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()), pose);
   }
 
   /**
