@@ -76,8 +76,7 @@ public class AtomTalon extends WPI_TalonSRX {
                 super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, m_PID, m_timeout);
                 this.reset();
                 this.m_distancePerPulse = Math.PI * Constants.DrivetrainConstants.kWheelDiameterMeters / Constants.kEdgesPerRevolution;
-            default:
-                // == case SHOOTER:
+            case SHOOTER:
                 super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, m_PID, m_timeout);
                 this.m_ticksPerDegree = Constants.kEdgesPerRevolution / (3 * 360); // (4096 / 1080) 1:3 Gearbox.
         }
