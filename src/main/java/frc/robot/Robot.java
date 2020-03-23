@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  public static LED ledManager = new LED();
+  public static final LED ledManager = new LED();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -50,7 +50,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     ledManager.runStrip();
-    ledManager.runRing();
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic

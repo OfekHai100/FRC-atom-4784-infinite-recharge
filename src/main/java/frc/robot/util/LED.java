@@ -53,26 +53,20 @@ public class LED {
     private State m_state;
     private boolean m_onVision;
     private boolean m_switched;
-    private boolean m_passed;
-    private AddressableLED m_ledStrip;
-    private AddressableLED m_ledRing;
-    private AddressableLEDBuffer m_ledStripBuffer;
-    private AddressableLEDBuffer m_ledRingBuffer;
+    private AddressableLED m_ledStrip = new AddressableLED(Constants.Ports.kLEDStrip);
+    //private AddressableLED m_ledRing = new AddressableLED(Constants.Ports.kLEDRing);
+    private AddressableLEDBuffer m_ledStripBuffer = new AddressableLEDBuffer(40);
+    private AddressableLEDBuffer m_ledRingBuffer = new AddressableLEDBuffer(10);
 
     /**
      * Constructor, inits all LEDs.
      */
     public LED() {
-        m_ledStrip = new AddressableLED(Constants.Ports.kLEDStrip);
-        m_ledRing = new AddressableLED(Constants.Ports.kLEDRing);
-        m_ledStripBuffer = new AddressableLEDBuffer(40);
-        m_ledRingBuffer = new AddressableLEDBuffer(10);
-
         m_onVision = false;
         for(var i = 0 ; i < m_ledRingBuffer.getLength() ; i++) {
             m_ledRingBuffer.setRGB(i, 0, 255, 0); // Set to green.
         }
-        m_ledRing.setData(m_ledRingBuffer);
+        //m_ledRing.setData(m_ledRingBuffer);
 
         m_state = State.INIT;
         m_switched = true;
@@ -86,15 +80,6 @@ public class LED {
     public void setState(State state) {
         m_state = state;
         m_switched = true;
-    }
-
-    /**
-     * Method to set if the Robot is using vision or not. 
-     * @param isVision
-     */
-    public void setIsVision(boolean isVision) {
-        m_onVision = isVision;
-        m_passed = false;
     }
 
     /**
@@ -115,19 +100,6 @@ public class LED {
                 m_ledStripBuffer.setRGB(i, m_state.getR(), m_state.getG(), m_state.getB());
             }
             m_ledStrip.setData(m_ledStripBuffer);
-        }
-    }
-
-    /**
-     * Runs the LED ring, green when using vision.
-     */
-    public void runRing() {
-        if(m_onVision && !m_passed) {
-            m_ledRing.start();
-            m_passed = true;
-        } else if(!m_passed) {
-            m_ledRing.stop();
-            m_passed = true;
         }
     }
 

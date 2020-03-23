@@ -48,7 +48,6 @@ public final class Constants {
 
         // LED:
         public static final int kLEDStrip = 0;
-        public static final int kLEDRing = 1;
         
         // Joysticks:
         public static final int kMain = 0;
