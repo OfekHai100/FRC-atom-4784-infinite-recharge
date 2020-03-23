@@ -28,6 +28,15 @@ import frc.robot.pathing.Configuration;
  */
 public class VisionController {
     
+    /**
+     * This enum represents the required target for the position-correction component in a {@link Calculation} object.
+     * Target can be: further from the Power Port or closer to it.  
+     */
+    enum Target {
+        FURTHER,
+        CLOSER
+    }
+
     // Vision processing varaibles.
     private double m_targetYaw, m_targetPitch, m_targetArea;
     private boolean m_targetValid;
@@ -39,15 +48,6 @@ public class VisionController {
     private final double kMaxVelocity = Constants.ShooterConstants.kMaxVelocity;
     private final double kMinAngle = Constants.ShooterConstants.kMinAngle;
     private final double kMaxAngle = Constants.ShooterConstants.kMaxAngle;
-
-    /**
-     * This enum represents the required target for the position-correction component in a {@link Calculation} object.
-     * Target can be: further from the Power Port or closer to it.  
-     */
-    enum Target {
-        FURTHER,
-        CLOSER
-    }
 
     /**
      * Constructor.
