@@ -86,8 +86,9 @@ public class Shooter extends SubsystemBase {
   }
 
   /**
-   * Sets the shooter to specific angle.
+   * Sets the Shooter to a specific angle.
    * @param angle
+   * @param isPosition if called from the getPosition() method.
    */
   public void goToAngle(double angle, boolean isPosition) {
     if(!isPosition) {
@@ -118,13 +119,17 @@ public class Shooter extends SubsystemBase {
   }
 
   /**
-   * Gets the current angle of the rotator.
+   * Returns the current angle of the rotator.
    * @return Current angle, in degrees.
    */
   public double getAngle() {
     return m_rotator.unitsToDegrees(m_rotator.getSelectedSensorPosition());
   }
 
+  /**
+   * Returns the current {@link Position} of the Shooter.
+   * @return Shooter position, as a {@link Position} object.
+   */
   public Position getPosition() {
     return this.m_position;
   }
