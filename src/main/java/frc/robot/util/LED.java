@@ -9,7 +9,8 @@ package frc.robot.util;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
 import frc.robot.Constants;
 
 /**
@@ -53,23 +54,18 @@ public class LED {
     private State m_state;
     private boolean m_onVision;
     private boolean m_switched;
+    private boolean m_passed;
     private AddressableLED m_ledStrip = new AddressableLED(Constants.Ports.kLEDStrip);
-    //private AddressableLED m_ledRing = new AddressableLED(Constants.Ports.kLEDRing);
     private AddressableLEDBuffer m_ledStripBuffer = new AddressableLEDBuffer(40);
-    private AddressableLEDBuffer m_ledRingBuffer = new AddressableLEDBuffer(10);
 
     /**
      * Constructor, inits all LEDs.
      */
     public LED() {
-        m_onVision = false;
-        for(var i = 0 ; i < m_ledRingBuffer.getLength() ; i++) {
-            m_ledRingBuffer.setRGB(i, 0, 255, 0); // Set to green.
-        }
-        //m_ledRing.setData(m_ledRingBuffer);
-
         m_state = State.INIT;
         m_switched = true;
+        m_onVision = false;
+        m_passed = true;
         m_ledStrip.start();
     }
 
@@ -82,12 +78,27 @@ public class LED {
         m_switched = true;
     }
 
+    public void setOnVision(boolean onVision) {
+        m_onVision = true;
+        m_passed = false;
+    }
+
     /**
      * Return true if the Robot is using vision, false if not.
      * @return onVision
      */
     public boolean getOnVision() {
         return m_onVision;
+    }
+
+    public void runRing() {
+        if(!m_passed && m_onVision) {
+            Arduino.getInstnace().write("OPEN");
+            m_passed = true;
+        } else if(!m_passed) {
+            Arduino.getInstnace().write("CLOSE");
+            m_passed = true;
+        } 
     }
 
     /**

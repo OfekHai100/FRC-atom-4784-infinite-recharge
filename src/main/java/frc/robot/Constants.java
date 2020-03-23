@@ -47,7 +47,10 @@ public final class Constants {
         public static final int kCylinderReverse = 1;
 
         // LED:
-        public static final int kLEDStrip = 0;
+        public static final int kLEDStrip = 0; // PWM
+        
+        // Arduino I2C:
+        public static final int kArduinoI2C = 4;
         
         // Joysticks:
         public static final int kMain = 0;
