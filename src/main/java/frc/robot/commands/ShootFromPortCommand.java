@@ -29,12 +29,12 @@ public class ShootFromPortCommand extends CommandBase {
   @Override
   public void initialize() {
     m_shooter.goToPosition(Position.PORT);
+    m_shooter.shoot(0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.shoot(0.5);
   }
 
   // Called once the command ends or is interrupted.

@@ -27,12 +27,12 @@ public class SimpleShootCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_shooter.shoot(0.6);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.shoot(0.6);
   }
 
   // Called once the command ends or is interrupted.
