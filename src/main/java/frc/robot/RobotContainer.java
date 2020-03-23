@@ -190,7 +190,7 @@ public class RobotContainer {
     .andThen(
       new InstantCommand(() -> Robot.ledManager.setState(State.SHOOTER_VISION)),
       new RunCommand(() -> getTrajectoryCommand(m_calculation.getPath()), m_drive),
-      new InstantCommand(() -> m_shooter.goToAngle(m_calculation.getAngle()), m_shooter),
+      new InstantCommand(() -> m_shooter.goToAngle(m_calculation.getAngle(), false), m_shooter),
       new InstantCommand(() -> m_shooter.shoot(m_calculation.getVelocity()), m_shooter),
       new WaitCommand(4.5),
       new InstantCommand(() -> m_shooter.stopAll()),

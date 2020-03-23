@@ -19,11 +19,6 @@ import frc.robot.util.AtomTalon.Subsystem;
 
 public class Shooter extends SubsystemBase {
 
-  // FAKE P VALUE!
-  private static AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.ShooterConstants.kSlotIdx, 0.1);
-  private VictorSPX m_shooter = new VictorSPX(Constants.Ports.kShooterFront);
-  private VictorSPX m_loader = new VictorSPX(Constants.Ports.kShooterRear);
-  
   /**
    * Enum to store all default positions of the Shooter.
    */
@@ -32,7 +27,8 @@ public class Shooter extends SubsystemBase {
     LOWEST_POSITION(31.4),
     LOADING(72.5),
     PORT(80.0),
-    TRENCH(32.644);
+    TRENCH(32.644),
+    OTHER(0.0); // In case of 'OTHER', the Shooter will NOT call the getPositionAngle() method.
 
     private double m_angle;
 
@@ -44,6 +40,14 @@ public class Shooter extends SubsystemBase {
       return this.m_angle;
     }
   }
+
+  // FAKE P VALUE!
+  private static AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.ShooterConstants.kSlotIdx, 0.1);
+  private VictorSPX m_shooter = new VictorSPX(Constants.Ports.kShooterFront);
+  private VictorSPX m_loader = new VictorSPX(Constants.Ports.kShooterRear);
+
+  private Position m_position;
+  
 
   /**
    * Creates a new Shooter.
@@ -85,10 +89,16 @@ public class Shooter extends SubsystemBase {
    * Sets the shooter to specific angle.
    * @param angle
    */
-  public void goToAngle(double angle) {
+  public void goToAngle(double angle, boolean isPosition) {
+    if(!isPosition) {
+      m_position = Position.OTHER;
+    }
+
     int setpoint = m_rotator.degreesToUnits(angle);
     int current = m_rotator.getSelectedSensorPosition();
+
     m_rotator.set(ControlMode.Position, setpoint, DemandType.ArbitraryFeedForward, m_rotator.calculateCoisneScalar());
+
     while(current - 1 < setpoint) {
       current  = m_rotator.getSelectedSensorPosition();
     }
@@ -99,7 +109,12 @@ public class Shooter extends SubsystemBase {
    * @param position of the Shooter to set, as {@link Position} object.
    */
   public void goToPosition(Position position) {
-    goToAngle(position.getPositionAngle());
+    if(m_position.equals(position)) {
+      return;
+    }
+    
+    m_position = position;
+    goToAngle(position.getPositionAngle(), true);
   }
 
   /**
@@ -108,6 +123,10 @@ public class Shooter extends SubsystemBase {
    */
   public double getAngle() {
     return m_rotator.unitsToDegrees(m_rotator.getSelectedSensorPosition());
+  }
+
+  public Position getPosition() {
+    return this.m_position;
   }
 
   /**
