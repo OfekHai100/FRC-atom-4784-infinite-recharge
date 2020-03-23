@@ -127,7 +127,7 @@ public class VisionController {
             angle = calculateAngle();
             if(!inRange(alpha, angle)) {
                 // Angle correction is needed:
-                if(checkAngle(angle)) {
+                if(!checkAngle(angle)) {
                     // Position correction is needed:
                     if(angle < kMinAngle) {
                         // We need to get closer to the target:
@@ -147,7 +147,7 @@ public class VisionController {
                     return new Calculation(velocity, angle, null);
                 }
             } else {
-                if(checkVelocity(velocity)) {
+                if(!checkVelocity(velocity)) {
                     // Position correction is needed:
                     if(velocity < kMinVelocity) {
                         // We need to get further from the target.
@@ -187,6 +187,18 @@ public class VisionController {
     }
 
     /**
+     * Checks if the calculated velocity is between the min and the max values determined.
+     * @param velocity as calculated
+     * @return True if in the range, false if not.
+     */
+    private boolean checkVelocity(double velocity) {
+        if(velocity >= kMinVelocity && velocity <= kMaxVelocity) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Method to calculate the Angle parameter of a {@link Calculation}.
      * @return Angle-Correction of the Shooter, in degrees.
      */
@@ -207,18 +219,6 @@ public class VisionController {
      */
     private boolean inRange(double alpha, double beta) {
         if(beta >= alpha-5.0 && beta <= alpha+5.0) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Checks if the calculated velocity is between the min and the max values determined.
-     * @param velocity as calculated
-     * @return True if in the range, false if not.
-     */
-    private boolean checkVelocity(double velocity) {
-        if(velocity >= kMinVelocity && velocity <= kMaxVelocity) {
             return true;
         }
         return false;
