@@ -47,9 +47,10 @@ public class Configuration {
 
     /**
      * This method generates a new Configuration object and returns it.
+     * @param reversed - the direction of a {@link Trajectory}.
      * @return Configuration.
      */
-    public static Configuration getConfiguration() {
+    public static Configuration getConfiguration(boolean reversed) {
         TrajectoryConfig config;
         DifferentialDriveVoltageConstraint voltageConstraint;
         
@@ -63,7 +64,7 @@ public class Configuration {
             );
         
         config = new TrajectoryConfig(Constants.DrivetrainConstants.kMaxSpeed, Constants.DrivetrainConstants.kMaxAcceleration)
-            .setKinematics(Constants.DrivetrainConstants.kDriveKinematics).addConstraint(voltageConstraint);
+            .setKinematics(Constants.DrivetrainConstants.kDriveKinematics).addConstraint(voltageConstraint).setReversed(reversed);
         
         return new Configuration(config, voltageConstraint);
     }

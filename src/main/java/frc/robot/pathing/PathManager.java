@@ -72,7 +72,7 @@ public class PathManager {
      * @return 'S' shaped {@link Trajectory}.
      */
     public static Trajectory getSTrajectory() {
-        Configuration config = Configuration.getConfiguration();
+        Configuration config = Configuration.getConfiguration(false);
         
         Trajectory path = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, new Rotation2d(0)),

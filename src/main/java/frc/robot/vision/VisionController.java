@@ -247,10 +247,7 @@ public class VisionController {
     private Trajectory calculatePath(Pose2d position, Target target) {
         
         Trajectory path;
-        Configuration config = Configuration.getConfiguration();
         Alliance side = DriverStation.getInstance().getAlliance();
-
-        TrajectoryConfig trajectoryConfig = config.getConfig();
 
         // Find interior waypoint and endpoint:
         if(target == Target.CLOSER) {
@@ -270,13 +267,15 @@ public class VisionController {
             Pose2d endpoint = new Pose2d(x, y, omega);
             Translation2d waypoint = calculateWaypoint(position, endpoint);
 
+            TrajectoryConfig config = Configuration.getConfiguration(false).getConfig();
+
             path = TrajectoryGenerator.generateTrajectory(
                 position, 
                 List.of(
                     waypoint
                 ), 
                 endpoint, 
-                trajectoryConfig
+                config
             );
 
         } else {
@@ -296,6 +295,8 @@ public class VisionController {
             
             Pose2d endpoint = new Pose2d(new Translation2d(x, y), omega);
             Translation2d waypoint = calculateWaypoint(position, endpoint);
+            
+            TrajectoryConfig config = Configuration.getConfiguration(true).getConfig();
 
             path = TrajectoryGenerator.generateTrajectory(
                 position, 
@@ -303,7 +304,7 @@ public class VisionController {
                     waypoint
                 ), 
                 endpoint, 
-                trajectoryConfig
+                config
             );
         }
 
