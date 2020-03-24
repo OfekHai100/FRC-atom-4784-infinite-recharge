@@ -9,8 +9,6 @@ package frc.robot.util;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.I2C.Port;
 import frc.robot.Constants;
 
 /**
@@ -96,7 +94,7 @@ public class LED {
             Arduino.getInstnace().write("OPEN");
             m_passed = true;
         } else if(!m_passed) {
-            Arduino.getInstnace().write("CLOSE");
+            Arduino.getInstnace().write("SHUT");
             m_passed = true;
         } 
     }
