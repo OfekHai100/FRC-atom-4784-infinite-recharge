@@ -22,6 +22,9 @@ public class Arduino {
     private final int kMaxBytes = 32;
     private static Arduino m_instance; // The singleton instance.
 
+    /**
+     * Constructor.
+     */
     private Arduino() {
         m_adress = Constants.Ports.kArduinoI2C;
         m_wire = new I2C(Port.kOnboard, this.m_adress);
