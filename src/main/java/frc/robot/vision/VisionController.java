@@ -182,7 +182,7 @@ public class VisionController {
         double velocity;
         update();
         // Fake Function!
-        velocity = 0.0606 * m_targetPitch * m_targetPitch - 4E-15 * m_targetPitch + 5.9545;
+        velocity = 0.0061 * m_targetPitch * m_targetPitch - (4E-16) * m_targetPitch + 0.5955;
         return velocity;
     }
 
