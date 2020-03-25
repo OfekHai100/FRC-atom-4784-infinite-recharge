@@ -50,11 +50,12 @@ public class LED {
     }
 
     private State m_state;
+    private AddressableLED m_ledStrip = new AddressableLED(Constants.Ports.kLEDStrip);
+    private AddressableLEDBuffer m_ledStripBuffer = new AddressableLEDBuffer(40);
+
     private boolean m_onVision;
     private boolean m_switched;
     private boolean m_passed;
-    private AddressableLED m_ledStrip = new AddressableLED(Constants.Ports.kLEDStrip);
-    private AddressableLEDBuffer m_ledStripBuffer = new AddressableLEDBuffer(40);
 
     /**
      * Constructor, inits all LEDs.
