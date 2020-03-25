@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  public static final LED ledManager = new LED();
+  public static LED ledManager;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    ledManager = new LED();
     Dashboard.putChooser();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
