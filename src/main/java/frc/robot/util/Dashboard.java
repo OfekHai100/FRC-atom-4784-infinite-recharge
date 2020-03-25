@@ -77,15 +77,9 @@ public class Dashboard {
             SmartDashboard.putString(alliance, "Station "+station);
             SmartDashboard.putString("Competing at:", event);
         } else {
-            alliance = "Red Alliance";
-            matchType = "ATOM";
-            event = "Practice Session";
-            matchNum = 4784;
-            station = 4784;
-
-            SmartDashboard.putNumber(matchType, matchNum);
-            SmartDashboard.putString(alliance, "Station "+station);
-            SmartDashboard.putString("Status:", event);
+            SmartDashboard.putNumber("ATOM", 4784);
+            SmartDashboard.putString("Red Alliance", "Station " + 4784);
+            SmartDashboard.putString("Status:", "Practice Session");
         }
     }
 
