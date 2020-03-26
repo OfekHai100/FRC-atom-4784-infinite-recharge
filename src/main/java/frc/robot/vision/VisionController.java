@@ -111,10 +111,10 @@ public class VisionController {
      * It calculates parameters based on Shooter angle and Robot position.
      * 
      * @param alpha - Current angle of Robot shooter, in degrees.
-     * @param position - Current position of the Robot, as a {@link Pose2d} object.
+     * @param x - Current position of the Robot, as a {@link Pose2d} object.
      * @return Result as a {@link Calculation} object. 
      */
-    public Calculation calculate(double alpha, Pose2d position) {
+    public Calculation calculate(double alpha, Pose2d x) {
         
         // Define variables:
         double velocity;
@@ -131,13 +131,13 @@ public class VisionController {
                     // Position correction is needed:
                     if(angle < kMinAngle) {
                         // We need to get closer to the target:
-                        path = calculatePath(position, Target.CLOSER);
+                        path = calculatePath(x, Target.CLOSER);
                         angle = calculateAngle();
                         velocity = calculateVelocity();
                         return new Calculation(velocity, angle, path);
                     } else {
                         // We need to get further from the target.
-                        path = calculatePath(position, Target.FURTHER);
+                        path = calculatePath(x, Target.FURTHER);
                         angle = calculateAngle();
                         velocity = calculateVelocity();
                         return new Calculation(velocity, angle, path);
@@ -151,13 +151,13 @@ public class VisionController {
                     // Position correction is needed:
                     if(velocity < kMinVelocity) {
                         // We need to get further from the target.
-                        path = calculatePath(position, Target.FURTHER);
+                        path = calculatePath(x, Target.FURTHER);
                         angle = calculateAngle();
                         velocity = calculateVelocity();
                         return new Calculation(velocity, angle, path);
                     } else {
                         // We need to get closer to the target
-                        path = calculatePath(position, Target.CLOSER);
+                        path = calculatePath(x, Target.CLOSER);
                         angle = calculateAngle();
                         velocity = calculateVelocity();
                         return new Calculation(velocity, angle, path);
