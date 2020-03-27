@@ -32,7 +32,7 @@ public class VisionController {
      * This enum represents the required target for the position-correction component in a {@link Calculation} object.
      * Target can be: further from the Power Port or closer to it.  
      */
-    enum Target {
+    private enum Target {
         FURTHER,
         CLOSER
     }
@@ -44,6 +44,7 @@ public class VisionController {
     private NetworkTableInstance m_table;
     private NetworkTable m_camera;
 
+    // Used in the calculation methods.
     private final double kMinVelocity = Constants.ShooterConstants.kMinVelocity;
     private final double kMaxVelocity = Constants.ShooterConstants.kMaxVelocity;
     private final double kMinAngle = Constants.ShooterConstants.kMinAngle;
