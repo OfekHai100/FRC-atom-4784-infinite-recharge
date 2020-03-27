@@ -181,7 +181,6 @@ public class VisionController {
      */
     private double calculateVelocity() {
         double velocity;
-        update();
         // Fake Function!
         velocity = 0.0061 * m_targetPitch * m_targetPitch - (4E-16) * m_targetPitch + 0.5955;
         return velocity;
@@ -218,7 +217,6 @@ public class VisionController {
      */
     private double calculateAngle() {
         double angle;
-        update();
         // Fake Function!
         angle = 0.6556 * m_targetPitch * m_targetPitch * m_targetPitch - 6.3111 * m_targetPitch * m_targetPitch + 20.789 * m_targetPitch + 16.867;
         return angle;
