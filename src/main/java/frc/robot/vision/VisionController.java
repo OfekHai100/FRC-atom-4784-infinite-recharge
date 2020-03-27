@@ -132,14 +132,14 @@ public class VisionController {
                     if(angle < kMinAngle) {
                         // We need to get closer to the target:
                         path = calculatePath(x, Target.CLOSER);
-                        angle = calculateAngle();
-                        velocity = calculateVelocity();
+                        angle = calculateAndCheckAngle();
+                        velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
                     } else {
                         // We need to get further from the target.
                         path = calculatePath(x, Target.FURTHER);
-                        angle = calculateAngle();
-                        velocity = calculateVelocity();
+                        angle = calculateAndCheckAngle();
+                        velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
                     }
                 } else {
@@ -152,14 +152,14 @@ public class VisionController {
                     if(velocity < kMinVelocity) {
                         // We need to get further from the target.
                         path = calculatePath(x, Target.FURTHER);
-                        angle = calculateAngle();
-                        velocity = calculateVelocity();
+                        angle = calculateAndCheckAngle();
+                        velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
                     } else {
                         // We need to get closer to the target
                         path = calculatePath(x, Target.CLOSER);
-                        angle = calculateAngle();
-                        velocity = calculateVelocity();
+                        angle = calculateAndCheckAngle();
+                        velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
                     }
                 } else {
@@ -199,6 +199,19 @@ public class VisionController {
     }
 
     /**
+     * Calculates the Velocity component of a {@link Calculation}, and then checks if it is between the min and max values.
+     * If so, the method returns the calculated velocity, and if not, it returns an average tested output.
+     * @return Calculated velocity, or an average tested output in case the calculated is not in range of the min and max values.
+     */
+    private double calculateAndCheckVelocity() {
+        double calculated = calculateVelocity();
+        if(checkVelocity(calculated)) {
+            return calculated;
+        }
+        return 0.8; // This output has been tested to give just-fine results.
+    }
+
+    /**
      * Method to calculate the Angle parameter of a {@link Calculation}.
      * @return Angle-Correction of the Shooter, in degrees.
      */
@@ -234,6 +247,19 @@ public class VisionController {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Calculates the Angle component of a {@link Calculation}, and then checks if it is between the min and max values.
+     * If so, the method returns the calculated angle, and if not, it returns an average tested angle.
+     * @return Calculated angle, or an average tested angle in case the calculated is not in range of the min and max values.
+     */
+    private double calculateAndCheckAngle() {
+        double calculated = calculateAngle();
+        if(checkAngle(calculated)) {
+            return calculated;
+        }
+        return 45.0; // This angle has been tested to give just-fine results.
     }
 
     /**
