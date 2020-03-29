@@ -133,13 +133,13 @@ public class VisionController {
                     if(angle < kMinAngle) {
                         // We need to get closer to the target:
                         path = calculatePath(x, Target.CLOSER);
-                        angle = calculateAndCheckAngle();
+                        angle = calculateAndCheckAngle(alpha);
                         velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
                     } else if(angle > kMaxAngle) {
                         // We need to get further from the target.
                         path = calculatePath(x, Target.FURTHER);
-                        angle = calculateAndCheckAngle();
+                        angle = calculateAndCheckAngle(alpha);
                         velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
                     }
@@ -153,13 +153,13 @@ public class VisionController {
                     if(velocity < kMinVelocity) {
                         // We need to get further from the target.
                         path = calculatePath(x, Target.FURTHER);
-                        angle = calculateAndCheckAngle();
+                        angle = calculateAndCheckAngle(alpha);
                         velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
                     } else if(velocity > kMaxVelocity) {
                         // We need to get closer to the target
                         path = calculatePath(x, Target.CLOSER);
-                        angle = calculateAndCheckAngle();
+                        angle = calculateAndCheckAngle(alpha);
                         velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
                     }
@@ -253,10 +253,14 @@ public class VisionController {
     /**
      * Calculates the Angle component of a {@link Calculation}, and then checks if it is between the min and max values.
      * If so, the method returns the calculated angle, and if not, it returns an average tested angle.
+     * @param currentAngle of the Shooter.
      * @return Calculated angle, or an average tested angle in case the calculated is not in range of the min and max values.
      */
-    private double calculateAndCheckAngle() {
+    private double calculateAndCheckAngle(double currentAngle) {
         double calculated = calculateAngle();
+        if(inRange(currentAngle, calculated)) {
+            return 0.0;
+        }
         if(checkAngle(calculated)) {
             return calculated;
         }
