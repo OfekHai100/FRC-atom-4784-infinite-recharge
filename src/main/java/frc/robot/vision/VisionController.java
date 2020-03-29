@@ -136,7 +136,7 @@ public class VisionController {
                         angle = calculateAndCheckAngle();
                         velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
-                    } else {
+                    } else if(angle > kMaxAngle) {
                         // We need to get further from the target.
                         path = calculatePath(x, Target.FURTHER);
                         angle = calculateAndCheckAngle();
@@ -156,7 +156,7 @@ public class VisionController {
                         angle = calculateAndCheckAngle();
                         velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
-                    } else {
+                    } else if(velocity > kMaxVelocity) {
                         // We need to get closer to the target
                         path = calculatePath(x, Target.CLOSER);
                         angle = calculateAndCheckAngle();
@@ -180,6 +180,7 @@ public class VisionController {
      * @return Velocity of the Shooter motor, in TalonSRX Percent-Output units.
      */
     private double calculateVelocity() {
+        update();
         double velocity;
         // Fake Function!
         velocity = 0.0061 * m_targetPitch * m_targetPitch - (4E-16) * m_targetPitch + 0.5955;
@@ -216,6 +217,7 @@ public class VisionController {
      * @return Angle-Correction of the Shooter, in degrees.
      */
     private double calculateAngle() {
+        update();
         double angle;
         // Fake Function!
         angle = 0.6556 * m_targetPitch * m_targetPitch * m_targetPitch - 6.3111 * m_targetPitch * m_targetPitch + 20.789 * m_targetPitch + 16.867;
