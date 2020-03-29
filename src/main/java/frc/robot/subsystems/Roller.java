@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -16,10 +15,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
+import frc.robot.util.AtomVictor;
 
 public class Roller extends SubsystemBase {
   
-  private VictorSPX m_roller = new VictorSPX(Constants.Ports.kRoller);
+  private AtomVictor m_roller = new AtomVictor(Constants.Ports.kRoller, true);
   private DoubleSolenoid m_cylinder = new DoubleSolenoid(Constants.Ports.kCylinderForward, Constants.Ports.kCylinderReverse);
 
   private boolean m_reverse;
@@ -28,9 +28,6 @@ public class Roller extends SubsystemBase {
    * Creates a new Roller.
    */
   public Roller() {
-    m_roller.configFactoryDefault();
-    m_roller.setInverted(true);
-
     m_reverse = false;
   }
 

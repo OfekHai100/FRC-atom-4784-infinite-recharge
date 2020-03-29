@@ -8,17 +8,17 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
+import frc.robot.util.AtomVictor;
 
 public class Climber extends SubsystemBase {
   
-  private VictorSPX m_leftClimber = new VictorSPX(Constants.Ports.kLeftClimber);
-  private VictorSPX m_rightClimber = new VictorSPX(Constants.Ports.kRightClimber);
+  private AtomVictor m_leftClimber = new AtomVictor(Constants.Ports.kLeftClimber, false);
+  private AtomVictor m_rightClimber = new AtomVictor(Constants.Ports.kRightClimber, false);
 
   private boolean m_reverse;
   
@@ -26,12 +26,6 @@ public class Climber extends SubsystemBase {
    * Creates a new Climber.
    */
   public Climber() {
-    m_leftClimber.configFactoryDefault();
-    m_rightClimber.configFactoryDefault();
-
-    m_leftClimber.setInverted(false);
-    m_rightClimber.setInverted(false);
-
     m_leftClimber.configOpenloopRamp(0.3);
     m_rightClimber.configOpenloopRamp(0.3);
 

@@ -9,12 +9,12 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 import frc.robot.util.AtomTalon;
+import frc.robot.util.AtomVictor;
 import frc.robot.util.AtomTalon.Subsystem;
 
 public class Shooter extends SubsystemBase {
@@ -43,8 +43,8 @@ public class Shooter extends SubsystemBase {
 
   // FAKE P VALUE!
   private static AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.ShooterConstants.kSlotIdx, 0.1);
-  private VictorSPX m_shooter = new VictorSPX(Constants.Ports.kShooterFront);
-  private VictorSPX m_loader = new VictorSPX(Constants.Ports.kShooterRear);
+  private AtomVictor m_shooter = new AtomVictor(Constants.Ports.kShooterFront, false);
+  private AtomVictor m_loader = new AtomVictor(Constants.Ports.kShooterRear, true);
 
   private Position m_position;
   
@@ -53,11 +53,6 @@ public class Shooter extends SubsystemBase {
    * Creates a new Shooter.
    */
   public Shooter() {
-    m_shooter.configFactoryDefault();
-    m_loader.configFactoryDefault();
-
-    m_shooter.setInverted(false);
-    m_loader.setInverted(true);
     m_rotator.setInverted(true);
     m_rotator.setSensorPhase(true);
 

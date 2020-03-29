@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 
@@ -23,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 import frc.robot.util.AtomTalon;
+import frc.robot.util.AtomVictor;
 import frc.robot.util.AtomTalon.Subsystem;
 
 public class Drivetrain extends SubsystemBase {
@@ -31,8 +31,8 @@ public class Drivetrain extends SubsystemBase {
   private static AtomTalon m_leftFront = new AtomTalon(Constants.Ports.kLeftMaster, Constants.DrivetrainConstants.kSlotIdxLeft, 0.1);
   private static AtomTalon m_rightFront = new AtomTalon(Constants.Ports.kRightSlave, Constants.DrivetrainConstants.kSlotIdxRight, 0.1);
 
-  private static WPI_VictorSPX m_leftRear = new WPI_VictorSPX(Constants.Ports.kLeftSlave);
-  private static WPI_VictorSPX m_rightRear = new WPI_VictorSPX(Constants.Ports.kRightSlave);
+  private static AtomVictor m_leftRear = new AtomVictor(Constants.Ports.kLeftSlave);
+  private static AtomVictor m_rightRear = new AtomVictor(Constants.Ports.kRightSlave);
 
   private SpeedControllerGroup m_left = new SpeedControllerGroup(m_leftFront, m_leftRear);
   private SpeedControllerGroup m_right = new SpeedControllerGroup(m_rightFront, m_rightRear);
@@ -47,9 +47,6 @@ public class Drivetrain extends SubsystemBase {
    * Creates a new Drivetrain.
    */
   public Drivetrain() {
-    m_leftRear.configFactoryDefault();
-    m_rightRear.configFactoryDefault();
-
     m_pigeon.configFactoryDefault();
 
     //m_leftRear.follow(m_leftFront);
