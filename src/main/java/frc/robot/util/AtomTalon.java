@@ -11,11 +11,11 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.util.Units;
-
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.Constants;
 
 /**
- * Customized, better Talon SRX.
+ * Customized, better {@link WPI_TalonSRX}.
  */
 public class AtomTalon extends WPI_TalonSRX {
 
@@ -27,15 +27,17 @@ public class AtomTalon extends WPI_TalonSRX {
         SHOOTER
     }
 
-    private int m_PID = 0; // PID Index - Inner (0) or Outer (1), we use inner.
     private int m_slot; // Slot Index
     private double m_distancePerPulse; // Distance traveled per encoder pulse.
     private double m_ticksPerDegree; // Encoder pulse per degree.
-    private int m_timeout = 10; // Timeout = 10ms.
+    private int m_port;
+
+    private final int kTimeout = 10; // Timeout = 10ms.
+    private final int kPIDIdx = 0; // PID Index - Inner (0) or Outer (1), we use inner.
     
     /**
      * Constructor for AtomTalon.
-     * @param port of the Talon.
+     * @param port of the {@link WPI_TalonSRX}.
      * @param slotIdx - slot to store PIDF constants (1-4).
      * @param kP
      * @param kI
@@ -44,6 +46,7 @@ public class AtomTalon extends WPI_TalonSRX {
      */
     public AtomTalon(int port, int slotIdx, double kP, double kI, double kD, double kF) {
         super(port);
+        m_port = port;
         super.configFactoryDefault();
         
         this.m_slot = slotIdx;
@@ -51,15 +54,15 @@ public class AtomTalon extends WPI_TalonSRX {
         super.config_kI(m_slot, kI);
         super.config_kD(m_slot, kD);
         super.config_kF(m_slot, kF);
-        super.selectProfileSlot(m_slot, m_PID);
+        super.selectProfileSlot(m_slot, kPIDIdx);
 
         super.configVoltageCompSaturation(11.0);
         super.enableVoltageCompensation(true);
     }
 
     /**
-     * Constructor for AtomTalon for specific Velocity-control.
-     * @param port of the Talon.
+     * Constructor for AtomTalon with specific Velocity-control.
+     * @param port of the {@link WPI_TalonSRX}.
      * @param slotIdx - slot to store PIDF constants (1-4).
      * @param kp
      */
@@ -74,11 +77,11 @@ public class AtomTalon extends WPI_TalonSRX {
     public void configEncoder(Subsystem s) {
         switch(s) {
             case DRIVETRAIN:
-                super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, m_PID, m_timeout);
+                super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kPIDIdx, kTimeout);
                 this.reset();
                 this.m_distancePerPulse = Math.PI * Constants.DrivetrainConstants.kWheelDiameterMeters / Constants.kEdgesPerRevolution;
             case SHOOTER:
-                super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, m_PID, m_timeout);
+                super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, kPIDIdx, kTimeout);
                 this.m_ticksPerDegree = Constants.kEdgesPerRevolution / (3 * 360); // (4096 / 1080) 1:3 Gearbox.
         }
     }
@@ -170,6 +173,13 @@ public class AtomTalon extends WPI_TalonSRX {
 
         double maxFeedForward = 0.07;
         return maxFeedForward * scalar;
+    }
+
+    /**
+     * Debug method - Prints the output of the {@link TalonSRX}.
+     */
+    public void debug() {
+        new PrintCommand("The output of TalonSRX in port " + m_port + " is: " + super.getMotorOutputPercent());
     }
 
 }
