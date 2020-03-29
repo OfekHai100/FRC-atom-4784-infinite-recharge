@@ -45,15 +45,16 @@ public class AtomTalon extends WPI_TalonSRX {
     public AtomTalon(int port, int slotIdx, double kP, double kI, double kD, double kF) {
         super(port);
         super.configFactoryDefault();
-
+        
         this.m_slot = slotIdx;
-
         super.config_kP(m_slot, kP);
         super.config_kI(m_slot, kI);
         super.config_kD(m_slot, kD);
         super.config_kF(m_slot, kF);
-
         super.selectProfileSlot(m_slot, m_PID);
+
+        super.configVoltageCompSaturation(11.0);
+        super.enableVoltageCompensation(true);
     }
 
     /**
