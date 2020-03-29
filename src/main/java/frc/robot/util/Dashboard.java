@@ -72,15 +72,17 @@ public class Dashboard {
                 default:
                     matchType = "PRCT";
             }
-
-            SmartDashboard.putNumber(matchType, matchNum);
-            SmartDashboard.putString(alliance, "Station "+station);
-            SmartDashboard.putString("Competing at:", event);
         } else {
-            SmartDashboard.putNumber("ATOM", 4784);
-            SmartDashboard.putString("Red Alliance", "Station " + 4784);
-            SmartDashboard.putString("Status:", "Practice Session");
+            matchType = "PRCT";
+            matchNum = 0;
+            alliance = "Red Alliance";
+            station = 0;
+            event = "Virtual Practice Event";
         }
+
+        SmartDashboard.putNumber(matchType, matchNum);
+        SmartDashboard.putString(alliance, "Station " + station);
+        SmartDashboard.putString("Competing at:", event);
     }
 
     /**
