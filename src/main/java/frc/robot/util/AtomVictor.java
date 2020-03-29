@@ -9,20 +9,20 @@ package frc.robot.util;
 
 import com.ctre.phoenix.motorcontrol.IMotorController;
 import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 
 /**
- * Customized, better {@link VictorSPX}.
+ * Customized, better {@link WPI_VictorSPX}.
  */
-public class AtomVictor extends VictorSPX {
+public class AtomVictor extends WPI_VictorSPX {
 
     private int m_port;
 
     /**
      * Constructor for AtomVictor.
-     * @param port of the {@link VictorSPX}.
+     * @param port of the {@link WPI_VictorSPX}.
      */
     public AtomVictor(int port) {
         super(port);
@@ -35,7 +35,7 @@ public class AtomVictor extends VictorSPX {
 
     /**
      * Constructor for AtomVictor with invert type parameter.
-     * @param port of the {@link VictorSPX}.
+     * @param port of the {@link WPI_VictorSPX}.
      * @param isReversed - True of false.
      */
     public AtomVictor(int port, boolean isReversed) {
@@ -51,7 +51,7 @@ public class AtomVictor extends VictorSPX {
 
     /**
      * Constructor for AtomVictor when following master motor.
-     * @param port of the {@link VictorSPX}.
+     * @param port of the {@link WPI_VictorSPX}.
      * @param master to follow.
      * @param opposeMaster - Invert type: Follow master's invert (false) or oppose it (true).
      */
@@ -72,7 +72,7 @@ public class AtomVictor extends VictorSPX {
     }
 
     /**
-     * Debug method - Prints the output of the {@link VictorSPX}.
+     * Debug method - Prints the output of the {@link WPI_VictorSPX}.
      */
     public void debug() {
         new PrintCommand("The output of VictorSPX in port " + m_port + " is: " + super.getMotorOutputPercent());
