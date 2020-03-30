@@ -187,8 +187,8 @@ public class RobotContainer {
       new InstantCommand(() -> m_shooter.goToAngle(m_calculation.getAngle(), false), m_shooter),
       new InstantCommand(() -> m_shooter.shoot(m_calculation.getVelocity()), m_shooter),
       new WaitCommand(4.5),
-      new InstantCommand(() -> m_shooter.stopAll()),
-      new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION)),
+      new InstantCommand(() -> m_shooter.stopAll(), m_shooter),
+      new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION), m_shooter),
       new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))
     );
     
