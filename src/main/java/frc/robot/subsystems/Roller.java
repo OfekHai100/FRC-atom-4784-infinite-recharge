@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
-import frc.robot.util.AtomVictor;
+import frc.robot.util.motors.AtomVictor;
 
 public class Roller extends SubsystemBase {
   

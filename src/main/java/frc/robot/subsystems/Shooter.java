@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
-import frc.robot.util.AtomTalon;
-import frc.robot.util.AtomVictor;
-import frc.robot.util.AtomTalon.Subsystem;
+import frc.robot.util.motors.AtomTalon;
+import frc.robot.util.motors.AtomVictor;
+import frc.robot.util.motors.AtomTalon.Subsystem;
 
 public class Shooter extends SubsystemBase {
 
