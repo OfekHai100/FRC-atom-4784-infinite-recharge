@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Roller;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Shooter.Position;
 
 public class IntakeCommand extends CommandBase {
   
