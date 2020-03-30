@@ -8,12 +8,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import frc.robot.subsystems.Roller;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.Position;
 
-public class IntakeCommand extends CommandBase {
+public class ActivateIntakeCommand extends CommandBase {
   
   private final Roller m_roller;
   private final Shooter m_shooter;
@@ -21,12 +20,12 @@ public class IntakeCommand extends CommandBase {
   private boolean m_reverse;
   
   /**
-   * Creates a new IntakeCommand.
+   * Creates a new ActivateIntakeCommand.
    */
-  public IntakeCommand(Roller roller, Shooter shooter) {
+  public ActivateIntakeCommand(Roller roller, Shooter shooter) {
     m_roller = roller;
     m_shooter = shooter;
-    m_reverse = m_roller.getReverse();
+    m_reverse = roller.getReverse();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(roller, shooter);
   }
@@ -34,8 +33,13 @@ public class IntakeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_roller.intake();
-    m_shooter.load(m_reverse);
+    if(!m_reverse) {
+      m_shooter.goToPosition(Position.LOADING);
+      m_roller.openRoller();
+    } else {
+      m_shooter.goToPosition(Position.LOWEST_POSITION);
+      m_roller.closeRoller();
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,8 +50,6 @@ public class IntakeCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_roller.stop();
-    m_shooter.stopLoader();
   }
 
   // Returns true when the command should end.

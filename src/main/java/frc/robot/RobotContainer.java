@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import frc.robot.commands.ActivateIntakeCommand;
 import frc.robot.commands.ClimbLeftCommand;
 import frc.robot.commands.ClimbRightCommand;
 import frc.robot.commands.IntakeCommand;
@@ -62,6 +62,7 @@ public class RobotContainer {
   PSController operator  = new PSController(Constants.Ports.kSecond);
 
   // Driver buttons:
+  JoystickButton activateIntake = new JoystickButton(driver, PSController.getTriangle());
   JoystickButton intake = new JoystickButton(driver, PSController.getL2());
   JoystickButton reverseIntake = new JoystickButton(driver, PSController.getUp());
   JoystickButton climbLeft = new JoystickButton(driver, PSController.getL1());
@@ -99,6 +100,7 @@ public class RobotContainer {
     );
 
     // Intake commands:
+    activateIntake.whenPressed(new ActivateIntakeCommand(m_roller, m_shooter));
     intake.whenHeld(new IntakeCommand(m_roller, m_shooter));
     reverseIntake.whenPressed(new InstantCommand(() -> m_roller.setReverse(m_roller.getReverse() ? false : true), m_roller));
 
