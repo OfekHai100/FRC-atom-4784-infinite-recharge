@@ -100,12 +100,12 @@ public class RobotContainer {
 
     // Intake commands:
     intake.whenHeld(new IntakeCommand(m_roller, m_shooter));
-    reverseIntake.whenPressed(new InstantCommand(() -> m_roller.setReverse(m_roller.getReverse() ? false : true)));
+    reverseIntake.whenPressed(new InstantCommand(() -> m_roller.setReverse(m_roller.getReverse() ? false : true), m_roller));
 
     // Climb commands:
     climbLeft.whenHeld(new ClimbLeftCommand(m_climber));
     climbRight.whenHeld(new ClimbRightCommand(m_climber));
-    reverseClimb.whenPressed(new InstantCommand(() -> m_climber.setReverse(m_climber.getReverse() ? false : true)));
+    reverseClimb.whenPressed(new InstantCommand(() -> m_climber.setReverse(m_climber.getReverse() ? false : true), m_roller));
 
     // Runs the sequence Calculate -> Set LED -> Correct Position -> Correct Angle -> Shoot -> Reset angle -> Stop motors -> Set LED:
     shootUsingVision.whenHeld(getVisionCommand());
@@ -119,8 +119,8 @@ public class RobotContainer {
       .andThen(new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))));
 
     // Shooter position commands:
-    lowerShooter.whenPressed(new InstantCommand(() -> m_shooter.goToPosition(Position.LOWEST_POSITION)));
-    resetShooter.whenPressed(new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION)));
+    lowerShooter.whenPressed(new InstantCommand(() -> m_shooter.goToPosition(Position.LOWEST_POSITION), m_shooter));
+    resetShooter.whenPressed(new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION), m_shooter));
 
     // Abort commands:
     driverAbort.whenPressed(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
