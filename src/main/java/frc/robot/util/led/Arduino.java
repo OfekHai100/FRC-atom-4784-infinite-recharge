@@ -54,6 +54,8 @@ public class Arduino {
         boolean failed = m_wire.writeBulk(data);
         if(failed) {
             System.out.println("FAILED TO PASS TO ARDUINO: " + input);
+        } else {
+            System.out.println("SUCCEFULY PASSED TO ARDUINO: " + input);
         }
     }
 
@@ -63,14 +65,18 @@ public class Arduino {
      */
     public String read() {
         byte[] data = new byte[kMaxBytes];
+        String finalResult;
         boolean failed = m_wire.read(this.m_adress, kMaxBytes, data);
         if(!failed) {
             String returnedString = new String(data);
             int pt = returnedString.indexOf((char) 255);
-            return (String) returnedString.subSequence(0, pt < 0 ? 0 : pt);
+            finalResult = (String) returnedString.subSequence(0, pt < 0 ? 0 : pt);
+            System.out.println("ARDUINO SENDS: " + finalResult);
+        } else {
+            System.out.println("FAILED TO READ FROM ARDUINO!");
+            finalResult = "";
         }
-        System.out.println("FAILED TO READ FROM ARDUINO!");
-        return "";
+        return finalResult;
     }
 
 }
