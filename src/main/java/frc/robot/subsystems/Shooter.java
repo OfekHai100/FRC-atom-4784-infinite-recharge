@@ -81,12 +81,18 @@ public class Shooter extends SubsystemBase {
 
   /**
    * Sets the Shooter to a specific angle.
-   * @param angle
+   * @param angle in degrees.
    * @param isPosition if called from the getPosition() method.
    */
   public void goToAngle(double angle, boolean isPosition) {
+    // Checks if the angle is not coming from a known Position, if so checks if a valid angle has been given and sets the current
+    // Position to OTHER.
     if(!isPosition) {
       m_position = Position.OTHER;
+      if(angle > Constants.ShooterConstants.kMaxAngle || angle < Constants.ShooterConstants.kMinAngle) {
+        System.out.println("Error! Invalid angle has been given!");
+        return; 
+      }
     }
 
     int setpoint = m_rotator.degreesToUnits(angle);
@@ -180,7 +186,6 @@ public class Shooter extends SubsystemBase {
     stopShooter();
     stopLoader();
   }
-
 
   /**
    * This method is used for the Pigeon IMU object in the Drivetrain class.
