@@ -23,6 +23,12 @@ public class Dashboard {
     private static SendableChooser<Path> m_chooser = new SendableChooser<Path>();
 
     /**
+     * Utility class, private constructor.
+     */
+    private Dashboard() {
+    }
+
+    /**
      * Displays the {@link Path} chooser at the begining of every match.
      */
     public static void putChooser() {
