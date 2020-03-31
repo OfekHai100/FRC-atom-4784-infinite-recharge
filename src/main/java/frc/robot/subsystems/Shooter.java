@@ -47,7 +47,6 @@ public class Shooter extends SubsystemBase {
   private AtomVictor m_loader = new AtomVictor(Constants.Ports.kShooterRear, true);
 
   private Position m_position;
-  
 
   /**
    * Creates a new Shooter.

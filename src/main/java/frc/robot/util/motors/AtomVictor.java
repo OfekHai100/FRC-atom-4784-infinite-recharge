@@ -34,7 +34,7 @@ public class AtomVictor extends WPI_VictorSPX {
     /**
      * Constructor for AtomVictor with invert type parameter.
      * @param port of the {@link WPI_VictorSPX}.
-     * @param isReversed - True of false.
+     * @param isReversed - True or false.
      */
     public AtomVictor(int port, boolean isReversed) {
         super(port);
