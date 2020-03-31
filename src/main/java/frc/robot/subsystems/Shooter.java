@@ -130,6 +130,30 @@ public class Shooter extends SubsystemBase {
   }
 
   /**
+   * Returns the current {@link Position} of the Shooter as a String value, used for debugging.
+   * @return Shooter position, as a String value.
+   */
+  private String getPositionAsString() {
+    switch(this.m_position) {
+      case STARTING_CONFIGURATION:
+        return "Strating Configuration";
+      case LOWEST_POSITION:
+        return "Lowest Position";
+      case LOADING:
+        return "Loading";
+      case PORT:
+        return "Power Port";
+      case TRENCH:
+        return "Trench Run";
+      case OTHER:
+        return "Other";
+      default:
+        // Will never get here!
+        return "";
+    }
+  }
+
+  /**
    * Stops the shooter motor.
    */
   public void stopShooter() {
@@ -170,7 +194,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Shooter Angle:", getAngle());
-    SmartDashboard.putNumber("Shooter Output:", m_shooter.getMotorOutputPercent());
+    SmartDashboard.putNumber("Shooter - Output:", m_shooter.getMotorOutputPercent());
+    SmartDashboard.putString("Shooter - Position:", getPositionAsString());
   }
 }
