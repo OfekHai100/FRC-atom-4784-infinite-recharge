@@ -11,8 +11,6 @@ import com.ctre.phoenix.motorcontrol.IMotorController;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-import edu.wpi.first.wpilibj2.command.PrintCommand;
-
 /**
  * Customized, better {@link WPI_VictorSPX}.
  */
@@ -75,7 +73,7 @@ public class AtomVictor extends WPI_VictorSPX {
      * Debug method - Prints the output of the {@link WPI_VictorSPX}.
      */
     public void debug() {
-        new PrintCommand("The output of VictorSPX in port " + m_port + " is: " + super.getMotorOutputPercent());
+        System.out.println("The output of VictorSPX in port " + m_port + " is: " + super.getMotorOutputPercent());
     }
 
 }

@@ -11,7 +11,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.util.Units;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.Constants;
 
 /**
@@ -179,7 +178,7 @@ public class AtomTalon extends WPI_TalonSRX {
      * Debug method - Prints the output of the {@link TalonSRX}.
      */
     public void debug() {
-        new PrintCommand("The output of TalonSRX in port " + m_port + " is: " + super.getMotorOutputPercent());
+        System.out.println("The output of TalonSRX in port " + m_port + " is: " + super.getMotorOutputPercent());
     }
 
 }
