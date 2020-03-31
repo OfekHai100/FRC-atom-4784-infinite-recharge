@@ -17,7 +17,7 @@ public class ActivateIntakeCommand extends CommandBase {
   private final Roller m_roller;
   private final Shooter m_shooter;
 
-  private boolean m_reverse;
+  private boolean m_inIntakeMode;
   
   /**
    * Creates a new ActivateIntakeCommand.
@@ -25,7 +25,7 @@ public class ActivateIntakeCommand extends CommandBase {
   public ActivateIntakeCommand(Roller roller, Shooter shooter) {
     m_roller = roller;
     m_shooter = shooter;
-    m_reverse = roller.getReverse();
+    m_inIntakeMode = roller.isIntakeModeActivated();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(roller, shooter);
   }
@@ -33,7 +33,7 @@ public class ActivateIntakeCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(!m_reverse) {
+    if(m_inIntakeMode) {
       m_shooter.goToPosition(Position.LOADING);
       m_roller.openRoller();
     } else {

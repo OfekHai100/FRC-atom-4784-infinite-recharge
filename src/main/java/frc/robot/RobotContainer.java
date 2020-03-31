@@ -101,7 +101,9 @@ public class RobotContainer {
     );
 
     // Intake commands:
-    activateIntake.whenPressed(new ActivateIntakeCommand(m_roller, m_shooter));
+    activateIntake.whenPressed(new ActivateIntakeCommand(m_roller, m_shooter)
+      .beforeStarting(() -> m_roller.activateIntakeMode(m_roller.isIntakeModeActivated() ? false : true), m_roller)
+    );
     intake.whenHeld(new IntakeCommand(m_roller, m_shooter));
     reverseIntake.whenPressed(new InstantCommand(() -> m_roller.setReverse(m_roller.getReverse() ? false : true), m_roller));
 

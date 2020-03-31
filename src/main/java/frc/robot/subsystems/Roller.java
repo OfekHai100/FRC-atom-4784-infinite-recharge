@@ -23,12 +23,14 @@ public class Roller extends SubsystemBase {
   private DoubleSolenoid m_cylinder = new DoubleSolenoid(Constants.Ports.kCylinderForward, Constants.Ports.kCylinderReverse);
 
   private boolean m_reverse;
+  private boolean m_inIntakeMode;
   
   /**
    * Creates a new Roller.
    */
   public Roller() {
     m_reverse = false;
+    m_inIntakeMode = false;
   }
 
   /**
@@ -75,9 +77,27 @@ public class Roller extends SubsystemBase {
     return this.m_reverse;
   }
 
+  /**
+   * Activates or disables intake mode.
+   * <p> Intake mode is when the Shooter position is in loading position and the roller is open.
+   * @param activate - True to activate, false to disable.
+   */
+  public void activateIntakeMode(boolean activate) {
+    this.m_inIntakeMode = activate;
+  }
+
+  /**
+   * Returns the current status of intake mode.
+   * @return True if in intake mode, false if not.
+   */
+  public boolean isIntakeModeActivated() {
+    return this.m_inIntakeMode;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("Roller - Reverse:", this.m_reverse);
+    SmartDashboard.putBoolean("Roller - Intake Mode:", this.m_inIntakeMode);
   }
 }
