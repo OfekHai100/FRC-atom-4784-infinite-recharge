@@ -51,7 +51,7 @@ public class Arduino {
         for(int i = 0 ; i < charArray.length ; i++) {
             data[i] = (byte) charArray[i];
         }
-        boolean failed = m_wire.transaction(data, data.length, null, 0);
+        boolean failed = m_wire.writeBulk(data);
         if(failed) {
             System.out.println("FAILED TO PASS TO ARDUINO: " + input);
         }
