@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -199,7 +200,7 @@ public class RobotContainer {
       new WaitCommand(4.5),
       new InstantCommand(() -> m_shooter.stopAll(), m_shooter),
       new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION), m_shooter),
-      new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))
+      new InstantCommand(() -> Robot.ledManager.setState(DriverStation.getInstance().isOperatorControl() ? State.TELEOP : State.AUTO))
     );
     
     return visionCommand;
