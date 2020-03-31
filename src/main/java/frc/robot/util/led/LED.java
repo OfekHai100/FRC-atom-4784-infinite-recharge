@@ -94,6 +94,9 @@ public class LED {
         return m_onVision;
     }
 
+    /**
+     * Runs the LED ring used for vision, writes to the {@link Arduino} connected to the Robot via I2C.
+     */
     public void runRing() {
         if(!m_passed && m_onVision) {
             Arduino.getInstnace().write("OPEN");
