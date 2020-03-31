@@ -72,6 +72,7 @@ public class RobotContainer {
   JoystickButton driverAbort = new JoystickButton(driver, PSController.getPad());
   
   // Operator buttons:
+  JoystickButton activateVision = new JoystickButton(operator, PSController.getTriangle());
   JoystickButton shootUsingVision = new JoystickButton(operator, PSController.getR2());
   JoystickButton shootFromTrench = new JoystickButton(operator, PSController.getR1());
   JoystickButton shootFromPort = new JoystickButton(operator, PSController.getL1());
@@ -108,6 +109,10 @@ public class RobotContainer {
     climbLeft.whenHeld(new ClimbLeftCommand(m_climber));
     climbRight.whenHeld(new ClimbRightCommand(m_climber));
     reverseClimb.whenPressed(new InstantCommand(() -> m_climber.setReverse(m_climber.getReverse() ? false : true), m_roller));
+
+    activateVision.whenPressed(
+      new InstantCommand(() -> Robot.ledManager.activateVision(Robot.ledManager.isVisionActivated() ? false : true))
+    );
 
     // Runs the sequence Calculate -> Set LED -> Correct Position -> Correct Angle -> Shoot -> Reset angle -> Stop motors -> Set LED:
     shootUsingVision.whenHeld(getVisionCommand());

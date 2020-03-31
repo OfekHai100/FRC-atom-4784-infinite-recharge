@@ -77,7 +77,7 @@ public class LED {
         m_switched = true;
     }
 
-    public void setOnVision(boolean onVision) {
+    public void activateVision(boolean onVision) {
         m_onVision = true;
         m_passed = false;
     }
@@ -86,7 +86,7 @@ public class LED {
      * Return true if the Robot is using vision, false if not.
      * @return onVision
      */
-    public boolean getOnVision() {
+    public boolean isVisionActivated() {
         return m_onVision;
     }
 
