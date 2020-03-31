@@ -37,7 +37,6 @@ public class Arduino {
     public static Arduino getInstnace() {
         if(m_instance == null) {
             m_instance = new Arduino();
-            return m_instance;
         }
         return m_instance;
     }
