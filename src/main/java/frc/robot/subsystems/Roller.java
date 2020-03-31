@@ -78,9 +78,9 @@ public class Roller extends SubsystemBase {
   }
 
   /**
-   * Activates or disables intake mode.
+   * Activates or deactivates intake mode.
    * <p> Intake mode is when the Shooter position is in loading position and the roller is open.
-   * @param activate - True to activate, false to disable.
+   * @param activate - True to activate, false to deactivate.
    */
   public void activateIntakeMode(boolean activate) {
     this.m_inIntakeMode = activate;

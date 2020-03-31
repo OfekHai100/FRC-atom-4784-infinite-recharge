@@ -78,8 +78,8 @@ public class LED {
     }
 
     /**
-     * Activates or disables the vision mode on the Robot.
-     * @param activate - True to activate, false to disable.
+     * Activates or deactivates the vision mode on the Robot.
+     * @param activate - True to activate, false to deactivate.
      */
     public void activateVision(boolean activate) {
         m_onVision = activate;
