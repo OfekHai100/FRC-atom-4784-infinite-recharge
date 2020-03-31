@@ -51,7 +51,10 @@ public class Arduino {
         for(int i = 0 ; i < charArray.length ; i++) {
             data[i] = (byte) charArray[i];
         }
-        m_wire.transaction(data, data.length, null, 0);
+        boolean failed = m_wire.transaction(data, data.length, null, 0);
+        if(failed) {
+            System.out.println("FAILED TO PASS TO ARDUINO: " + input);
+        }
     }
 
     /**
@@ -60,10 +63,14 @@ public class Arduino {
      */
     public String read() {
         byte[] data = new byte[kMaxBytes];
-        m_wire.read(this.m_adress, kMaxBytes, data);
-        String returnedString = new String(data);
-        int pt = returnedString.indexOf((char) 255);
-        return (String) returnedString.subSequence(0, pt < 0 ? 0 : pt);
+        boolean failed = m_wire.read(this.m_adress, kMaxBytes, data);
+        if(!failed) {
+            String returnedString = new String(data);
+            int pt = returnedString.indexOf((char) 255);
+            return (String) returnedString.subSequence(0, pt < 0 ? 0 : pt);
+        }
+        System.out.println("FAILED TO READ FROM ARDUINO!");
+        return "";
     }
 
 }
