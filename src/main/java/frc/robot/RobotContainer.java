@@ -55,7 +55,7 @@ public class RobotContainer {
   private final Roller m_roller = new Roller();
 
   // Vision:
-  private VisionController m_vision = new VisionController();
+  private final VisionController m_vision = new VisionController();
   private Calculation m_calculation;
 
   // Joysticks:
