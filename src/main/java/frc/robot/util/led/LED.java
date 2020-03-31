@@ -77,8 +77,12 @@ public class LED {
         m_switched = true;
     }
 
-    public void activateVision(boolean onVision) {
-        m_onVision = true;
+    /**
+     * Activates or disables the vision mode on the Robot.
+     * @param activate - True to activate, false to disable.
+     */
+    public void activateVision(boolean activate) {
+        m_onVision = activate;
         m_passed = false;
     }
 
