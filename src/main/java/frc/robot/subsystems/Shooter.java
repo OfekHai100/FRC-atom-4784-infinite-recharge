@@ -85,6 +85,12 @@ public class Shooter extends SubsystemBase {
    * @param isPosition if called from the getPosition() method.
    */
   public void goToAngle(double angle, boolean isPosition) {
+    // Checks if the angle given equals to 0, meaning that the vision calculation did not need angle correction for the final result:
+    if(angle == 0.0) {
+      System.out.println("Calculation result - Angle correction was not needed!");
+      return;
+    }
+    
     // Checks if the angle is not coming from a known Position, if so checks if a valid angle has been given and sets the current
     // Position to OTHER.
     if(!isPosition) {
