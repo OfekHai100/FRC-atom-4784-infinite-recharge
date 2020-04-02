@@ -67,6 +67,7 @@ public class RobotContainer {
 
   // Debug Mode:
   private boolean m_inDebugMode = true;
+  private boolean m_inSafeMode = false;
 
   // Joysticks:
   PSController driver = new PSController(Constants.Ports.kMain);
@@ -149,7 +150,7 @@ public class RobotContainer {
 
     // Debug Mode:
     if(m_inDebugMode) {
-      enterDebugMode.whenPressed(new DebugCommand(m_climber, m_drive, m_roller, m_shooter));
+      enterDebugMode.whenPressed(new DebugCommand(m_climber, m_drive, m_roller, m_shooter, m_inSafeMode));
     }
 
   }

@@ -17,15 +17,18 @@ import frc.robot.subsystems.Roller;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.Position;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
+/**
+ * This command checks all subsystems in order. It may be used for debugging purposes or pre-match check.
+ * <p> To activate this command, change m_inDebugMode to true in the RobotContainer class, the command
+ * will be controlled by the operator with the UP button on the controller.
+ */
 public class DebugCommand extends SequentialCommandGroup {
 
   /**
    * Creates a new DebugCommand.
+   * @param inSafeMode - If in safe mode the Robot will not move at all during Debug Mode, meaning Drivetrain debugging is not active.
    */
-  public DebugCommand(Climber climber, Drivetrain drive, Roller roller, Shooter shooter) {
+  public DebugCommand(Climber climber, Drivetrain drive, Roller roller, Shooter shooter, boolean inSafeMode) {
     addCommands(
       new PrintCommand("ENTERING DEBUG MODE!"),
       
@@ -49,17 +52,17 @@ public class DebugCommand extends SequentialCommandGroup {
       new WaitCommand(2.5),
 
       // Drivetrain:
-      new PrintCommand("DRIVETRAIN DISTANCE: " + drive.getDistance()),
-      new InstantCommand(() -> drive.arcade(-0.5, 0), drive),
-      new WaitCommand(2.0),
-      new PrintCommand("NEW DRIVETRAIN DISTANCE: " + drive.getDistance()),
-      new WaitCommand(1.5),
-      new PrintCommand("ROBOT HEADING: " + drive.getHeading()),
-      new InstantCommand(() -> drive.arcade(0, 0.5), drive),
-      new WaitCommand(2.0),
-      new PrintCommand("NEW ROBOT HEADING: " + drive.getHeading()),
+      new PrintCommand(inSafeMode ? "SAFE MODE ACTIVE!" : "DRIVETRAIN DISTANCE: " + drive.getDistance()),
+      new InstantCommand(() -> drive.arcade(inSafeMode ? 0.0 : -0.5, 0), drive),
+      new WaitCommand(inSafeMode ? 0.0 : 2.0),
+      new PrintCommand(inSafeMode ? "" : "NEW DRIVETRAIN DISTANCE: " + drive.getDistance()),
+      new WaitCommand(inSafeMode ? 0.0 : 1.5),
+      new PrintCommand(inSafeMode ? "" : "ROBOT HEADING: " + drive.getHeading()),
+      new InstantCommand(() -> drive.arcade(0, inSafeMode ? 0.0 : 0.5), drive),
+      new WaitCommand(inSafeMode ? 0.0 : 2.0),
+      new PrintCommand(inSafeMode ? "" : "NEW ROBOT HEADING: " + drive.getHeading()),
       new InstantCommand(() -> drive.stop()),
-      new WaitCommand(2.5),
+      new WaitCommand(inSafeMode ? 0.0 : 2.5),
 
       // Roller:
       new InstantCommand(() -> roller.activateIntakeMode(true), roller),
