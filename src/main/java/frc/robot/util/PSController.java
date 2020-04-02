@@ -91,7 +91,7 @@ public class PSController extends Joystick {
      * @return Right button value
      */
     public static int getRight() {
-        return 9;
+        return 90;
     }
 
     /**
@@ -99,7 +99,7 @@ public class PSController extends Joystick {
      * @return Left button value
      */
     public static int getLeft() {
-        return 11;
+        return 270;
     }
 
     /**
@@ -107,7 +107,7 @@ public class PSController extends Joystick {
      * @return Up button value
      */
     public static int getUp() {
-        return 10;
+        return 0;
     }
 
     /**
@@ -115,7 +115,7 @@ public class PSController extends Joystick {
      * @return Down button value
      */
     public static int getDown() {
-        return 12;
+        return 180;
     }
 
     /**
