@@ -346,7 +346,7 @@ public class VisionController {
 
     /**
      * This method calculates waypoint between initpoint and endpoint in a position-correction path. 
-     * This is a simple average calculation.
+     * <p> This is a simple average calculation.
      * @param initpoint Current position of the Robot, initpoint, as a {@link Pose2d}.
      * @param endpoint Endpoint of the path, as a {@link Pose2d}.
      * @return Calculated waypoint, as a {@link Translation2d}.
