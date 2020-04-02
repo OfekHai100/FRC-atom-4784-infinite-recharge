@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 public class Calculation {
 
     private double m_velocity; // In TalonSRX Percent-Output units.
-    private double m_angle; // Angle--correction of the Shooter, in degrees.
+    private double m_angle; // Angle-correction of the Shooter, in degrees.
     private Trajectory m_path; // Position-Correction path of the Robot, as a Trajectory.
 
     /**
@@ -29,6 +29,13 @@ public class Calculation {
         this.m_velocity = velocity;
         this.m_angle = angle;
         this.m_path = path;
+    }
+
+    /**
+     * Constructor of an empty calculation.
+     */
+    public Calculation() {
+        this(0.0, 0.0, null);
     }
 
     /**

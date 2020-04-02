@@ -172,7 +172,7 @@ public class VisionController {
         } 
         
         // No valid target has been found, therefore can not calculate!
-        return new Calculation(0.0, 0.0, null);
+        return new Calculation();
     }
 
     /**
