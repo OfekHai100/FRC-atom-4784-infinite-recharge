@@ -21,11 +21,13 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.ActivateIntakeCommand;
 import frc.robot.commands.ClimbLeftCommand;
 import frc.robot.commands.ClimbRightCommand;
+import frc.robot.commands.DebugCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShootFromPortCommand;
 import frc.robot.commands.ShootFromTrenchCommand;
@@ -63,28 +65,32 @@ public class RobotContainer {
   private final VisionController m_vision = new VisionController();
   private Calculation m_calculation;
 
+  // Debug Mode:
+  private boolean m_inDebugMode = true;
+
   // Joysticks:
   PSController driver = new PSController(Constants.Ports.kMain);
   PSController operator  = new PSController(Constants.Ports.kSecond);
 
   // Driver buttons:
-  JoystickButton activateIntake = new JoystickButton(driver, PSController.getTriangle());
-  JoystickButton intake = new JoystickButton(driver, PSController.getL2());
-  JoystickButton reverseIntake = new JoystickButton(driver, PSController.getUp());
-  JoystickButton climbLeft = new JoystickButton(driver, PSController.getL1());
-  JoystickButton climbRight = new JoystickButton(driver, PSController.getR1());
-  JoystickButton reverseClimb = new JoystickButton(driver, PSController.getDown());
-  JoystickButton lowerShooter = new JoystickButton(driver, PSController.getIx());
-  JoystickButton driverAbort = new JoystickButton(driver, PSController.getPad());
+  Button activateIntake = new JoystickButton(driver, PSController.getTriangle());
+  Button intake = new JoystickButton(driver, PSController.getL2());
+  Button reverseIntake = new POVButton(driver, PSController.getUp());
+  Button climbLeft = new JoystickButton(driver, PSController.getL1());
+  Button climbRight = new JoystickButton(driver, PSController.getR1());
+  Button reverseClimb = new POVButton(driver, PSController.getDown());
+  Button lowerShooter = new JoystickButton(driver, PSController.getIx());
+  Button driverAbort = new JoystickButton(driver, PSController.getPad());
   
   // Operator buttons:
-  JoystickButton activateVision = new JoystickButton(operator, PSController.getTriangle());
-  JoystickButton shootUsingVision = new JoystickButton(operator, PSController.getR2());
-  JoystickButton shootFromTrench = new JoystickButton(operator, PSController.getR1());
-  JoystickButton shootFromPort = new JoystickButton(operator, PSController.getL1());
-  JoystickButton simpleShoot = new JoystickButton(operator, PSController.getSquare());
-  JoystickButton resetShooter = new JoystickButton(driver, PSController.getIx());
-  JoystickButton operatorAbort = new JoystickButton(driver, PSController.getPad());
+  Button activateVision = new JoystickButton(operator, PSController.getTriangle());
+  Button shootUsingVision = new JoystickButton(operator, PSController.getR2());
+  Button shootFromTrench = new JoystickButton(operator, PSController.getR1());
+  Button shootFromPort = new JoystickButton(operator, PSController.getL1());
+  Button simpleShoot = new JoystickButton(operator, PSController.getSquare());
+  Button resetShooter = new JoystickButton(operator, PSController.getIx());
+  Button operatorAbort = new JoystickButton(operator, PSController.getPad());
+  Button enterDebugMode = new POVButton(operator, PSController.getUp());
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -140,6 +146,11 @@ public class RobotContainer {
     // Abort commands:
     driverAbort.whenPressed(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
     operatorAbort.whenPressed(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
+
+    // Debug Mode:
+    if(m_inDebugMode) {
+      enterDebugMode.whenPressed(new DebugCommand(m_climber, m_drive, m_roller, m_shooter));
+    }
 
   }
 
