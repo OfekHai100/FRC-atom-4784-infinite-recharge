@@ -146,8 +146,8 @@ public class RobotContainer {
     resetShooter.whenPressed(new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION), m_shooter));
 
     // Abort commands:
-    driverAbort.whenPressed(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
-    operatorAbort.whenPressed(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
+    driverAbort.whenPressed(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()).andThen(new PrintCommand("ABORT WAS USED!")));
+    operatorAbort.whenPressed(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()).andThen(new PrintCommand("ABORT WAS USED!")));
 
     // Debug Mode:
     if(m_inDebugMode) {
