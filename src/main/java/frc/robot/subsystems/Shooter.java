@@ -60,6 +60,8 @@ public class Shooter extends SubsystemBase {
     m_rotator.configClosedloopRamp(0.4);
 
     m_rotator.configEncoder(Subsystem.SHOOTER);
+    
+    m_position = Position.STARTING_CONFIGURATION;
   }
 
   /**
@@ -144,7 +146,7 @@ public class Shooter extends SubsystemBase {
    * Returns the current {@link Position} of the Shooter as a String value, used for debugging.
    * @return Shooter position, as a String value.
    */
-  private String getPositionAsString() {
+  public String getPositionAsString() {
     switch(this.m_position) {
       case STARTING_CONFIGURATION:
         return "Strating Configuration";
