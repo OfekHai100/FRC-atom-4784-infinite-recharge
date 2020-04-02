@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Roller;
@@ -26,7 +27,8 @@ public class DebugCommand extends SequentialCommandGroup {
 
   /**
    * Creates a new DebugCommand.
-   * @param inSafeMode - If in safe mode the Robot will not move at all during Debug Mode, meaning Drivetrain debugging is not active.
+   * @param inSafeMode - If in safe mode the Drivetrain will not move at all during Debug Mode,
+   *  meaning Drivetrain debugging is not active.
    */
   public DebugCommand(Climber climber, Drivetrain drive, Roller roller, Shooter shooter, boolean inSafeMode) {
     addCommands(
@@ -53,7 +55,7 @@ public class DebugCommand extends SequentialCommandGroup {
 
       // Drivetrain:
       new PrintCommand(inSafeMode ? "SAFE MODE ACTIVE!" : "DRIVETRAIN DISTANCE: " + drive.getDistance()),
-      new InstantCommand(() -> drive.arcade(inSafeMode ? 0.0 : -0.5, 0), drive),
+      new InstantCommand(() -> drive.arcade(inSafeMode ? 0.0 : 0.5, 0), drive),
       new WaitCommand(inSafeMode ? 0.0 : 2.0),
       new PrintCommand(inSafeMode ? "" : "NEW DRIVETRAIN DISTANCE: " + drive.getDistance()),
       new WaitCommand(inSafeMode ? 0.0 : 1.5),
