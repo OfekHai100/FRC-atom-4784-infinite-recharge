@@ -48,6 +48,17 @@ public class Roller extends SubsystemBase {
   }
 
   /**
+   * Returns the status of the Intake mechanism.
+   * @return True if open, false if closed.
+   */
+  public boolean isOpen() {
+    if(m_cylinder.get() == Value.kForward) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Starts to spin the motors.
    */
   public void intake() {

@@ -8,13 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.subsystems.LED.State;
 import frc.robot.util.Dashboard;
-import frc.robot.util.led.LED;
-import frc.robot.util.led.LED.State;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -27,15 +24,12 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  public static LED ledManager;
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
-    ledManager = new LED();
     Dashboard.putChooser();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -57,11 +51,6 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    
-    // LED Manager periodic functions:
-    ledManager.runStrip();
-    ledManager.runRing();
-    SmartDashboard.putBoolean("Vision Mode - Activated:", ledManager.isVisionActivated());
   }
 
   /**
@@ -80,7 +69,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    ledManager.setState(State.AUTO);
+    m_robotContainer.ledManager.setState(State.AUTO);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand(Dashboard.getSelectedPath());
 
     // schedule the autonomous command (example)
@@ -98,7 +87,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    ledManager.setState(State.TELEOP);
+    m_robotContainer.ledManager.setState(State.TELEOP);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
