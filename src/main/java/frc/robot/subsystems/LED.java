@@ -5,16 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.util.led;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.util.Arduino;
 
 /**
  * Manager class for LED strips on the Robot.
  */
-public class LED {
+public class LED extends SubsystemBase {
 
     /**
      * Enum for current Robot state, based on action or match period.
@@ -118,6 +121,14 @@ public class LED {
             }
             m_ledStrip.setData(m_ledStripBuffer);
         }
+    }
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+        runRing();
+        runStrip();
+        SmartDashboard.putBoolean("Vision Mode - Activated:", isVisionActivated());
     }
 
 }

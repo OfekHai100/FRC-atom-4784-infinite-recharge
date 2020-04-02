@@ -34,11 +34,12 @@ import frc.robot.pathing.PathManager;
 import frc.robot.pathing.PathManager.Path;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.LED;
+import frc.robot.subsystems.LED.State;
 import frc.robot.subsystems.Roller;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.Position;
 import frc.robot.util.PSController;
-import frc.robot.util.led.LED.State;
 import frc.robot.vision.Calculation;
 import frc.robot.vision.VisionController;
 
@@ -54,6 +55,9 @@ public class RobotContainer {
   private final Climber m_climber = new Climber();
   private final Shooter m_shooter = new Shooter();
   private final Roller m_roller = new Roller();
+
+  // LED:
+  public final LED ledManager = new LED();
 
   // Vision:
   private final VisionController m_vision = new VisionController();
@@ -115,19 +119,19 @@ public class RobotContainer {
     reverseClimb.whenPressed(new InstantCommand(() -> m_climber.setReverse(m_climber.getReverse() ? false : true), m_roller));
 
     activateVision.whenPressed(
-      new InstantCommand(() -> Robot.ledManager.activateVision(Robot.ledManager.isVisionActivated() ? false : true))
+      new InstantCommand(() -> ledManager.activateVision(ledManager.isVisionActivated() ? false : true))
     );
 
     // Runs the sequence Calculate -> Set LED -> Correct Position -> Correct Angle -> Shoot -> Reset angle -> Stop motors -> Set LED:
     shootUsingVision.whenHeld(getVisionCommand());
 
     // Other Shooter commands:
-    shootFromTrench.whenHeld((new ShootFromTrenchCommand(m_shooter).beforeStarting(() -> Robot.ledManager.setState(State.SHOOTER_TRENCH)))
-      .andThen(new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))));
-    shootFromPort.whenHeld((new ShootFromPortCommand(m_shooter).beforeStarting(() -> Robot.ledManager.setState(State.SHOOTER_PORT)))
-      .andThen(new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))));
-    simpleShoot.whenHeld((new SimpleShootCommand(m_shooter).beforeStarting(() -> Robot.ledManager.setState(State.SHOOTER_SIMPLE)))
-      .andThen(new InstantCommand(() -> Robot.ledManager.setState(State.TELEOP))));
+    shootFromTrench.whenHeld((new ShootFromTrenchCommand(m_shooter).beforeStarting(() -> ledManager.setState(State.SHOOTER_TRENCH), ledManager))
+      .andThen(new InstantCommand(() -> ledManager.setState(State.TELEOP), ledManager)));
+    shootFromPort.whenHeld((new ShootFromPortCommand(m_shooter).beforeStarting(() -> ledManager.setState(State.SHOOTER_PORT), ledManager))
+      .andThen(new InstantCommand(() -> ledManager.setState(State.TELEOP), ledManager)));
+    simpleShoot.whenHeld((new SimpleShootCommand(m_shooter).beforeStarting(() -> ledManager.setState(State.SHOOTER_SIMPLE), ledManager))
+      .andThen(new InstantCommand(() -> ledManager.setState(State.TELEOP), ledManager)));
 
     // Shooter position commands:
     lowerShooter.whenPressed(new InstantCommand(() -> m_shooter.goToPosition(Position.LOWEST_POSITION), m_shooter));
@@ -193,14 +197,14 @@ public class RobotContainer {
   public Command getVisionCommand() {
     Command visionCommand = new InstantCommand(() -> m_calculation = m_vision.calculate(m_shooter.getAngle(), m_drive.getPose()))
     .andThen(
-      new InstantCommand(() -> Robot.ledManager.setState(State.SHOOTER_VISION)),
+      new InstantCommand(() -> ledManager.setState(State.SHOOTER_VISION), ledManager),
       new RunCommand(() -> getTrajectoryCommand(m_calculation.getPath()), m_drive),
       new InstantCommand(() -> m_shooter.goToAngle(m_calculation.getAngle(), false), m_shooter),
       new InstantCommand(() -> m_shooter.shoot(m_calculation.getVelocity()), m_shooter),
       new WaitCommand(4.5),
       new InstantCommand(() -> m_shooter.stopAll(), m_shooter),
       new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION), m_shooter),
-      new InstantCommand(() -> Robot.ledManager.setState(DriverStation.getInstance().isOperatorControl() ? State.TELEOP : State.AUTO))
+      new InstantCommand(() -> ledManager.setState(DriverStation.getInstance().isOperatorControl() ? State.TELEOP : State.AUTO), ledManager)
     );
     
     return visionCommand;
