@@ -53,8 +53,8 @@ public class LED extends SubsystemBase {
     }
 
     private State m_state;
-    private AddressableLED m_ledStrip = new AddressableLED(Constants.Ports.kLEDStrip);
-    private AddressableLEDBuffer m_ledStripBuffer = new AddressableLEDBuffer(40);
+    private AddressableLED m_ledStrip;
+    private AddressableLEDBuffer m_ledStripBuffer;
 
     private boolean m_onVision;
     private boolean m_switched;
@@ -64,6 +64,9 @@ public class LED extends SubsystemBase {
      * Constructor, inits all LEDs.
      */
     public LED() {
+        m_ledStrip = new AddressableLED(Constants.Ports.kLEDStrip);
+        m_ledStripBuffer = new AddressableLEDBuffer(40);
+
         m_state = State.INIT;
         m_switched = true;
         m_onVision = false;
