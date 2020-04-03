@@ -8,22 +8,20 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.sensors.PigeonIMU;
-import com.ctre.phoenix.sensors.PigeonIMU.CalibrationMode;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
-import frc.robot.util.motors.AtomTalon;
-import frc.robot.util.motors.AtomVictor;
-import frc.robot.util.motors.AtomTalon.Subsystem;
+import frc.robot.util.hardware.AtomPigeon;
+import frc.robot.util.hardware.AtomTalon;
+import frc.robot.util.hardware.AtomVictor;
+import frc.robot.util.hardware.AtomTalon.Subsystem;
 
 public class Drivetrain extends SubsystemBase {
   
@@ -37,7 +35,7 @@ public class Drivetrain extends SubsystemBase {
   private SpeedControllerGroup m_left = new SpeedControllerGroup(m_leftFront, m_leftRear);
   private SpeedControllerGroup m_right = new SpeedControllerGroup(m_rightFront, m_rightRear);
 
-  private PigeonIMU m_pigeon = new PigeonIMU(Shooter.getTalon());
+  private AtomPigeon m_pigeon;
 
   private DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 
@@ -47,16 +45,7 @@ public class Drivetrain extends SubsystemBase {
    * Creates a new Drivetrain.
    */
   public Drivetrain() {
-    m_pigeon.configFactoryDefault();
-
-    //m_leftRear.follow(m_leftFront);
-    //m_rightRear.follow(m_rightFront);
-
-    //m_leftFront.setInverted(false);
-    //m_rightFront.setInverted(true);
-
-    //m_leftRear.setInverted(InvertType.FollowMaster);
-    //m_rightRear.setInverted(InvertType.FollowMaster);
+    m_pigeon = new AtomPigeon(Shooter.getTalon(), Constants.DrivetrainConstants.kGyroReversed);
 
     m_leftFront.configOpenloopRamp(0.4);
     m_rightFront.configOpenloopRamp(0.4);
@@ -66,7 +55,7 @@ public class Drivetrain extends SubsystemBase {
     m_leftFront.configEncoder(Subsystem.DRIVETRAIN);
     m_rightFront.configEncoder(Subsystem.DRIVETRAIN);
 
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    m_odometry = new DifferentialDriveOdometry(m_pigeon.getAsRotation2d());
   }
 
   /**
@@ -98,24 +87,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   /**
-   * Get the Yaw heading of the Robot.
-   * @return Robot's heading in degrees, from -180 to 180.
-   */
-  public double getHeading() {
-    return Math.IEEEremainder(getYPR()[0], 360) * (Constants.DrivetrainConstants.kGyroReversed ? -1.0 : 1.0);
-  }
-
-  /**
-   * Get the Yaw, Pitch and Roll values of the Robot as an array.
-   * @return yaw, pitch, roll.
-   */
-  public double[] getYPR() {
-    double[] ypr = new double[3];
-    m_pigeon.getYawPitchRoll(ypr);
-    return ypr;
-  }
-
-  /**
    * Get the current position of the Robot.
    * @return Current position.
    */
@@ -140,6 +111,14 @@ public class Drivetrain extends SubsystemBase {
   }
 
   /**
+   * Returns the current heading of the Robot, between -180 to 180 degrees.
+   * @return Robot heading.
+   */
+  public double getHeading() {
+    return m_pigeon.getHeading();
+  }
+
+  /**
    * Stops all motors.
    */
   public void stop() {
@@ -158,32 +137,18 @@ public class Drivetrain extends SubsystemBase {
   }
 
   /**
-   * Resets the Gyro.
-   */
-  public void zero() {
-    m_pigeon.setYaw(0);
-  }
-
-  /**
-   * Calibrates the Gyro.
-   */
-  public void calibratePigeon() {
-    m_pigeon.enterCalibrationMode(CalibrationMode.BootTareGyroAccel);
-  }
-
-  /**
    * Resets Robot odometry.
    * @param pose current position of the Robot, as a {@link Pose2d} obejct.
    */
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
-    m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
+    m_odometry.resetPosition(pose, m_pigeon.getAsRotation2d());
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftFront.getDistanceMeters(), m_rightFront.getDistanceMeters());
+    m_odometry.update(m_pigeon.getAsRotation2d(), m_leftFront.getDistanceMeters(), m_rightFront.getDistanceMeters());
     SmartDashboard.putNumber("Robot Heading:", getHeading());
     SmartDashboard.putNumber("Left Encoder:", m_leftFront.getSelectedSensorPosition());
     SmartDashboard.putNumber("Right Encoder:", m_rightFront.getSelectedSensorPosition());
