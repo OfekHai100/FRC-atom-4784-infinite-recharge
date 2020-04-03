@@ -42,9 +42,9 @@ public class Shooter extends SubsystemBase {
   }
 
   // FAKE P VALUE!
-  private static AtomTalon m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.ShooterConstants.kSlotIdx, 0.1);
-  private AtomVictor m_shooter = new AtomVictor(Constants.Ports.kShooterFront, false);
-  private AtomVictor m_loader = new AtomVictor(Constants.Ports.kShooterRear, true);
+  private static AtomTalon m_rotator;
+  private AtomVictor m_shooter;
+  private AtomVictor m_loader;
 
   private Position m_position;
 
@@ -52,6 +52,10 @@ public class Shooter extends SubsystemBase {
    * Creates a new Shooter.
    */
   public Shooter() {
+    m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.ShooterConstants.kSlotIdx, 0.1);
+    m_shooter = new AtomVictor(Constants.Ports.kShooterFront, false);
+    m_loader = new AtomVictor(Constants.Ports.kShooterRear, true);
+
     m_rotator.setInverted(true);
     m_rotator.setSensorPhase(true);
 
