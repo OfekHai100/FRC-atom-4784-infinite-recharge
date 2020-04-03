@@ -26,18 +26,18 @@ import frc.robot.util.hardware.AtomTalon.Subsystem;
 public class Drivetrain extends SubsystemBase {
   
   // FAKE P VALUE!
-  private static AtomTalon m_leftFront = new AtomTalon(Constants.Ports.kLeftMaster, Constants.DrivetrainConstants.kSlotIdxLeft, 0.1);
-  private static AtomTalon m_rightFront = new AtomTalon(Constants.Ports.kRightSlave, Constants.DrivetrainConstants.kSlotIdxRight, 0.1);
+  private static AtomTalon m_leftFront;
+  private static AtomTalon m_rightFront;
 
-  private static AtomVictor m_leftRear = new AtomVictor(Constants.Ports.kLeftSlave);
-  private static AtomVictor m_rightRear = new AtomVictor(Constants.Ports.kRightSlave);
+  private static AtomVictor m_leftRear; 
+  private static AtomVictor m_rightRear; 
 
-  private SpeedControllerGroup m_left = new SpeedControllerGroup(m_leftFront, m_leftRear);
-  private SpeedControllerGroup m_right = new SpeedControllerGroup(m_rightFront, m_rightRear);
+  private SpeedControllerGroup m_left;
+  private SpeedControllerGroup m_right; 
 
   private AtomPigeon m_pigeon;
 
-  private DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
+  private DifferentialDrive m_drive;
 
   private DifferentialDriveOdometry m_odometry;
 
@@ -45,7 +45,18 @@ public class Drivetrain extends SubsystemBase {
    * Creates a new Drivetrain.
    */
   public Drivetrain() {
+    m_leftFront = new AtomTalon(Constants.Ports.kLeftMaster, Constants.DrivetrainConstants.kSlotIdxLeft, 0.1);
+    m_rightFront = new AtomTalon(Constants.Ports.kRightSlave, Constants.DrivetrainConstants.kSlotIdxRight, 0.1);
+
+    m_leftRear = new AtomVictor(Constants.Ports.kLeftSlave);
+    m_rightRear = new AtomVictor(Constants.Ports.kRightSlave);
+
+    m_left = new SpeedControllerGroup(m_leftFront, m_leftRear);
+    m_right = new SpeedControllerGroup(m_rightFront, m_rightRear);
+
     m_pigeon = new AtomPigeon(Shooter.getTalon(), Constants.DrivetrainConstants.kGyroReversed);
+
+    m_drive = new DifferentialDrive(m_left, m_right);
 
     m_leftFront.configOpenloopRamp(0.4);
     m_rightFront.configOpenloopRamp(0.4);
