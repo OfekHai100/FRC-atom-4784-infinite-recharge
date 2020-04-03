@@ -19,8 +19,8 @@ import frc.robot.util.hardware.AtomVictor;
 
 public class Roller extends SubsystemBase {
   
-  private AtomVictor m_roller = new AtomVictor(Constants.Ports.kRoller, true);
-  private DoubleSolenoid m_cylinder = new DoubleSolenoid(Constants.Ports.kCylinderForward, Constants.Ports.kCylinderReverse);
+  private AtomVictor m_roller;
+  private DoubleSolenoid m_cylinder;
 
   private boolean m_reverse;
   private boolean m_inIntakeMode;
@@ -29,6 +29,9 @@ public class Roller extends SubsystemBase {
    * Creates a new Roller.
    */
   public Roller() {
+    m_roller = new AtomVictor(Constants.Ports.kRoller, true);
+    m_cylinder = new DoubleSolenoid(Constants.Ports.kCylinderForward, Constants.Ports.kCylinderReverse);
+
     m_reverse = false;
     m_inIntakeMode = false;
   }
