@@ -71,8 +71,8 @@ public class RobotContainer {
   private boolean m_inSafeMode = false;
 
   // Joysticks:
-  PSController driver = new PSController(Constants.Ports.kMain);
-  PSController operator  = new PSController(Constants.Ports.kSecond);
+  PSController driver = new PSController(Constants.Ports.kDriver);
+  PSController operator  = new PSController(Constants.Ports.kOpeator);
 
   // Driver buttons:
   Button activateIntake = new JoystickButton(driver, PSController.getTriangle());

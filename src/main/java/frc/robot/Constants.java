@@ -53,8 +53,8 @@ public final class Constants {
         public static final int kArduinoI2C = 4;
         
         // Joysticks:
-        public static final int kMain = 0;
-        public static final int kSecond = 1;
+        public static final int kDriver = 0;
+        public static final int kOpeator = 1;
     }
 
     public static final class DrivetrainConstants {
