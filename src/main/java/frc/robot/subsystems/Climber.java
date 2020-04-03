@@ -17,8 +17,8 @@ import frc.robot.util.hardware.AtomVictor;
 
 public class Climber extends SubsystemBase {
   
-  private AtomVictor m_leftClimber = new AtomVictor(Constants.Ports.kLeftClimber, false);
-  private AtomVictor m_rightClimber = new AtomVictor(Constants.Ports.kRightClimber, false);
+  private AtomVictor m_leftClimber;
+  private AtomVictor m_rightClimber;
 
   private boolean m_reverse;
   
@@ -26,6 +26,9 @@ public class Climber extends SubsystemBase {
    * Creates a new Climber.
    */
   public Climber() {
+    m_leftClimber = new AtomVictor(Constants.Ports.kLeftClimber, false);
+    m_rightClimber = new AtomVictor(Constants.Ports.kRightClimber, false);
+
     m_leftClimber.configOpenloopRamp(0.3);
     m_rightClimber.configOpenloopRamp(0.3);
 
