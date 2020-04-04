@@ -63,6 +63,8 @@ public class Shooter extends SubsystemBase {
     m_shooter = new AtomVictor(Constants.Ports.kShooterFront, false);
     m_loader = new AtomVictor(Constants.Ports.kShooterRear, true);
 
+    m_switch = new DigitalInput(Constants.Ports.kSwitch);
+
     m_rotator.setInverted(true);
     m_rotator.setSensorPhase(true);
 

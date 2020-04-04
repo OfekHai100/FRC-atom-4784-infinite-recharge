@@ -36,6 +36,7 @@ public final class Constants {
         public static final int kShooterFront = 5;
         public static final int kShooterRear = 6;
         public static final int kRotator = 7;
+        public static final int kSwitch = 0;
 
         // Climber hardware:
         public static final int kLeftClimber = 8;
