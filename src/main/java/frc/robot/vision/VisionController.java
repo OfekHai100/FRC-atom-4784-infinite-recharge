@@ -227,11 +227,11 @@ public class VisionController {
         Trajectory path;
         Alliance side = DriverStation.getInstance().getAlliance();
 
+        double x, y;
+        Rotation2d omega;
+
         // Find interior waypoint and endpoint:
         if(action == Action.CLOSER) {
-            double x, y;
-            Rotation2d omega;
-            
             if(side == Alliance.Blue) {
                 x = (Constants.FieldConstants.kBluePowerPort.getTranslation().getX() - position.getTranslation().getX()) / 2.0;
                 y = (Constants.FieldConstants.kBluePowerPort.getTranslation().getY() + position.getTranslation().getY()) / 2.0;
@@ -258,9 +258,6 @@ public class VisionController {
 
         } else {
             // == FURTHER
-            double x, y;
-            Rotation2d omega;
-
             if(side == Alliance.Blue) {
                 x = position.getTranslation().getX() - ((Constants.FieldConstants.kBluePowerPort.getTranslation().getX() - position.getTranslation().getX()) / 2.0);
                 y = (Constants.FieldConstants.kBluePowerPort.getTranslation().getY() + position.getTranslation().getY()) / 2.0;
