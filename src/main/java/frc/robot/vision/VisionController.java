@@ -172,7 +172,8 @@ public class VisionController {
 
     /**
      * This method checks if the calculated angle is in range with the current angle, in order to determine
-     * if angle-correction is needed for the final calculation. Range is an offset of plus or minus 5 degrees.
+     * if angle-correction is needed for the final calculation. 
+     * <p> Range is an offset of plus or minus 5 degrees.
      * @param alpha the current angle, in degrees.
      * @param beta the calculated angle, in degrees.
      * @return True if in range, false if not.
