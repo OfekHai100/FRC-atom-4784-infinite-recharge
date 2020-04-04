@@ -28,7 +28,6 @@ import frc.robot.util.hardware.AtomTalon.Subsystem;
  */
 public class Drivetrain extends SubsystemBase {
   
-  // FAKE P VALUE!
   private static AtomTalon m_leftFront;
   private static AtomTalon m_rightFront;
 
@@ -48,6 +47,7 @@ public class Drivetrain extends SubsystemBase {
    * Creates a new Drivetrain.
    */
   public Drivetrain() {
+    // FAKE P VALUE!
     m_leftFront = new AtomTalon(Constants.Ports.kLeftMaster, Constants.DrivetrainConstants.kSlotIdxLeft, 0.1);
     m_rightFront = new AtomTalon(Constants.Ports.kRightSlave, Constants.DrivetrainConstants.kSlotIdxRight, 0.1);
 
