@@ -101,7 +101,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   /**
-   * Get the current position of the Robot.
+   * Get the current position of the Robot, as a {@link Pose2d} object.
    * @return Current position.
    */
   public Pose2d getPose() {
