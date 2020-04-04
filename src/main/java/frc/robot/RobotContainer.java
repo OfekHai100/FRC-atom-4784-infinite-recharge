@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -215,12 +216,12 @@ public class RobotContainer {
       new InstantCommand(() -> ledManager.setState(State.SHOOTER_VISION), ledManager),
       new RunCommand(() -> getTrajectoryCommand(m_calculation.getPath()), m_drive),
       new InstantCommand(() -> m_shooter.goToAngle(m_calculation.getAngle(), false), m_shooter),
-      new InstantCommand(() -> m_shooter.shoot(m_calculation.getVelocity()), m_shooter),
-      new WaitCommand(4.5),
+      new InstantCommand(() -> m_shooter.shoot(m_calculation.getVelocity(), false), m_shooter),
       new InstantCommand(() -> m_shooter.stopAll(), m_shooter),
       new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION), m_shooter),
       new InstantCommand(() -> ledManager.setState(DriverStation.getInstance().isOperatorControl() ? State.TELEOP : State.AUTO), ledManager)
     );
+
     
     return visionCommand;
   }

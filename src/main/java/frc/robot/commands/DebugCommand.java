@@ -114,9 +114,8 @@ public class DebugCommand extends SequentialCommandGroup {
       new InstantCommand(() -> shooter.load(true)),
       new PrintCommand("REVERSE LOADER ACTIVATED!"),
       new WaitCommand(2.0),
-      new InstantCommand(() -> shooter.shoot(0.6)),
-      new WaitCommand(2.0),
-      new PrintCommand("SHOOTER RAN FOR 2 SECONDS WITH OUTPUT OF 0.6"),
+      new InstantCommand(() -> shooter.shoot(0.6, false)),
+      new PrintCommand("SHOOTER SHOT ALL LOADED POWER CELLS WITH OUTPUT OF 0.6"),
       new WaitCommand(2.5),
 
       new PrintCommand("EXITING DEBUG MODE!")

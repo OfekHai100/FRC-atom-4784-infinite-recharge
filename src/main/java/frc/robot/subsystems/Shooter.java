@@ -9,6 +9,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -48,6 +51,7 @@ public class Shooter extends SubsystemBase {
   private static AtomTalon m_rotator;
   private AtomVictor m_shooter;
   private AtomVictor m_loader;
+  private DigitalInput m_switch;
 
   private Position m_position;
 
@@ -75,9 +79,15 @@ public class Shooter extends SubsystemBase {
    * Sets output for the shooting motor, determined by vision processing or by default pre-determined values.
    * @param output
    */
-  public void shoot(double output) {
+  public void shoot(double output, boolean simple) {
     m_shooter.set(ControlMode.PercentOutput, output);
     load(false);
+    if(!simple) {
+      boolean loaded = true;
+      while(loaded) {
+        loaded = isLoaded();
+      }
+    }
   }
 
   /**
@@ -171,6 +181,16 @@ public class Shooter extends SubsystemBase {
         // Will never get here!
         return "";
     }
+  }
+
+  public boolean isLoaded() {
+    Timer timer = new Timer();
+    timer.reset();
+    timer.start();
+    while(!timer.hasElapsed(1.3)) {
+      // Wait
+    }
+    return m_switch.get();
   }
 
   /**

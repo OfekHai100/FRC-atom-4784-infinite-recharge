@@ -29,7 +29,7 @@ public class ShootFromTrenchCommand extends CommandBase {
   @Override
   public void initialize() {
     m_shooter.goToPosition(Position.TRENCH);
-    m_shooter.shoot(0.9);
+    m_shooter.shoot(0.9, true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
