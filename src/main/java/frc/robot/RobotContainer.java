@@ -54,13 +54,13 @@ import frc.robot.vision.VisionController;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drive = new Drivetrain();
-  private final Climber m_climber = new Climber();
-  private final Shooter m_shooter = new Shooter();
-  private final Roller m_roller = new Roller();
+  private final Climber m_climber = Climber.getInstance();
+  private final Drivetrain m_drive = Drivetrain.getInstance();
+  private final Roller m_roller = Roller.getInstance();
+  private final Shooter m_shooter = Shooter.getInstance();
 
   // LED:
-  public final LED ledManager = new LED();
+  public final LED ledManager = LED.getInstance();
 
   // Vision:
   private final VisionController m_vision = new VisionController();

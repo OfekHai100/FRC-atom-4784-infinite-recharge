@@ -43,10 +43,12 @@ public class Drivetrain extends SubsystemBase {
 
   private DifferentialDriveOdometry m_odometry;
 
+  private static Drivetrain m_instance;
+
   /**
    * Creates a new Drivetrain.
    */
-  public Drivetrain() {
+  private Drivetrain() {
     // FAKE P VALUE!
     m_leftFront = new AtomTalon(Constants.Ports.kLeftMaster, Constants.DrivetrainConstants.kSlotIdxLeft, 0.1);
     m_rightFront = new AtomTalon(Constants.Ports.kRightSlave, Constants.DrivetrainConstants.kSlotIdxRight, 0.1);
@@ -70,6 +72,17 @@ public class Drivetrain extends SubsystemBase {
     m_rightFront.configEncoder(Subsystem.DRIVETRAIN);
 
     m_odometry = new DifferentialDriveOdometry(m_pigeon.getAsRotation2d());
+  }
+
+  /**
+   * Access to the Drivetrain subsystem
+   * @return The Drivetrain singleton instance.
+   */
+  public static Drivetrain getInstance() {
+    if(m_instance == null) {
+      m_instance = new Drivetrain();
+    }
+    return m_instance;
   }
 
   /**

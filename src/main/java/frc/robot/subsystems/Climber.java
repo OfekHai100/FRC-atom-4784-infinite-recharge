@@ -24,11 +24,13 @@ public class Climber extends SubsystemBase {
   private AtomVictor m_rightClimber;
 
   private boolean m_reverse;
+
+  private static Climber m_instance;
   
   /**
    * Creates a new Climber.
    */
-  public Climber() {
+  private Climber() {
     m_leftClimber = new AtomVictor(Constants.Ports.kLeftClimber, false);
     m_rightClimber = new AtomVictor(Constants.Ports.kRightClimber, false);
 
@@ -36,6 +38,17 @@ public class Climber extends SubsystemBase {
     m_rightClimber.configOpenloopRamp(0.3);
 
     m_reverse = false;
+  }
+
+  /**
+   * Access to the Climber subsystem
+   * @return The Climber singleton instance.
+   */
+  public static Climber getInstance() {
+    if(m_instance == null) {
+      m_instance = new Climber();
+    }
+    return m_instance;
   }
 
   /**

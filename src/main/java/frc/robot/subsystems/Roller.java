@@ -27,16 +27,29 @@ public class Roller extends SubsystemBase {
 
   private boolean m_reverse;
   private boolean m_inIntakeMode;
+
+  private static Roller m_instance;
   
   /**
    * Creates a new Roller.
    */
-  public Roller() {
+  private Roller() {
     m_roller = new AtomVictor(Constants.Ports.kRoller, true);
     m_cylinder = new DoubleSolenoid(Constants.Ports.kCylinderForward, Constants.Ports.kCylinderReverse);
 
     m_reverse = false;
     m_inIntakeMode = false;
+  }
+
+  /**
+   * Access to the Roller subsystem
+   * @return The Roller singleton instance.
+   */
+  public static Roller getInstance() {
+    if(m_instance == null) {
+      m_instance = new Roller();
+    }
+    return m_instance;
   }
 
   /**

@@ -55,10 +55,12 @@ public class Shooter extends SubsystemBase {
 
   private Position m_position;
 
+  private static Shooter m_instance;
+
   /**
    * Creates a new Shooter.
    */
-  public Shooter() {
+  private Shooter() {
     m_rotator = new AtomTalon(Constants.Ports.kRotator, Constants.ShooterConstants.kSlotIdx, 0.1);
     m_shooter = new AtomVictor(Constants.Ports.kShooterFront, false);
     m_loader = new AtomVictor(Constants.Ports.kShooterRear, true);
@@ -75,6 +77,17 @@ public class Shooter extends SubsystemBase {
     m_rotator.configEncoder(Subsystem.SHOOTER);
     
     m_position = Position.STARTING_CONFIGURATION;
+  }
+
+  /**
+   * Access to the Shooter subsystem
+   * @return The Shooter singleton instance.
+   */
+  public static Shooter getInstance() {
+    if(m_instance == null) {
+      m_instance = new Shooter();
+    }
+    return m_instance;
   }
 
   /**

@@ -60,10 +60,12 @@ public class LED extends SubsystemBase {
     private boolean m_switched;
     private boolean m_passed;
 
+    private static LED m_instance;
+
     /**
      * Constructor, inits all LEDs.
      */
-    public LED() {
+    private LED() {
         m_ledStrip = new AddressableLED(Constants.Ports.kLEDStrip);
         m_ledStripBuffer = new AddressableLEDBuffer(40);
 
@@ -72,6 +74,17 @@ public class LED extends SubsystemBase {
         m_switched = true;
         m_passed = true;
         m_ledStrip.start();
+    }
+
+    /**
+   * Access to the LED subsystem
+   * @return The LED singleton instance.
+   */
+    public static LED getInstance() {
+        if(m_instance == null) {
+            m_instance = new LED();
+        }
+        return m_instance;
     }
 
     /**
