@@ -107,10 +107,6 @@ public final class Constants {
         public static final double kPowerPortMin = 220.455;
         // The maximum height of the Outer Port with one Power Cell included, in cm.
         public static final double kPowerPortMax = 278.655;
-        // Minimum distance from the Power Port when shooting angle is 45 degrees, in cm.
-        public static final double kDistanceMin = 136.1022204;
-        // Maximum distance from the Power Port when shooting angle is 45 degrees, in cm.
-        public static final double kDistanceMax = 172.0331325;
         // The height of the center of the Inner Port, in cm.
         public static final double kInnerPortHeight = 249.555;
         // Minimum distance from the Inner Port when shooting angle is 45 degrees, in cm.
@@ -119,6 +115,10 @@ public final class Constants {
         public static final Pose2d kBluePowerPort = new Pose2d(15.714, -5.808, new Rotation2d(1, 0));
         // Red Power Port coordinates, as a Pose2d object.
         public static final Pose2d kRedPowerPort = new Pose2d(0.306, -2.429, new Rotation2d(-1, 0));
+        // Blue Initiation Line X coordinate.
+        public static final double kBlueInitLineX = 3.114;
+        // Red Initiation Line X coordinate.
+        public static final double kRedInitLineX = 12.894;
     }
 
 }
