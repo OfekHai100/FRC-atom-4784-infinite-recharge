@@ -94,17 +94,17 @@ public class PathManager {
     public static Pose2d getStartingPosition(Path path) {
         switch(path) {
             case RED_PORT:
-                return new Pose2d(new Translation2d(3.019, -2.453), new Rotation2d(-1, 0));
+                return new Pose2d(new Translation2d(3.114, -2.453), new Rotation2d(-1, 0));
             case RED_MIDDLE:
-                return new Pose2d(new Translation2d(3.019, -5.046), new Rotation2d(-1, 0));
+                return new Pose2d(new Translation2d(3.114, -5.046), new Rotation2d(-1, 0));
             case RED_BLUE_FEEDER:
-                return new Pose2d(new Translation2d(3.019, -5.641), new Rotation2d(-1, 0));
+                return new Pose2d(new Translation2d(3.114, -5.641), new Rotation2d(-1, 0));
             case BLUE_PORT:
-                return new Pose2d(new Translation2d(13.013, -5.796), new Rotation2d(1, 0));
+                return new Pose2d(new Translation2d(12.894, -5.796), new Rotation2d(1, 0));
             case BLUE_MIDDLE:
-                return new Pose2d(new Translation2d(13.013, -3.309), new Rotation2d(1, 0));
+                return new Pose2d(new Translation2d(12.894, -3.309), new Rotation2d(1, 0));
             case BLUE_RED_FEEDER:
-                return new Pose2d(new Translation2d(13.013, -2.56), new Rotation2d(1, 0));
+                return new Pose2d(new Translation2d(12.894, -2.56), new Rotation2d(1, 0));
             default:
                 // Can not reach here!
                 return null;
