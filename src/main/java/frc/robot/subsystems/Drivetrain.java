@@ -23,6 +23,9 @@ import frc.robot.util.hardware.AtomTalon;
 import frc.robot.util.hardware.AtomVictor;
 import frc.robot.util.hardware.AtomTalon.Subsystem;
 
+/**
+ * This subsystem represents the drivetrain of the Robot.
+ */
 public class Drivetrain extends SubsystemBase {
   
   // FAKE P VALUE!

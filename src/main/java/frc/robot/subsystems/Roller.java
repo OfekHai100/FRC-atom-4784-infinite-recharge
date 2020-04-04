@@ -17,6 +17,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.hardware.AtomVictor;
 
+/**
+ * This subsystem represents the intake mechanism on the Robot.
+ */
 public class Roller extends SubsystemBase {
   
   private AtomVictor m_roller;

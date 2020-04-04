@@ -17,6 +17,9 @@ import frc.robot.util.hardware.AtomTalon;
 import frc.robot.util.hardware.AtomVictor;
 import frc.robot.util.hardware.AtomTalon.Subsystem;
 
+/**
+ * This subsystem represents the shooting mechanism on the Robot.
+ */
 public class Shooter extends SubsystemBase {
 
   /**
