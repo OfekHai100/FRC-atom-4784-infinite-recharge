@@ -183,13 +183,28 @@ public class Shooter extends SubsystemBase {
     }
   }
 
+  /**
+   * This method checks if the Shooter is loaded with Power Cells.
+   * <p> The role of the timer is to avoid delays between the limit switch and loader motor, in cases like this:
+   * A Power Cell has been shot, the next Power Cells not arrived yet to the limit switch, but the method was still called
+   * and returned false. The timer prevents those kinds of errors.
+   * @return True if there are Power Cells in the loader, false if not.
+   */
   public boolean isLoaded() {
     Timer timer = new Timer();
+    boolean elapsed = true;
+
     timer.reset();
     timer.start();
-    while(!timer.hasElapsed(1.3)) {
+
+    // Prevents delays by placing timeout of 1.3 seconds:
+    while(elapsed) {
       // Wait
+      if(timer.hasElapsed(1.3)) {
+        elapsed = false;
+      }
     }
+
     return m_switch.get();
   }
 
