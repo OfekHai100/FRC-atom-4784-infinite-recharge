@@ -68,8 +68,8 @@ public class LED extends SubsystemBase {
         m_ledStripBuffer = new AddressableLEDBuffer(40);
 
         m_state = State.INIT;
-        m_switched = true;
         m_onVision = false;
+        m_switched = true;
         m_passed = true;
         m_ledStrip.start();
     }
