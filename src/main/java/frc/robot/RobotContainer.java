@@ -131,7 +131,7 @@ public class RobotContainer {
     );
 
     // Runs the sequence Calculate -> Set LED -> Correct Position -> Correct Angle -> Shoot -> Reset angle -> Stop motors -> Set LED:
-    shootUsingVision.whenHeld(getVisionCommand());
+    shootUsingVision.whenHeld(generateVisionCommand());
 
     // Other Shooter commands:
     shootFromTrench.whenHeld((new ShootFromTrenchCommand(m_shooter).beforeStarting(() -> ledManager.setState(State.SHOOTER_TRENCH), ledManager))
@@ -163,13 +163,13 @@ public class RobotContainer {
    * @param path to use in autonomous routine.
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand(Path path) {
+  public Command generateAutonomousCommand(Path path) {
     Trajectory trajectory;
     trajectory = PathManager.generateTrajectory(path);
 
     m_drive.resetOdometry(PathManager.getStartingPosition(path));
 
-    Command auto = getTrajectoryCommand(trajectory).andThen(getVisionCommand());
+    Command auto = generateTrajectoryCommand(trajectory).andThen(generateVisionCommand());
     return auto;
   }
 
@@ -178,7 +178,7 @@ public class RobotContainer {
    * @param path as a {@link Trajectory} object.
    * @return Trajectory command.
    */
-  public Command getTrajectoryCommand(Trajectory trajectory) {
+  public Command generateTrajectoryCommand(Trajectory trajectory) {
     // Checks if a valid Trajectory is given, if not returns a new PrintCommand.
     if(trajectory == null) {
       return new PrintCommand("Invalid Trajectory given - Error or a Calculation result!");
@@ -208,11 +208,11 @@ public class RobotContainer {
    * by the {@link VisionController} class.
    * @return Vision command.
    */
-  public Command getVisionCommand() {
+  public Command generateVisionCommand() {
     Command visionCommand = new InstantCommand(() -> m_calculation = m_vision.calculate(m_shooter.getAngle(), m_drive.getPose()))
     .andThen(
       new InstantCommand(() -> ledManager.setState(State.SHOOTER_VISION), ledManager),
-      new RunCommand(() -> getTrajectoryCommand(m_calculation.getPath()), m_drive),
+      new RunCommand(() -> generateTrajectoryCommand(m_calculation.getPath()), m_drive),
       new InstantCommand(() -> m_shooter.goToAngle(m_calculation.getAngle(), false), m_shooter),
       new InstantCommand(() -> m_shooter.shoot(m_calculation.getVelocity(), false), m_shooter),
       new InstantCommand(() -> m_shooter.stopAll(), m_shooter),
