@@ -22,15 +22,17 @@ import frc.robot.Constants;
 import frc.robot.pathing.Configuration;
 
 /**
- * Vision prcoessing controller.
+ * A full vision prcoessing controller.
+ * <p> Calculates the required components of a {@link Calculation} object: Velocity, Angle-Correction and Position-Correction,
+ * in order to shoot Power Cells accuratly enough to the Inner and Outer port.
  */
 public class VisionController {
     
     /**
-     * This enum represents the required target for the position-correction component in a {@link Calculation} object.
-     * Target can be: further from the Power Port or closer to it.  
+     * This enum represents the required action for the position-correction component in a {@link Calculation} object.
+     * <p> Action can be: further from the Power Port or closer to it.  
      */
-    private enum Target {
+    private enum Action {
         FURTHER,
         CLOSER
     }
@@ -76,13 +78,13 @@ public class VisionController {
                     // Position correction is needed:
                     if(angle < kMinAngle) {
                         // We need to get closer to the target:
-                        path = calculatePath(x, Target.CLOSER);
+                        path = calculatePath(x, Action.CLOSER);
                         angle = calculateAndCheckAngle(alpha);
                         velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
                     } else if(angle > kMaxAngle) {
                         // We need to get further from the target.
-                        path = calculatePath(x, Target.FURTHER);
+                        path = calculatePath(x, Action.FURTHER);
                         angle = calculateAndCheckAngle(alpha);
                         velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
@@ -96,13 +98,13 @@ public class VisionController {
                     // Position correction is needed:
                     if(velocity < kMinVelocity) {
                         // We need to get further from the target.
-                        path = calculatePath(x, Target.FURTHER);
+                        path = calculatePath(x, Action.FURTHER);
                         angle = calculateAndCheckAngle(alpha);
                         velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
                     } else if(velocity > kMaxVelocity) {
                         // We need to get closer to the target
-                        path = calculatePath(x, Target.CLOSER);
+                        path = calculatePath(x, Action.CLOSER);
                         angle = calculateAndCheckAngle(alpha);
                         velocity = calculateAndCheckVelocity();
                         return new Calculation(velocity, angle, path);
@@ -215,17 +217,17 @@ public class VisionController {
      * This method finds the needed {@link Trajectory} for the position-correction component of a {@link Calculation}.
      * It starts by creating configuration for the path, then finds it's waypoint and endpoint and in the end returns final path.
      * @param position of the Robot.
-     * @param target - A {@link Target} is what the path is based on. A target can be a path that drives CLOSER to the Power Port,
+     * @param action - A {@link Action} is what the path is based on. A action can be a path that drives CLOSER to the Power Port,
      *  or FURTHER from it.
      * @return Position-Correction, as a {@link Trajectory} object.
      */
-    private Trajectory calculatePath(Pose2d position, Target target) {
+    private Trajectory calculatePath(Pose2d position, Action action) {
         
         Trajectory path;
         Alliance side = DriverStation.getInstance().getAlliance();
 
         // Find interior waypoint and endpoint:
-        if(target == Target.CLOSER) {
+        if(action == Action.CLOSER) {
             double x, y;
             Rotation2d omega;
             
