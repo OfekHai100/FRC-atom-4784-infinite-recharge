@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.pathing;
+package frc.robot.autopilot;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import frc.robot.subsystems.Drivetrain;
