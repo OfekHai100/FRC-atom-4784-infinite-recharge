@@ -9,8 +9,6 @@ package frc.robot.vision;
 
 import java.util.List;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -37,74 +35,20 @@ public class VisionController {
         CLOSER
     }
 
-    // Vision processing varaibles.
-    private double m_targetYaw, m_targetPitch, m_targetArea;
-    private boolean m_targetValid;
-
-    private NetworkTableInstance m_table;
-    private NetworkTable m_camera;
-
     // Used in the calculation methods.
     private final double kMinVelocity = Constants.ShooterConstants.kMinVelocity;
     private final double kMaxVelocity = Constants.ShooterConstants.kMaxVelocity;
     private final double kMinAngle = Constants.ShooterConstants.kMinAngle;
     private final double kMaxAngle = Constants.ShooterConstants.kMaxAngle;
 
+    // Camera:
+    private NetworkCamera m_camera;
+
     /**
      * Constructor.
      */
     public VisionController() {
-        m_table = NetworkTableInstance.getDefault();
-        
-        m_camera = m_table.getTable("chameleon-vision").getSubTable("VisionCamera");
-        
-        update();
-    }
-
-    /**
-     * This method updates retrieved camera values when called.
-     */
-    private void update() {
-        m_targetYaw = m_camera.getEntry("yaw").getDouble(0.0);
-        m_targetPitch = m_camera.getEntry("pitch").getDouble(0.0);
-        m_targetArea = m_camera.getEntry("area").getDouble(0.0);
-        m_targetValid = m_camera.getEntry("isValid").getBoolean(false);
-    }
-
-    /**
-     * Returns true if a valid target found.
-     * @return true if valid, false else.
-     */
-    public boolean isValid() {
-        update();
-        return m_targetValid;
-    }
-
-    /**
-     * Returns the targetPitch (Y-Offset) value.
-     * @return targetPitch.
-     */
-    public double getPitch() {
-        update();
-        return this.m_targetPitch;
-    }
-
-    /**
-     * Returns the targetYaw (X-Offset) value.
-     * @return targetYaw.
-     */
-    public double getYaw() {
-        update();
-        return this.m_targetYaw;
-    }
-
-    /**
-     * Returns the targetArea value.
-     * @return targetArea.
-     */
-    public double getArea() {
-        update();
-        return this.m_targetArea;
+        m_camera = NetworkCamera.getInstance();
     }
 
     /**
@@ -122,7 +66,7 @@ public class VisionController {
         double angle;
         Trajectory path;
 
-        if(isValid()) {
+        if(m_camera.isValid()) {
             // First, calculate Velocity and Angle:
             velocity = calculateVelocity();
             angle = calculateAngle();
@@ -180,10 +124,10 @@ public class VisionController {
      * @return Velocity of the Shooter motor, in TalonSRX Percent-Output units.
      */
     private double calculateVelocity() {
-        update();
         double velocity;
+        double pitch = m_camera.getPitch();
         // Fake Function!
-        velocity = 0.0061 * m_targetPitch * m_targetPitch - (4E-16) * m_targetPitch + 0.5955;
+        velocity = 0.0061 * pitch * pitch - (4E-16) * pitch + 0.5955;
         return velocity;
     }
 
@@ -217,10 +161,10 @@ public class VisionController {
      * @return Angle-Correction of the Shooter, in degrees.
      */
     private double calculateAngle() {
-        update();
         double angle;
+        double pitch = m_camera.getPitch();
         // Fake Function!
-        angle = 0.6556 * m_targetPitch * m_targetPitch * m_targetPitch - 6.3111 * m_targetPitch * m_targetPitch + 20.789 * m_targetPitch + 16.867;
+        angle = 0.6556 * pitch * pitch * pitch - 6.3111 * pitch * pitch + 20.789 * pitch + 16.867;
         return angle;
     }
 
