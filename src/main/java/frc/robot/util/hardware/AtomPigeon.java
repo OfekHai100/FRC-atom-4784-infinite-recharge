@@ -89,6 +89,14 @@ public class AtomPigeon extends PigeonIMU {
     }
 
     /**
+     * Returns the orientation of the {@link PigeonIMU}.
+     * @return Orientation
+     */
+    public boolean isReversed() {
+        return m_reversed;
+    }
+
+    /**
      * Zeroes the {@link PigeonIMU}.
      */
     public void zero() {
