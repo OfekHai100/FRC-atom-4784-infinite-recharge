@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -150,9 +151,10 @@ public class RobotContainer {
     operatorAbort.whenPressed(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()).andThen(new PrintCommand("ABORT WAS USED!")));
 
     // Debug Mode:
-    if(m_inDebugMode) {
-      enterDebugMode.whenPressed(new DebugCommand(m_climber, m_drive, m_roller, m_shooter, m_inSafeMode));
-    }
+    enterDebugMode.whenPressed(new ConditionalCommand(new DebugCommand(m_climber, m_drive, m_roller, m_shooter, m_inSafeMode), 
+                                                      new PrintCommand("DEBUG MODE IS NOT ACTIVATED!"), 
+                                                      () -> m_inDebugMode)
+    );
 
   }
 
