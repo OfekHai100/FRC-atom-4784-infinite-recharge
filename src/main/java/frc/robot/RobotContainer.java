@@ -75,7 +75,7 @@ public class RobotContainer {
   PSController driver = new PSController(Constants.Ports.kDriver);
   PSController operator  = new PSController(Constants.Ports.kOpeator);
 
-  // Driver buttons:
+  // Driver buttons - Driver is in charge of driving, intake and climbing:
   Button activateIntake = new JoystickButton(driver, PSController.getTriangle());
   Button intake = new JoystickButton(driver, PSController.getL2());
   Button reverseIntake = new POVButton(driver, PSController.getUp());
@@ -85,7 +85,7 @@ public class RobotContainer {
   Button lowerShooter = new JoystickButton(driver, PSController.getIx());
   Button driverAbort = new JoystickButton(driver, PSController.getPad());
   
-  // Operator buttons:
+  // Operator buttons - Operator is in charge of shooting:
   Button activateVision = new JoystickButton(operator, PSController.getTriangle());
   Button shootUsingVision = new JoystickButton(operator, PSController.getR2());
   Button shootFromTrench = new JoystickButton(operator, PSController.getR1());
