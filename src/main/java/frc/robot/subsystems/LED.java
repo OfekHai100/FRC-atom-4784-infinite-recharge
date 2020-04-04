@@ -75,7 +75,7 @@ public class LED extends SubsystemBase {
     }
 
     /**
-     * Sets the state of the Robot.
+     * Sets the state of the LED Strip.
      * @param state
      */
     public void setState(State state) {
