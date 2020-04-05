@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.LED.State;
 import frc.robot.util.Dashboard;
 
@@ -22,6 +23,8 @@ import frc.robot.util.Dashboard;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
+  private LED m_led;
+
   private RobotContainer m_robotContainer;
 
   /**
@@ -31,6 +34,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     Dashboard.putChooser();
+    m_led = LED.getInstance();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
@@ -69,8 +73,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_robotContainer.ledManager.setState(State.AUTO);
-    m_autonomousCommand = m_robotContainer.generateAutonomousCommand(Dashboard.getSelectedPath());
+    m_led.setState(State.AUTO);
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand(Dashboard.getSelectedPath());
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -87,7 +91,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_robotContainer.ledManager.setState(State.TELEOP);
+    m_led.setState(State.TELEOP);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

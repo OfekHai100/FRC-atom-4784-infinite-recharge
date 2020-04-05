@@ -7,19 +7,13 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -33,7 +27,6 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShootFromPortCommand;
 import frc.robot.commands.ShootFromTrenchCommand;
 import frc.robot.commands.SimpleShootCommand;
-import frc.robot.pathing.PathManager;
 import frc.robot.pathing.PathManager.Path;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -42,6 +35,7 @@ import frc.robot.subsystems.LED.State;
 import frc.robot.subsystems.Roller;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.Position;
+import frc.robot.util.CommandGenerator;
 import frc.robot.util.PSController;
 import frc.robot.vision.Calculation;
 import frc.robot.vision.VisionController;
@@ -60,11 +54,7 @@ public class RobotContainer {
   private final Shooter m_shooter = Shooter.getInstance();
 
   // LED:
-  public final LED ledManager = LED.getInstance();
-
-  // Vision:
-  private final VisionController m_vision = new VisionController();
-  private Calculation m_calculation;
+  private final LED m_led = LED.getInstance();
 
   // Debug Mode:
   private boolean m_inDebugMode = true;
@@ -127,19 +117,19 @@ public class RobotContainer {
     reverseClimb.whenPressed(new InstantCommand(() -> m_climber.setReverse(m_climber.getReverse() ? false : true), m_roller));
 
     activateVision.whenPressed(
-      new InstantCommand(() -> ledManager.activateVision(ledManager.isVisionActivated() ? false : true))
+      new InstantCommand(() -> m_led.activateVision(m_led.isVisionActivated() ? false : true))
     );
 
     // Runs the sequence Calculate -> Set LED -> Correct Position -> Correct Angle -> Shoot -> Reset angle -> Stop motors -> Set LED:
-    shootUsingVision.whenHeld(generateVisionCommand());
+    shootUsingVision.whenHeld(CommandGenerator.generateVisionCommand());
 
     // Other Shooter commands:
-    shootFromTrench.whenHeld((new ShootFromTrenchCommand(m_shooter).beforeStarting(() -> ledManager.setState(State.SHOOTER_TRENCH), ledManager))
-      .andThen(new InstantCommand(() -> ledManager.setState(State.TELEOP), ledManager)));
-    shootFromPort.whenHeld((new ShootFromPortCommand(m_shooter).beforeStarting(() -> ledManager.setState(State.SHOOTER_PORT), ledManager))
-      .andThen(new InstantCommand(() -> ledManager.setState(State.TELEOP), ledManager)));
-    simpleShoot.whenHeld((new SimpleShootCommand(m_shooter).beforeStarting(() -> ledManager.setState(State.SHOOTER_SIMPLE), ledManager))
-      .andThen(new InstantCommand(() -> ledManager.setState(State.TELEOP), ledManager)));
+    shootFromTrench.whenHeld((new ShootFromTrenchCommand(m_shooter).beforeStarting(() -> m_led.setState(State.SHOOTER_TRENCH), m_led))
+      .andThen(new InstantCommand(() -> m_led.setState(State.TELEOP), m_led)));
+    shootFromPort.whenHeld((new ShootFromPortCommand(m_shooter).beforeStarting(() -> m_led.setState(State.SHOOTER_PORT), m_led))
+      .andThen(new InstantCommand(() -> m_led.setState(State.TELEOP), m_led)));
+    simpleShoot.whenHeld((new SimpleShootCommand(m_shooter).beforeStarting(() -> m_led.setState(State.SHOOTER_SIMPLE), m_led))
+      .andThen(new InstantCommand(() -> m_led.setState(State.TELEOP), m_led)));
 
     // Shooter position commands:
     lowerShooter.whenPressed(new InstantCommand(() -> m_shooter.goToPosition(Position.LOWEST_POSITION), m_shooter));
@@ -159,68 +149,10 @@ public class RobotContainer {
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @param path to use in autonomous routine.
    * @return the command to run in autonomous
    */
-  public Command generateAutonomousCommand(Path path) {
-    Trajectory trajectory;
-    trajectory = PathManager.generateTrajectory(path);
-
-    m_drive.resetOdometry(PathManager.getStartingPosition(path));
-
-    Command auto = generateTrajectoryCommand(trajectory).andThen(generateVisionCommand());
-    return auto;
-  }
-
-  /**
-   * This method returns {@link RamseteCommand} based on a given trajectory.
-   * @param path as a {@link Trajectory} object.
-   * @return Trajectory command.
-   */
-  public Command generateTrajectoryCommand(Trajectory trajectory) {
-    // Checks if a valid Trajectory is given, if not returns a new PrintCommand.
-    if(trajectory == null) {
-      return new PrintCommand("Invalid Trajectory given - Error or a Calculation result!");
-    }
-    
-    // RamseteCommand generation:
-    RamseteCommand trajectoryCommand = new RamseteCommand(
-      trajectory, 
-      m_drive::getPose, 
-      new RamseteController(Constants.DrivetrainConstants.kRamseteB, Constants.DrivetrainConstants.kRamseteZeta), 
-      new SimpleMotorFeedforward(Constants.DrivetrainConstants.ksVolts,
-                                 Constants.DrivetrainConstants.ksVoltSecondsPerMeter,
-                                 Constants.DrivetrainConstants.ksVoltSecondsSquaredPerMeter), 
-      Constants.DrivetrainConstants.kDriveKinematics, 
-      m_drive::getWheelSpeeds, 
-      new PIDController(Constants.DrivetrainConstants.kP, 0, 0), 
-      new PIDController(Constants.DrivetrainConstants.kP, 0, 0), 
-      m_drive::setVoltage, 
-      m_drive
-    );
-
-    return trajectoryCommand;
-  }
-
-  /**
-   * This method returns {@link Command} used for shooting using vision, based on a {@link Calculation} generated
-   * by the {@link VisionController} class.
-   * @return Vision command.
-   */
-  public Command generateVisionCommand() {
-    Command visionCommand = new InstantCommand(() -> m_calculation = m_vision.calculate(m_shooter.getAngle(), m_drive.getPose()))
-    .andThen(
-      new InstantCommand(() -> ledManager.setState(State.SHOOTER_VISION), ledManager),
-      new RunCommand(() -> generateTrajectoryCommand(m_calculation.getPath()), m_drive),
-      new InstantCommand(() -> m_shooter.goToAngle(m_calculation.getAngle(), false), m_shooter),
-      new InstantCommand(() -> m_shooter.shoot(m_calculation.getVelocity(), false), m_shooter),
-      new InstantCommand(() -> m_shooter.stopAll(), m_shooter),
-      new InstantCommand(() -> m_shooter.goToPosition(Position.STARTING_CONFIGURATION), m_shooter),
-      new InstantCommand(() -> ledManager.setState(DriverStation.getInstance().isOperatorControl() ? State.TELEOP : State.AUTO), ledManager)
-    );
-
-    return visionCommand;
+  public Command getAutonomousCommand(Path path) {
+    return CommandGenerator.generateAutoCommand(path);
   }
 
 }
