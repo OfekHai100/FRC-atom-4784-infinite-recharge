@@ -37,8 +37,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.Position;
 import frc.robot.util.CommandGenerator;
 import frc.robot.util.PSController;
-import frc.robot.vision.Calculation;
-import frc.robot.vision.VisionController;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
