@@ -19,8 +19,8 @@ public class ShootFromTrenchCommand extends CommandBase {
   /**
    * Creates a new ShootFromTrenchCommand.
    */
-  public ShootFromTrenchCommand(Shooter shooter) {
-    m_shooter = shooter;
+  public ShootFromTrenchCommand() {
+    m_shooter = Shooter.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
   }

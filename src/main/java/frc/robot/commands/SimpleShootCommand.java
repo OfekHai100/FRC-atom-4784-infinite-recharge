@@ -18,8 +18,8 @@ public class SimpleShootCommand extends CommandBase {
   /**
    * Creates a new SimpleShootCommand.
    */
-  public SimpleShootCommand(Shooter shooter) {
-    m_shooter = shooter;
+  public SimpleShootCommand() {
+    m_shooter = Shooter.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
   }

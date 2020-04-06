@@ -22,12 +22,12 @@ public class IntakeCommand extends CommandBase {
   /**
    * Creates a new IntakeCommand.
    */
-  public IntakeCommand(Roller roller, Shooter shooter) {
-    m_roller = roller;
-    m_shooter = shooter;
+  public IntakeCommand() {
+    m_roller = Roller.getInstance();
+    m_shooter = Shooter.getInstance();
     m_reverse = m_roller.getReverse();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(roller, shooter);
+    addRequirements(m_roller, m_shooter);
   }
 
   // Called when the command is initially scheduled.

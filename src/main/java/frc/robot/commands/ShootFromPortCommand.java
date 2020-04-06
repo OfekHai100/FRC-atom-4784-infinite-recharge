@@ -19,8 +19,8 @@ public class ShootFromPortCommand extends CommandBase {
   /**
    * Creates a new ShootFromPortCommand.
    */
-  public ShootFromPortCommand(Shooter shooter) {
-    m_shooter = shooter;
+  public ShootFromPortCommand() {
+    m_shooter = Shooter.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
   }

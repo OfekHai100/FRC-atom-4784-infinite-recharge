@@ -18,8 +18,8 @@ public class ClimbLeftCommand extends CommandBase {
   /**
    * Creates a new ClimbLeftCommand.
    */
-  public ClimbLeftCommand(Climber climber) {
-    m_climber = climber;
+  public ClimbLeftCommand() {
+    m_climber = Climber.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_climber);
   }

@@ -109,12 +109,12 @@ public class RobotContainer {
     activateIntake.whenPressed(new ActivateIntakeCommand(m_roller, m_shooter)
       .beforeStarting(() -> m_roller.activateIntakeMode(m_roller.isIntakeModeActivated() ? false : true), m_roller)
     );
-    intake.whenHeld(new IntakeCommand(m_roller, m_shooter));
+    intake.whenHeld(new IntakeCommand());
     reverseIntake.whenPressed(new InstantCommand(() -> m_roller.setReverse(m_roller.getReverse() ? false : true), m_roller));
 
     // Climb commands:
-    climbLeft.whenHeld(new ClimbLeftCommand(m_climber));
-    climbRight.whenHeld(new ClimbRightCommand(m_climber));
+    climbLeft.whenHeld(new ClimbLeftCommand());
+    climbRight.whenHeld(new ClimbRightCommand());
     reverseClimb.whenPressed(new InstantCommand(() -> m_climber.setReverse(m_climber.getReverse() ? false : true), m_climber));
 
     // Vision LED command:
@@ -126,11 +126,11 @@ public class RobotContainer {
     shootUsingVision.whenHeld(CommandGenerator.generateVisionCommand());
 
     // Other Shooter commands:
-    shootFromTrench.whenHeld((new ShootFromTrenchCommand(m_shooter).beforeStarting(() -> m_led.setState(State.SHOOTER_TRENCH), m_led))
+    shootFromTrench.whenHeld((new ShootFromTrenchCommand().beforeStarting(() -> m_led.setState(State.SHOOTER_TRENCH), m_led))
       .andThen(new InstantCommand(() -> m_led.setState(State.TELEOP), m_led)));
-    shootFromPort.whenHeld((new ShootFromPortCommand(m_shooter).beforeStarting(() -> m_led.setState(State.SHOOTER_PORT), m_led))
+    shootFromPort.whenHeld((new ShootFromPortCommand().beforeStarting(() -> m_led.setState(State.SHOOTER_PORT), m_led))
       .andThen(new InstantCommand(() -> m_led.setState(State.TELEOP), m_led)));
-    simpleShoot.whenHeld((new SimpleShootCommand(m_shooter).beforeStarting(() -> m_led.setState(State.SHOOTER_SIMPLE), m_led))
+    simpleShoot.whenHeld((new SimpleShootCommand().beforeStarting(() -> m_led.setState(State.SHOOTER_SIMPLE), m_led))
       .andThen(new InstantCommand(() -> m_led.setState(State.TELEOP), m_led)));
 
     // Shooter position commands:
@@ -142,7 +142,7 @@ public class RobotContainer {
     operatorAbort.whenPressed(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()).andThen(new PrintCommand("ABORT WAS USED!")));
 
     // Debug Mode:
-    enterDebugMode.whenPressed(new ConditionalCommand(new DebugCommand(m_climber, m_drive, m_roller, m_shooter, m_inSafeMode), 
+    enterDebugMode.whenPressed(new ConditionalCommand(new DebugCommand(m_inSafeMode), 
                                                       new PrintCommand("DEBUG MODE IS NOT ACTIVATED!"), 
                                                       () -> m_inDebugMode)
     );
