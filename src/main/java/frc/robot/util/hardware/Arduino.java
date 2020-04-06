@@ -17,17 +17,19 @@ import frc.robot.Constants;
 public class Arduino {
 
     // Define variables:
-    private I2C m_wire;
-    private int m_adress;
+    private final I2C kWire;
+    private final int kAdress;
     private final int kMaxBytes = 32;
-    private static Arduino m_instance; // The singleton instance.
+
+    // The singleton instance.
+    private static Arduino m_instance;
 
     /**
      * Constructor.
      */
     private Arduino() {
-        m_adress = Constants.Ports.kArduinoI2C;
-        m_wire = new I2C(Port.kOnboard, this.m_adress);
+        kAdress = Constants.Ports.kArduinoI2C;
+        kWire = new I2C(Port.kOnboard, this.kAdress);
     }
 
     /**
@@ -51,7 +53,7 @@ public class Arduino {
         for(int i = 0 ; i < charArray.length ; i++) {
             data[i] = (byte) charArray[i];
         }
-        boolean failed = m_wire.writeBulk(data);
+        boolean failed = kWire.writeBulk(data);
         if(failed) {
             System.out.println("FAILED TO PASS TO ARDUINO: " + input);
         } else {
@@ -66,7 +68,7 @@ public class Arduino {
     public String read() {
         byte[] data = new byte[kMaxBytes];
         String finalResult;
-        boolean failed = m_wire.read(this.m_adress, kMaxBytes, data);
+        boolean failed = kWire.read(this.kAdress, kMaxBytes, data);
         if(!failed) {
             String returnedString = new String(data);
             int pt = returnedString.indexOf((char) 255);
