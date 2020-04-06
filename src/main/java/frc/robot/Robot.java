@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.LED;
 import frc.robot.subsystems.LED.State;
-import frc.robot.util.CommandGenerator;
 import frc.robot.util.Dashboard;
 
 /**
@@ -75,7 +74,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_led.setState(State.AUTO);
-    m_autonomousCommand = CommandGenerator.generateAutoCommand(Dashboard.getSelectedPath());
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand(Dashboard.getSelectedPath());
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
