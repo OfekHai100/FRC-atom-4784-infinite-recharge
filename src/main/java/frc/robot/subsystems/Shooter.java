@@ -93,6 +93,7 @@ public class Shooter extends SubsystemBase {
   /**
    * Sets output for the shooting motor, determined by vision processing or by default pre-determined values.
    * @param output
+   * @param simple - Is in simple shooting mode, or not.
    */
   public void shoot(double output, boolean simple) {
     m_shooter.set(ControlMode.PercentOutput, output);
