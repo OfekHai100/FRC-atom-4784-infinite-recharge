@@ -114,6 +114,7 @@ public class RobotContainer {
     climbRight.whenHeld(new ClimbRightCommand(m_climber));
     reverseClimb.whenPressed(new InstantCommand(() -> m_climber.setReverse(m_climber.getReverse() ? false : true), m_climber));
 
+    // Vision LED command:
     activateVision.whenPressed(
       new InstantCommand(() -> m_led.activateVision(m_led.isVisionActivated() ? false : true))
     );
