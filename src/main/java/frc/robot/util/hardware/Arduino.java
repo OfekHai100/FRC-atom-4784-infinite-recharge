@@ -9,6 +9,7 @@ package frc.robot.util.hardware;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
+
 import frc.robot.Constants;
 
 /**
