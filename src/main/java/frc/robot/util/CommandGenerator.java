@@ -38,7 +38,7 @@ public class CommandGenerator {
 
     /**
      * This method returns {@link RamseteCommand} based on a given trajectory.
-     * @param path as a {@link Trajectory} object.
+     * @param trajectory as a {@link Trajectory} object.
      * @return Trajectory command.
      */
     public static Command generateTrajectoryCommand(Trajectory trajectory) {
