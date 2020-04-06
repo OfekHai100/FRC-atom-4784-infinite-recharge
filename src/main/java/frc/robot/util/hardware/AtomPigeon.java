@@ -73,7 +73,7 @@ public class AtomPigeon extends PigeonIMU {
     }
 
     /**
-     * Retunrs the heading in radians, between -PI to PI.
+     * Returns the heading in radians, between -PI to PI.
      * @return Heading in radians.
      */
     public double getInRadians() {
