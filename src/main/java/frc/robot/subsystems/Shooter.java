@@ -246,7 +246,7 @@ public class Shooter extends SubsystemBase {
   }
 
   /**
-   * Stops all motors.
+   * Stops the shooting mechanism - the Shooter motor and the Loader motor.
    */
   public void stopAll() {
     stopShooter();
