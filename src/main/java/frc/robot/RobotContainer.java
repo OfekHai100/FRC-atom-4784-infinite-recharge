@@ -55,6 +55,9 @@ public class RobotContainer {
   private final LED m_led = LED.getInstance();
 
   // Debug Mode:
+  // Test Mode - Debug Mode: True, Safe Mode: False.
+  // Competition Mode - Debug Mode: False, Safe Mode: True/False.
+  // Quick Check Mode - Debug Mode: True, Safe Mode: True.
   private boolean m_inDebugMode = true;
   private boolean m_inSafeMode = false;
 
