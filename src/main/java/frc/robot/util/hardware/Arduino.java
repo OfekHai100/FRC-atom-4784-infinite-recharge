@@ -45,19 +45,19 @@ public class Arduino {
 
     /**
      * Writes something to the Arduino.
-     * @param input
+     * @param output
      */
-    public void write(String input) {
-        char[] charArray = input.toCharArray();
+    public void write(String output) {
+        char[] charArray = output.toCharArray();
         byte[] data = new byte[charArray.length];
         for(int i = 0 ; i < charArray.length ; i++) {
             data[i] = (byte) charArray[i];
         }
         boolean failed = kWire.writeBulk(data);
         if(failed) {
-            System.out.println("FAILED TO PASS TO ARDUINO: " + input);
+            System.out.println("FAILED TO PASS TO ARDUINO: " + output);
         } else {
-            System.out.println("SUCCEFULY PASSED TO ARDUINO: " + input);
+            System.out.println("SUCCEFULY PASSED TO ARDUINO: " + output);
         }
     }
 
