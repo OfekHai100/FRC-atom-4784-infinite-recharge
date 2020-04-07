@@ -92,7 +92,7 @@ public class CommandGenerator {
             new InstantCommand(() -> led.setState(DriverStation.getInstance().isOperatorControl() ? State.TELEOP : State.AUTO), led)
         );
 
-    return visionCommand;
+        return visionCommand;
     }
 
     /**
