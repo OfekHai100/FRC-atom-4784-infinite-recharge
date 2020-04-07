@@ -165,7 +165,7 @@ public class Dashboard {
                               .getEntry();
 
         m_angle = m_autoTab.add("Shooter Angle", 0.0)
-                           .withProperties(Map.of("Min", Constants.ShooterConstants.kMinAngle, "Max", Constants.ShooterConstants.kMaxAngle))
+                           .withProperties(Map.of("min", Constants.ShooterConstants.kMinAngle, "max", Constants.ShooterConstants.kMaxAngle))
                            .withSize(4, 6)
                            .withPosition(0, 9)
                            .withWidget(BuiltInWidgets.kNumberBar)
