@@ -200,6 +200,14 @@ public class Shooter extends SubsystemBase {
   }
 
   /**
+   * Returns the output of the Shooter motor, in TalonSRX percent-output units.
+   * @return Output
+   */
+  public double getShooterOutput() {
+    return m_shooter.getMotorOutputPercent();
+  }
+
+  /**
    * This method checks if the Shooter is loaded with Power Cells.
    * <p> The role of the timer is to avoid delays between the limit switch and loader motor, in cases like this:
    * A Power Cell has been shot, the next Power Cells not arrived yet to the limit switch, but the method was still called
@@ -264,7 +272,5 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Shooter - Output:", m_shooter.getMotorOutputPercent());
-    SmartDashboard.putString("Shooter - Position:", getPositionAsString());
   }
 }
