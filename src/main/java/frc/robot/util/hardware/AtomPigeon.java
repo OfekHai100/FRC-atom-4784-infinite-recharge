@@ -18,12 +18,22 @@ public class AtomPigeon extends PigeonIMU {
 
     private boolean m_reversed;
 
-    public AtomPigeon(AtomTalon master, boolean reversed) {
-        super(master);
+    /**
+     * Constructor for when a Pigeon is connected to an {@link AtomTalon} through Data Cable.
+     * @param device
+     * @param reversed is reversed.
+     */
+    public AtomPigeon(AtomTalon device, boolean reversed) {
+        super(device);
         m_reversed = reversed;
         super.configFactoryDefault();
     }
 
+    /**
+     * Constructor for when a Pigeon is connected to the CAN bus.
+     * @param canID
+     * @param reversed is reversed.
+     */
     public AtomPigeon(int canID, boolean reversed) {
         super(canID);
         m_reversed = reversed;
