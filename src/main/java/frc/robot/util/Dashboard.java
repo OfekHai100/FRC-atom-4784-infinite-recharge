@@ -51,6 +51,9 @@ public class Dashboard {
     private Dashboard() {
     }
 
+    /**
+     * Setup code, used to initialize all tabs, and to display the Setup Tab.
+     */
     public static void setup() {
         m_DS = DriverStation.getInstance();
 
@@ -64,14 +67,19 @@ public class Dashboard {
         m_passedTeleop = false;
     }
 
+    /**
+     * Runs periodically: Displays automatically the tabs for Autonomous and Teleop, and updates their values.
+     */
     public static void loop() {
         if(m_DS.isAutonomous()) {
+            // Avoids duplicate calls.
             if(!m_passedAuto) {
                 Shuffleboard.selectTab("Autonomous Tab");
                 m_passedAuto = true;
             }
             updateAutonomousData();
         } else if(m_DS.isOperatorControl()) {
+            // Avoids duplicate calls.
             if(!m_passedTeleop) {
                 Shuffleboard.selectTab("Teleop Tab");
                 m_passedTeleop = true;
