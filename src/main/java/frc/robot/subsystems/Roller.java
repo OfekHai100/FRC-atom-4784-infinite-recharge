@@ -103,7 +103,7 @@ public class Roller extends SubsystemBase {
    * Returns the current direction of the mechanism.
    * @return current direction - true for reversed, false for default.
    */
-  public boolean getReverse() {
+  public boolean isReversed() {
     return this.m_reverse;
   }
 
@@ -127,7 +127,5 @@ public class Roller extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Roller - Reverse:", this.m_reverse);
-    SmartDashboard.putBoolean("Roller - Intake Mode:", this.m_inIntakeMode);
   }
 }

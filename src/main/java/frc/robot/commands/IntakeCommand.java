@@ -25,7 +25,7 @@ public class IntakeCommand extends CommandBase {
   public IntakeCommand() {
     m_roller = Roller.getInstance();
     m_shooter = Shooter.getInstance();
-    m_reverse = m_roller.getReverse();
+    m_reverse = m_roller.isReversed();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_roller, m_shooter);
   }

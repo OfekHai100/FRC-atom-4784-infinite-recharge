@@ -231,8 +231,8 @@ public class Dashboard {
         Shooter shooter = Shooter.getInstance();
 
 
-        m_reverseClimb.setBoolean(climber.getReverse());
-        m_reverseIntake.setBoolean(roller.getReverse());
+        m_reverseClimb.setBoolean(climber.isReversed());
+        m_reverseIntake.setBoolean(roller.isReversed());
         m_activateIntake.setBoolean(roller.isIntakeModeActivated());
         m_vision.setBoolean(led.isVisionActivated());
         m_position.setString(shooter.getPositionAsString());

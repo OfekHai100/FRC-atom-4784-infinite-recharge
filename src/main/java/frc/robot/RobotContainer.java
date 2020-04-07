@@ -110,12 +110,12 @@ public class RobotContainer {
       .beforeStarting(() -> m_roller.activateIntakeMode(m_roller.isIntakeModeActivated() ? false : true), m_roller)
     );
     intake.whenHeld(new IntakeCommand());
-    reverseIntake.whenPressed(new InstantCommand(() -> m_roller.setReverse(m_roller.getReverse() ? false : true), m_roller));
+    reverseIntake.whenPressed(new InstantCommand(() -> m_roller.setReverse(m_roller.isReversed() ? false : true), m_roller));
 
     // Climb commands:
     climbLeft.whenHeld(new ClimbLeftCommand());
     climbRight.whenHeld(new ClimbRightCommand());
-    reverseClimb.whenPressed(new InstantCommand(() -> m_climber.setReverse(m_climber.getReverse() ? false : true), m_climber));
+    reverseClimb.whenPressed(new InstantCommand(() -> m_climber.setReverse(m_climber.isReversed() ? false : true), m_climber));
 
     // Vision LED command:
     activateVision.whenPressed(
