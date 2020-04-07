@@ -107,7 +107,7 @@ public class LED extends SubsystemBase {
     }
 
     /**
-     * Return true if the Robot is using vision, false if not.
+     * Returns true if the Robot is using vision, false if not.
      * @return onVision
      */
     public boolean isVisionActivated() {
