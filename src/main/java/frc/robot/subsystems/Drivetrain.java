@@ -176,8 +176,5 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     m_odometry.update(m_pigeon.getAsRotation2d(), m_leftFront.getDistanceMeters(), m_rightFront.getDistanceMeters());
-    SmartDashboard.putNumber("Robot Heading:", getHeading());
-    SmartDashboard.putNumber("Left Encoder:", m_leftFront.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Right Encoder:", m_rightFront.getSelectedSensorPosition());
   }
 }

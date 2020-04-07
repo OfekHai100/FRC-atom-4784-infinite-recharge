@@ -145,7 +145,6 @@ public class LED extends SubsystemBase {
         // This method will be called once per scheduler run
         runRing();
         runStrip();
-        SmartDashboard.putBoolean("Vision Mode - Activated:", isVisionActivated());
     }
 
 }
