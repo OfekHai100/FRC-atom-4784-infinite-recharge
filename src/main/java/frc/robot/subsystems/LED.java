@@ -117,6 +117,7 @@ public class LED extends SubsystemBase {
      * Runs the LED ring used for vision, writes to the {@link Arduino} connected to the Robot via I2C.
      */
     public void runRing() {
+        // Avoids duplicate calls.
         if(!m_passed && m_onVision) {
             Arduino.getInstnace().write("OPEN");
             m_passed = true;
@@ -130,6 +131,7 @@ public class LED extends SubsystemBase {
      * Runs the LED strip, based on Robot state.
      */
     public void runStrip() {        
+        // Avoids duplicate calls.
         if(m_switched) {
             m_switched = false;
             for(var i = 0 ; i < m_ledStripBuffer.getLength() ; i++) {
