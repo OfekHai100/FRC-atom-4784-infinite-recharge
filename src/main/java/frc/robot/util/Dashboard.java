@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
+import frc.robot.Constants;
 import frc.robot.pathing.PathManager.Path;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -38,8 +39,8 @@ public class Dashboard {
     private static ShuffleboardTab m_autoTab = Shuffleboard.getTab("Autonomous Tab");
     private static ShuffleboardTab m_teleopTab = Shuffleboard.getTab("Teleop Tab");
 
-    private static NetworkTableEntry m_heading, m_distance, m_angle;
-    private static NetworkTableEntry m_reverseClimb, m_reverseIntake, m_activateIntake, m_position, m_vision;
+    private static NetworkTableEntry m_heading, m_distance, m_angle, m_velocity;
+    private static NetworkTableEntry m_reverseClimb, m_reverseIntake, m_activateIntake, m_vision, m_position, m_output;
 
     private static boolean m_passedAuto;
     private static boolean m_passedTeleop;
@@ -164,10 +165,17 @@ public class Dashboard {
                               .getEntry();
 
         m_angle = m_autoTab.add("Shooter Angle", 0.0)
-                           .withSize(4, 8)
+                           .withProperties(Map.of("Min", Constants.ShooterConstants.kMinAngle, "Max", Constants.ShooterConstants.kMaxAngle))
+                           .withSize(4, 6)
                            .withPosition(0, 9)
-                           .withWidget(BuiltInWidgets.kTextView)
+                           .withWidget(BuiltInWidgets.kNumberBar)
                            .getEntry();
+
+        m_velocity = m_autoTab.add("Shooter - Velocity", 0.0)
+                              .withSize(4, 6)
+                              .withPosition(2, 0)
+                              .withWidget(BuiltInWidgets.kNumberBar)
+                              .getEntry();
     }
 
     /**
@@ -180,6 +188,7 @@ public class Dashboard {
         m_heading.setDouble(drive.getHeading());
         m_distance.setDouble(drive.getDistance());
         m_angle.setDouble(shooter.getAngle());
+        m_velocity.setDouble(shooter.getShooterOutput());
     }
     
     /**
@@ -219,6 +228,12 @@ public class Dashboard {
                                 .withPosition(14, 1)
                                 .withWidget(BuiltInWidgets.kTextView)
                                 .getEntry();
+
+        m_output = m_teleopTab.add("Shooter - Output", 0.0)
+                              .withSize(4, 6)
+                              .withPosition(16, 1)
+                              .withWidget(BuiltInWidgets.kNumberBar)
+                              .getEntry();
     }
 
     /**
@@ -236,6 +251,7 @@ public class Dashboard {
         m_activateIntake.setBoolean(roller.isIntakeModeActivated());
         m_vision.setBoolean(led.isVisionActivated());
         m_position.setString(shooter.getPositionAsString());
+        m_output.setDouble(shooter.getShooterOutput());
     }
 
     /**
