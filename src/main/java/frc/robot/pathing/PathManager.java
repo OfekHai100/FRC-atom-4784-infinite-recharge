@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 public class PathManager {
 
     /**
-     * This enum stores all paths.
+     * Path is a pre-defined {@link Trajectory} created by Pathweaver and used for autonomous routines.
      */
     public enum Path {
         RED_PORT("paths/RedPort.wpilib.json"),
