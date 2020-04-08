@@ -33,15 +33,19 @@ public class Dashboard {
     // Path chooser:
     private static SendableChooser<Path> m_chooser = new SendableChooser<Path>();
 
+    // DS:
     private static DriverStation m_DS;
 
+    // Shuffleboard tabs:
     private static ShuffleboardTab m_setupTab = Shuffleboard.getTab("Setup Tab");
     private static ShuffleboardTab m_autoTab = Shuffleboard.getTab("Autonomous Tab");
     private static ShuffleboardTab m_teleopTab = Shuffleboard.getTab("Teleop Tab");
 
+    // All the entries for the Autonomous Tab and the Teleop Tab.
     private static NetworkTableEntry m_heading, m_distance, m_angle, m_velocity;
     private static NetworkTableEntry m_reverseClimb, m_reverseIntake, m_activateIntake, m_vision, m_position, m_output;
 
+    // Avoids duplicate calls:
     private static boolean m_passedAuto;
     private static boolean m_passedTeleop;
 
@@ -263,7 +267,7 @@ public class Dashboard {
     }
 
     /**
-     * Returns the selected path for autonomous routine.
+     * Returns the selected path for the autonomous routine.
      * @return Selected path.
      */
     public static Path getSelectedPath() {
