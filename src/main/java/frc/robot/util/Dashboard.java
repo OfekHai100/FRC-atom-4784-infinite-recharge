@@ -144,7 +144,7 @@ public class Dashboard {
         }
 
         m_setupTab.add("Alliance", isRed)
-                  .withProperties(Map.of("Color when true", "#FF0000", "Color when false", "#FF5555"))
+                  .withProperties(Map.of("colorWhenTrue", "#FF0000", "colorWhenFalse", "#FF5555"))
                   .withSize(6, 3)
                   .withPosition(0, 0)
                   .withWidget(BuiltInWidgets.kBooleanBox);
@@ -208,28 +208,28 @@ public class Dashboard {
      */
     private static void putTeleopData() {
         m_reverseClimb = m_teleopTab.add("Climber - Reversed", false)
-                                    .withProperties(Map.of("Color when true", "#008000", "Color when false", "#FF0000"))
+                                    .withProperties(Map.of("colorWhenTrue", "#008000", "colorWhenFalse", "#FF0000"))
                                     .withSize(4, 4)
                                     .withPosition(0, 1)
                                     .withWidget(BuiltInWidgets.kBooleanBox)
                                     .getEntry();
 
         m_reverseIntake = m_teleopTab.add("Intake - Reversed", false)
-                                     .withProperties(Map.of("Color when true", "#008000", "Color when false", "#FF0000"))
+                                     .withProperties(Map.of("colorWhenTrue", "#008000", "colorWhenFalse", "#FF0000"))
                                      .withSize(4, 4)
                                      .withPosition(6, 1)
                                      .withWidget(BuiltInWidgets.kBooleanBox)
                                      .getEntry();
 
         m_activateIntake = m_teleopTab.add("Intake - Activated", false)
-                                      .withProperties(Map.of("Color when true", "#008000", "Color when false", "#FF0000"))
+                                      .withProperties(Map.of("colorWhenTrue", "#008000", "colorWhenFalse", "#FF0000"))
                                       .withSize(4, 4)
                                       .withPosition(6, 6)
                                       .withWidget(BuiltInWidgets.kBooleanBox)
                                       .getEntry();
 
         m_vision = m_teleopTab.add("Vision Mode", false)
-                              .withProperties(Map.of("Color when true", "#008000", "Color when false", "#FF0000"))
+                              .withProperties(Map.of("colorWhenTrue", "#008000", "colorWhenFalse", "#FF0000"))
                               .withSize(4, 4)
                               .withPosition(12, 1)
                               .withWidget(BuiltInWidgets.kBooleanBox)
