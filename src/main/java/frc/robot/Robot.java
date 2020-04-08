@@ -24,7 +24,7 @@ import frc.robot.util.Dashboard;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private LED m_led;
+  private LED m_led; // Used to switch LED states between game periods.
 
   private RobotContainer m_robotContainer;
 
