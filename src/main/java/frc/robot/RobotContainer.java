@@ -35,7 +35,7 @@ import frc.robot.subsystems.LED.State;
 import frc.robot.subsystems.Roller;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.Position;
-import frc.robot.util.CommandGenerator;
+import frc.robot.util.CommandFactory;
 import frc.robot.util.PSController;
 
 /**
@@ -123,7 +123,7 @@ public class RobotContainer {
     );
 
     // Runs the sequence Calculate -> Set LED -> Correct Position -> Correct Angle -> Shoot -> Reset angle -> Stop motors -> Set LED:
-    shootUsingVision.whenHeld(CommandGenerator.generateVisionCommand());
+    shootUsingVision.whenHeld(CommandFactory.createVisionCommand());
 
     // Other Shooter commands:
     shootFromTrench.whenHeld((new ShootFromTrenchCommand().beforeStarting(() -> m_led.setState(State.SHOOTER_TRENCH), m_led))
@@ -154,7 +154,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand(Path path) {
-    return CommandGenerator.generateAutoCommand(path);
+    return CommandFactory.createAutonomousCommand(path);
   }
 
 }

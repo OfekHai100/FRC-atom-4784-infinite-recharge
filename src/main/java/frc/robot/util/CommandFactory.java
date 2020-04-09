@@ -30,9 +30,9 @@ import frc.robot.vision.Calculation;
 import frc.robot.vision.VisionController;
 
 /**
- * This utility class generates different types of {@link Command}s.
+ * This utility class creates different types of {@link Command}s.
  */
-public class CommandGenerator {
+public class CommandFactory {
 
     // Java...
     private static Calculation m_calculation;
@@ -42,7 +42,7 @@ public class CommandGenerator {
      * @param trajectory as a {@link Trajectory} object.
      * @return Trajectory command.
      */
-    public static Command generateTrajectoryCommand(Trajectory trajectory) {
+    public static Command createTrajectoryCommand (Trajectory trajectory) {
         Drivetrain drive = Drivetrain.getInstance();
 
         // Checks if a valid Trajectory is given, if not returns a new PrintCommand.
@@ -74,7 +74,7 @@ public class CommandGenerator {
      * by the {@link VisionController} class.
      * @return Vision command.
      */
-    public static Command generateVisionCommand() {
+    public static Command createVisionCommand() {
         VisionController controller = new VisionController();
 
         Drivetrain drive = Drivetrain.getInstance();
@@ -84,7 +84,7 @@ public class CommandGenerator {
         Command visionCommand = new InstantCommand(() -> { m_calculation = controller.calculate(shooter.getAngle(), drive.getPose()); })
         .andThen(
             new InstantCommand(() -> led.setState(State.SHOOTER_VISION), led),
-            new RunCommand(() -> generateTrajectoryCommand(m_calculation.getPath()), drive),
+            new RunCommand(() -> createTrajectoryCommand(m_calculation.getPath()), drive),
             new InstantCommand(() -> shooter.goToAngle(m_calculation.getAngle(), false), shooter),
             new InstantCommand(() -> shooter.shoot(m_calculation.getVelocity(), false), shooter),
             new InstantCommand(() -> shooter.stopAll(), shooter),
@@ -100,7 +100,7 @@ public class CommandGenerator {
      * @param path to follow, as a {@link Path} object.
      * @return Auto-command.
      */
-    public static Command generateAutoCommand(Path path) {
+    public static Command createAutonomousCommand(Path path) {
         Drivetrain drive = Drivetrain.getInstance();
 
         Trajectory trajectory;
@@ -108,7 +108,7 @@ public class CommandGenerator {
 
         drive.resetOdometry(PathManager.getStartingPosition(path));
 
-        Command auto = generateTrajectoryCommand(trajectory).andThen(generateVisionCommand());
+        Command auto = createTrajectoryCommand(trajectory).andThen(createVisionCommand());
         return auto;
     }
 
