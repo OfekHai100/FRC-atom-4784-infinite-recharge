@@ -50,7 +50,8 @@ public class Shooter extends SubsystemBase {
   private static AtomTalon m_rotator;
   private AtomVictor m_shooter;
   private AtomVictor m_loader;
-  private DigitalInput m_switch;
+  private DigitalInput m_shooterSwitch;
+  private DigitalInput m_intakeSwitch;
 
   private Position m_position;
 
@@ -64,7 +65,8 @@ public class Shooter extends SubsystemBase {
     m_shooter = new AtomVictor(Constants.Ports.kShooterFront, false);
     m_loader = new AtomVictor(Constants.Ports.kShooterRear, true);
 
-    m_switch = new DigitalInput(Constants.Ports.kSwitch);
+    m_shooterSwitch = new DigitalInput(Constants.Ports.kSwitch);
+    m_intakeSwitch = new DigitalInput(0);
 
     m_rotator.setInverted(true);
     m_rotator.setSensorPhase(true);
@@ -111,6 +113,27 @@ public class Shooter extends SubsystemBase {
    */
   public void load(boolean reverse) {
     m_loader.set(ControlMode.PercentOutput, reverse ? 0.4 : -0.4);
+  }
+
+  /**
+   * This method activated the loader motor for a specific time.
+   * <p> Used by the Intake command.
+   */
+  public void timedLoad(double seconds) {
+    Timer timer = new Timer();
+    boolean elapsed = false;
+
+    timer.reset();
+    timer.start();
+
+    while(!elapsed) {
+      load(false);
+      if(timer.hasElapsed(seconds)) {
+        elapsed = true;
+      }
+    }
+
+    stopLoader();
   }
 
   /**
@@ -215,20 +238,28 @@ public class Shooter extends SubsystemBase {
    */
   public boolean isLoaded() {
     Timer timer = new Timer();
-    boolean elapsed = true;
+    boolean elapsed = false;
 
     timer.reset();
     timer.start();
 
     // Prevents delays by placing timeout of 0.9 seconds:
-    while(elapsed) {
+    while(!elapsed) {
       // Wait
       if(timer.hasElapsed(0.9)) {
-        elapsed = false;
+        elapsed = true;
       }
     }
 
-    return m_switch.get();
+    return m_shooterSwitch.get();
+  }
+
+  /**
+   * Checks if Power Cell was inserted into the loader by the Roller.
+   * @return True if inserted, false if not.
+   */
+  public boolean isInserted() {
+    return m_intakeSwitch.get();
   }
 
   /**
