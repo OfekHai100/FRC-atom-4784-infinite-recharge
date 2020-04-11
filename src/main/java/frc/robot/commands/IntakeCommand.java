@@ -50,9 +50,8 @@ public class IntakeCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // Moves all loaded Power Cells to the Shooter head, there is enough room for 4 Power Cells in the loader.
-    m_shooter.timedLoad(0.4 * (4 - Shooter.loadedPowerCells));
     m_roller.stop();
+    m_shooter.stopLoader();
   }
 
   // Returns true when the command should end.
