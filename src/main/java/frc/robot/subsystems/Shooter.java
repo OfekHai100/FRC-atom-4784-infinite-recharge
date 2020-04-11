@@ -245,10 +245,10 @@ public class Shooter extends SubsystemBase {
     timer.reset();
     timer.start();
 
-    // Prevents delays by placing timeout of 0.9 seconds:
+    // Prevents delays by placing timeout of 0.5 seconds:
     while(!elapsed) {
       // Wait
-      if(timer.hasElapsed(0.9)) {
+      if(timer.hasElapsed(0.5)) {
         elapsed = true;
       }
     }
