@@ -18,8 +18,6 @@ public class IntakeCommand extends CommandBase {
   private final Shooter m_shooter;
 
   private boolean m_reverse;
-
-  private int m_powerCells; // Counts how many Power Cells inserted.
   
   /**
    * Creates a new IntakeCommand.
@@ -28,8 +26,6 @@ public class IntakeCommand extends CommandBase {
     m_roller = Roller.getInstance();
     m_shooter = Shooter.getInstance();
     m_reverse = m_roller.isReversed();
-
-    m_powerCells = 0;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_roller, m_shooter);
   }
@@ -45,7 +41,7 @@ public class IntakeCommand extends CommandBase {
   public void execute() {
     if(!m_reverse) {
       if(m_shooter.isInserted()) {
-        m_powerCells++;
+        Shooter.loadedPowerCells++;
         m_shooter.timedLoad(0.4); // Enough time to insert one Power Cell.
       }
     }
@@ -55,7 +51,7 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     // Moves all loaded Power Cells to the Shooter head, there is enough room for 4 Power Cells in the loader.
-    m_shooter.timedLoad(0.4 * (4 - m_powerCells));
+    m_shooter.timedLoad(0.4 * (4 - Shooter.loadedPowerCells));
     m_roller.stop();
   }
 
