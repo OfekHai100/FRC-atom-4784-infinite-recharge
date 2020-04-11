@@ -57,6 +57,8 @@ public class Shooter extends SubsystemBase {
 
   private static Shooter m_instance;
 
+  public static int loadedPowerCells = 0; // How many Power Cells are in the Shooter.
+
   /**
    * Creates a new Shooter.
    */
