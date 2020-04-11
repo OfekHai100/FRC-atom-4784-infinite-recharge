@@ -122,7 +122,7 @@ public class RobotContainer {
       new InstantCommand(() -> m_led.activateVision(m_led.isVisionActivated() ? false : true))
     );
 
-    // Runs the sequence Calculate -> Set LED -> Correct Position -> Correct Angle -> Shoot -> Reset angle -> Stop motors -> Set LED:
+    // The sequence: Calculate -> Set LED -> Correct Position -> Correct Angle -> Load -> Shoot -> Reset angle -> Stop motors -> Set LED:
     shootUsingVision.whenHeld(CommandFactory.createVisionCommand());
 
     // Other Shooter commands:
