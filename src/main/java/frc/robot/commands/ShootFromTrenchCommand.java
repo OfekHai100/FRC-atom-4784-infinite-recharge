@@ -29,6 +29,8 @@ public class ShootFromTrenchCommand extends CommandBase {
   @Override
   public void initialize() {
     m_shooter.goToPosition(Position.TRENCH);
+    // Moves all loaded Power Cells to the Shooter head, there is enough room for 4 Power Cells in the loader.
+    m_shooter.timedLoad(0.4 * (4 - Shooter.loadedPowerCells));
     m_shooter.shoot(0.9, true);
   }
 

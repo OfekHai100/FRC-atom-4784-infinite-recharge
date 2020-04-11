@@ -27,6 +27,8 @@ public class SimpleShootCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // Moves all loaded Power Cells to the Shooter head, there is enough room for 4 Power Cells in the loader.
+    m_shooter.timedLoad(0.4 * (4 - Shooter.loadedPowerCells));
     m_shooter.shoot(0.8, true); // 0.8 has been tested to give just fine results.
   }
 

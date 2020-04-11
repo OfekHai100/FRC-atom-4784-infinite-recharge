@@ -86,6 +86,7 @@ public class CommandFactory {
             new InstantCommand(() -> led.setState(State.SHOOTER_VISION), led),
             new RunCommand(() -> createTrajectoryCommand(m_calculation.getPath()), drive),
             new InstantCommand(() -> shooter.goToAngle(m_calculation.getAngle(), false), shooter),
+            new InstantCommand(() -> shooter.timedLoad(0.4 * (4 - Shooter.loadedPowerCells)),shooter),
             new InstantCommand(() -> shooter.shoot(m_calculation.getVelocity(), false), shooter),
             new InstantCommand(() -> shooter.stopAll(), shooter),
             new InstantCommand(() -> shooter.goToPosition(Position.STARTING_CONFIGURATION), shooter),
