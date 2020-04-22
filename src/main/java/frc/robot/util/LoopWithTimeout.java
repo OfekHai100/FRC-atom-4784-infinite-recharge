@@ -39,14 +39,6 @@ public class LoopWithTimeout {
     }
 
     /**
-     * Returns the timeout.
-     * @return Timeout, in seconds.
-     */
-    public double getTimeout() {
-        return this.m_timeout;
-    }
-
-    /**
      * Starts the {@link LoopThread} and the timed loop, until either the timeout achieved or the given loop has finished.
      */
     public void start() {
@@ -66,6 +58,31 @@ public class LoopWithTimeout {
      * <p> Call this method when declaring an object of LoopWithTimeout.
      */
     public void loop() {
+    }
+
+
+    /**
+     * Returns the timeout.
+     * @return Timeout, in seconds.
+     */
+    public double getTimeout() {
+        return this.m_timeout;
+    }
+
+    /**
+     * Is the timeout elapsed?
+     * @return True if elapsed, false if not.
+     */
+    public boolean isElapsed() {
+        return this.m_elapsed;
+    }
+
+    /**
+     * Is the Timer interrupted by the loop (the loop finished)?
+     * @return True if interrupted, false if not.
+     */
+    public boolean isInterrupted() {
+        return this.m_interrupted;
     }
 
     /**
