@@ -182,7 +182,7 @@ public class Shooter extends SubsystemBase {
    * @param position of the Shooter to set, as {@link Position} object.
    */
   public void goToPosition(Position position) {
-    if(m_position.equals(position)) {
+    if(m_position == position) {
       return;
     }
     m_position = position;
