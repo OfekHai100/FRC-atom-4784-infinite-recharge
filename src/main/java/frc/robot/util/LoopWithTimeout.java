@@ -50,12 +50,7 @@ public class LoopWithTimeout {
      * Starts the {@link LoopThread} and the timed loop, until either the timeout achieved or the given loop has finished.
      */
     public void start() {
-        LoopThread loopThread = new LoopThread(this.m_name) {
-            @Override
-            public void run() {
-                loop();
-            }
-        };
+        LoopThread loopThread = new LoopThread(this.m_name);
         loopThread.start();
 
         m_timer.reset();
