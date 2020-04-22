@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
+import frc.robot.util.LoopWithTimeout;
 import frc.robot.util.hardware.AtomTalon;
 import frc.robot.util.hardware.AtomVictor;
 import frc.robot.util.hardware.AtomTalon.Subsystem;
@@ -161,13 +162,19 @@ public class Shooter extends SubsystemBase {
     }
 
     int setpoint = m_rotator.degreesToUnits(angle);
-    int current = m_rotator.getSelectedSensorPosition();
-
     m_rotator.set(ControlMode.Position, setpoint, DemandType.ArbitraryFeedForward, m_rotator.calculateCoisneScalar());
 
-    while(current - 1 < setpoint) {
-      current  = m_rotator.getSelectedSensorPosition();
-    }
+    // LoopWithTimeout to track the angle of the mechanism before moving on for shooting in Command.
+    LoopWithTimeout loop = new LoopWithTimeout(3.4, "angle-loop") {
+      @Override
+      public void loop() {
+        int current = m_rotator.getSelectedSensorPosition(); 
+        while(current - 1 < setpoint) {
+          current  = m_rotator.getSelectedSensorPosition();
+        }
+      }
+    };
+    loop.start();
   }
 
   /**
@@ -178,7 +185,6 @@ public class Shooter extends SubsystemBase {
     if(m_position.equals(position)) {
       return;
     }
-    
     m_position = position;
     goToAngle(position.getPositionAngle(), true);
   }
@@ -305,4 +311,6 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
 }
+
