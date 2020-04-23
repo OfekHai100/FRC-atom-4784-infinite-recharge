@@ -61,7 +61,6 @@ public class LoopWithTimeout {
     public void loop() {
     }
 
-
     /**
      * Returns the timeout.
      * @return Timeout, in seconds.
