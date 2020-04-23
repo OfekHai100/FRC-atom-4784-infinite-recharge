@@ -128,13 +128,13 @@ public class Shooter extends SubsystemBase {
 
     timer.reset();
     timer.start();
-
     while(!elapsed) {
       load(false);
       if(timer.hasElapsed(seconds)) {
         elapsed = true;
       }
     }
+    timer.stop();
 
     stopLoader();
   }
