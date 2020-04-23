@@ -51,6 +51,7 @@ public class LoopWithTimeout {
             m_elapsed = m_timer.hasElapsed(m_timeout);
             m_interrupted = loopThread.m_isPassed;
         }
+        m_timer.stop();
     }
 
     /**
