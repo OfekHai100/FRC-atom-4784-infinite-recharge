@@ -250,7 +250,6 @@ public class Shooter extends SubsystemBase {
 
     timer.reset();
     timer.start();
-
     // Prevents delays by placing timeout of 0.5 seconds:
     while(!elapsed) {
       // Wait
@@ -258,6 +257,7 @@ public class Shooter extends SubsystemBase {
         elapsed = true;
       }
     }
+    timer.stop();
 
     return m_shooterSwitch.get();
   }
