@@ -12,9 +12,6 @@ import edu.wpi.first.wpilibj.Timer;
 /**
  * This class allows complex loop types (mainly closed-loop control tracking) via special Thread with timeout, to ensure no Run-Time
  * error is generated.
- * <p> Please note that in order to use this class, objects must be declared in a method used by a Command, in order to interact with 
- * the "ABORT" emergency function.
- * <p> In any case an object of this class goes wrong, the driver and the operator can stop the loop with the "ABORT" button.
  */
 public class LoopWithTimeout {
 
