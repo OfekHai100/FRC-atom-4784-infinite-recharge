@@ -38,26 +38,19 @@ public class AtomTalon extends WPI_TalonSRX {
     /**
      * Constructor for AtomTalon.
      * @param port of the {@link WPI_TalonSRX}.
-     * @param slotIdx - slot to store PIDF constants (1-4).
+     * @param slotIdx to store constants (1-4).
      * @param kP
      * @param kI
      * @param kD
      * @param kF
      */
-    public AtomTalon(int port, int slotIdx, double kP, double kI, double kD, double kF) {
+    public AtomTalon(int port, int slotIdx, double p, double i, double d, double f) {
         super(port);
         m_port = port;
         super.configFactoryDefault();
-        
-        this.m_slot = slotIdx;
-        super.config_kP(m_slot, kP);
-        super.config_kI(m_slot, kI);
-        super.config_kD(m_slot, kD);
-        super.config_kF(m_slot, kF);
-        super.selectProfileSlot(m_slot, kPIDIdx);
-
         super.configVoltageCompSaturation(11.0);
         super.enableVoltageCompensation(true);
+        configPIDF(slotIdx, p, i, d, f);
     }
 
     /**
@@ -84,6 +77,23 @@ public class AtomTalon extends WPI_TalonSRX {
                 super.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, kPIDIdx, kTimeout);
                 this.m_ticksPerDegree = Constants.kEdgesPerRevolution / (3 * 360); // (4096 / 1080) 1:3 Gearbox.
         }
+    }
+    
+    /**
+     * Configures the PIDF values of the Talon.
+     * @param slotIdx to store constants (1-4).
+     * @param p
+     * @param i
+     * @param d
+     * @param f
+     */
+    public void configPIDF(int slotIdx, double p, double i, double d, double f) {
+        this.m_slot = slotIdx;
+        super.config_kP(m_slot, p);
+        super.config_kI(m_slot, i);
+        super.config_kD(m_slot, d);
+        super.config_kF(m_slot, f);
+        super.selectProfileSlot(m_slot, kPIDIdx);
     }
 
     /**
