@@ -11,7 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 /**
- * This class represents a Camera used for vision processing, and trasmitts data to the roboRIO through NetworkTables.
+ * This class represents a Camera used for vision processing, and transmits data to the roboRIO through NetworkTables.
  */
 public class NetworkCamera {
 
