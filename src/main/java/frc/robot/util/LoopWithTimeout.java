@@ -49,6 +49,8 @@ public class LoopWithTimeout {
             m_interrupted = loopThread.m_isPassed;
         }
         m_timer.stop();
+        // Logs the LoopWithTimeout:
+        System.out.println("LoopWithTimeout just finished: " + m_name + ". This LoopWithTimeout has been "+ (m_elapsed ? "elapsed." : "interrupted."));
     }
 
     /**
