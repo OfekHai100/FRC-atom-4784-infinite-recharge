@@ -206,7 +206,7 @@ public class VisionController {
     private double calculateAndCheckAngle(double currentAngle) {
         double calculated = calculateAngle();
         if(inRange(currentAngle, calculated)) {
-            return currentAngle;
+            return 0.0;
         }
         if(checkAngle(calculated)) {
             return calculated;
