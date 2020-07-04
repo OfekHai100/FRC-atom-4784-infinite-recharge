@@ -172,7 +172,7 @@ public class AtomTalon extends WPI_TalonSRX {
     }
 
     /**
-     * Calculates the cosine scalar needed for {@link Shooter} Arbitarty Feed-Forward.
+     * Calculates the cosine scalar needed for Arbitarty Feed-Forward.
      * @return Calculated cosine scalar.
      */
     public double calculateCoisneScalar() {
