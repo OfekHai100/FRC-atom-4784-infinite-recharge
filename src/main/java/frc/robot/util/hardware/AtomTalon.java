@@ -89,11 +89,11 @@ public class AtomTalon extends WPI_TalonSRX {
      */
     public void configPIDF(int slotIdx, double p, double i, double d, double f) {
         this.m_slot = slotIdx;
+        super.selectProfileSlot(m_slot, kPIDIdx);
         super.config_kP(m_slot, p);
         super.config_kI(m_slot, i);
         super.config_kD(m_slot, d);
         super.config_kF(m_slot, f);
-        super.selectProfileSlot(m_slot, kPIDIdx);
     }
 
     /**
